@@ -1,0 +1,222 @@
+<resources>
+    <string name="app_name" translatable="false">Gym Buddy</string>
+    <string-array name="workoutTypes">
+        <item>---</item>
+        <item>FBW</item>
+        <item>Push</item>
+        <item>Pull</item>
+        <item>Legs</item>
+        <item>Upper</item>
+        <item>Lower</item>
+        <item>Split</item>
+    </string-array>
+    <string-array name="setsNumber">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="isometric">
+        <item>@string/no</item>
+        <item>@string/yes</item>
+    </string-array>
+
+    <string-array name="scheduleDuration">
+        <item>@string/w1</item>
+        <item>@string/w2</item>
+        <item>@string/w4</item>
+        <item>@string/w6</item>
+        <item>@string/w8</item>
+        <item>@string/w10</item>
+        <item>@string/w12</item>
+    </string-array>
+
+    <string-array name="scheduleReminder">
+        <item>---</item>
+        <item>@string/m15</item>
+        <item>@string/m30</item>
+        <item>@string/h1</item>
+        <item>@string/h1m30</item>
+        <item>@string/h2</item>
+    </string-array>
+
+    <!--AddExerciseActivity-->
+    <string name="addNewExercise">Add new exercise</string>
+    <string name="editing">editing</string>
+    <string name="nameIsRequired">Name is required</string>
+    <string name="breakTimeIsRequired">Break time is required</string>
+    <string name="breakTimeNotZero">Break time cannot be 0</string>
+    <string name="tempoDigits">Tempo must consist of 4 digits</string>
+    <string name="save">Save</string>
+    <!--AddWorkoutActivity-->
+    <string name="addNewWorkout">Add new workout</string>
+    <!--ExerciseActivity-->
+    <string name="deleting">Deleting exercises from</string>
+    <string name="sureDelete">Are you sure you want to delete all exercises?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="noExercises">No exercises</string>
+    <string name="noOtherWorkouts">No other workouts</string>
+    <string name="loadExercises">Load exercises - select workout:</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="noExercisesToLoad">No exercises to load!</string>
+    <string name="selectExercise">Select exercise</string>
+    <string name="selectOptions">Select options</string>
+    <string name="overwrite">Overwrite</string>
+    <string name="add">Add</string>
+    <string name="load">Load</string>
+    <!--ExercisesRVAdapter-->
+    <string name="sureDeleteThis">Are you sure you want to delete this exercise?</string>
+    <string name="deletingExercise">Deleting exercise</string>
+    <string name="setTxt">sets</string>
+    <string name="setTxt34">sets</string>
+    <!--MainActivity-->
+    <string name="permissions">Permissions</string>
+    <string name="permissionInfo">In order to share, save or load a file this app needs to be granted permission to access storage</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="pressBackToExit">Press BACK again to exit</string>
+    <string name="selectWorkoutsToShare">Select workouts to share</string>
+    <string name="share">Share</string>
+    <string name="noWorkoutsSelected">No workouts selected</string>
+    <string name="shareWorkoutsVia">Share workouts via:</string>
+    <string name="fileLocation">File location</string>
+    <string name="fileLocationInfo">Make sure the file is in Documents directory and copy file\'s name</string>
+    <string name="fileName">File name</string>
+    <string name="noWorkoutsToLoad">No workouts to load</string>
+    <string name="selectWorkoutsToLoad">Select workouts to load</string>
+    <string name="fileNotFound">File not found</string>
+    <string name="checkLocationName">Check file location and name and try again</string>
+    <string name="selectWorkoutsToSave">Select workouts to save</string>
+    <string name="insertFileName">Insert file name</string>
+    <string name="workoutsSavedIn">Workouts saved in</string>
+    <string name="savingToAppMemory">Saving to app\'s memory</string>
+    <string name="savingToAppMemoryInfo">Data saved in app\'s memory will be lost when the app is uninstalled</string>
+    <string name="workouts">Workouts</string>
+    <!--NewSessionActivity-->
+    <string name="pressBackToExitSession">Press BACK again to exit session</string>
+    <string name="breakFinished">Break finished!</string>
+    <string name="clickToOpenAndDoTheSet">Click to open the app and do continue</string>
+    <string name="insertRepsAndLoad">Insert reps and load!</string>
+    <string name="nextSet">Next set</string>
+    <string name="nextExercise">Next exercise</string>
+    <string name="finishWorkout">Finish workout</string>
+    <string name="deletingSessions">Deleting sessions from</string>
+    <string name="deletingSessionsInfo">Are you sure you want to delete all sessions?</string>
+    <string name="finishInputFirst">Finish input first</string>
+    <string name="done">Done</string>
+    <string name="start" translatable="false">Start</string>
+    <string name="reset" translatable="false">Reset</string>
+    <string name="stop" translatable="false">Stop</string>
+    <string name="isometric">Isometric</string>
+    <!--SessionActivity-->
+    <string name="loadSessions">Load sessions - select workout:</string>
+    <string name="noExercisesToLoadFrom">No exercises to load from!</string>
+    <string name="noSessionsToLoad">No sessions to load!</string>
+    <string name="addSortRemove">Add, sort and remove duplicates</string>
+    <!--SessionsRVAdapter-->
+    <string name="sureDeleteThisSession">Are you sure you want to delete this session?</string>
+    <!--WorkoutsRVAdapter-->
+    <string name="exercises">exercises</string>
+    <string name="exercises1">exercise</string>
+    <string name="exercises234">exercises</string>
+    <string name="sureDeleteThisWorkout">Are you sure you want to delete this workout?</string>
+    <!--activity_add_exercises-->
+    <string name="isometricAdd">Isometric:</string>
+    <!--activity_add_session-->
+    <string name="tempo" translatable="false">Tempo:</string>
+    <string name="hintOptional">optional</string>
+    <string name="exerciseName">Exercise name</string>
+    <string name="sets">Sets:</string>
+    <string name="muscleGroup">Muscle group:</string>
+    <string name="muscleGroupSecondary">Secondary muscle group:</string>
+    <string name="breaks">Breaks:</string>
+    <string name="seconds">seconds</string>
+    <!--activity_add_workout-->
+    <string name="workoutName">Workout name</string>
+    <string name="type">Type:</string>
+    <!--activity_exercises-->
+    <string name="startWorkout">Start workout</string>
+    <string name="resume">Resume</string>
+    <!--activity_new_session-->
+    <string name="set">Set:</string>
+    <string name="skipTimer">Skip break</string>
+    <string name="loadSet">Load</string>
+    <string name="repsSet">Reps</string>
+    <!--activity_sessions-->
+    <string name="iso">iso</string>
+    <string name="previous">Previous</string>
+    <string name="nextExer">Next exercise</string>
+    <!--exercises_menu-->
+    <string name="deleteAllExercises">Delete all exercises</string>
+    <!--main_menu-->
+    <string name="hideShowExercises">Hide/show exercises</string>
+    <string name="fromFile">from file</string>
+    <string name="fromAppsMemory">from app\'s memory</string>
+    <string name="toFile">to file</string>
+    <string name="toAppsMemory">to app\'s memory</string>
+    <!--popup_menu-->
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <!--sessions_menu-->
+    <string name="deleteAllSessions">Delete all sessions</string>
+    <string name="timeSet">Time</string>
+    <string name="select">Select</string>
+    <string name="breakDialog">Break</string>
+    <string name="breakDialogMessage">Select break time in seconds</string>
+    <string name="superset">Superset</string>
+    <string name="supersetWith">superset with:</string>
+    <string name="disablingSuperset">Disabling superset</string>
+    <string name="disablingSupersetMsg">Are you sure you want to disable this superset?</string>
+    <string name="noAvailableExercises">No available exercises</string>
+    <string name="schedule">Schedule</string>
+    <string name="permissionInfoCalendar">In order to share, save or load a file this app needs to be granted permission to access storage</string>
+    <string name="workout">Workout</string>
+    <string name="logInCalendar">Log in calendar</string>
+    <string name="disableLogging">Disable logging</string>
+    <string name="disableLoggingMsg">Are you sure you want to disable logging your workouts in calendar?</string>
+    <string name="enableLogging">Enable logging</string>>
+    <string name="enableLoggingMsg">Are you sure you want to enable logging your workouts in calendar?</string>
+    <string name="grantPermission">This app\'s calendar access permissision has been removed</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="schedulingWorkouts">Scheduling workouts</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="plan">Plan</string>
+    <string name="w1">1 week</string>
+    <string name="w2">2 weeks</string>
+    <string name="w4">4 weeks</string>
+    <string name="w6">6 weeks</string>
+    <string name="w8">8 weeks</string>
+    <string name="w10">10 weeks</string>
+    <string name="w12">12 weeks</string>
+    <string name="startMsg">Select starting time</string>
+    <string name="durationMsg">Select duration</string>
+    <string name="eventsAdded">Events added to calendar</string>
+    <string name="reminder">Reminder</string>
+    <string name="m15" translatable="false">15 min</string>
+    <string name="m30" translatable="false">30 min</string>
+    <string name="h1" translatable="false">1 h</string>
+    <string name="h1m30" translatable="false">1 h 30 min</string>
+    <string name="h2" translatable="false">2 h</string>
+    <string name="startingTime">Starting time</string>
+    <string name="duration">Duration</string>
+    <string name="selectCalendar">Select calendar</string>
+    <string name="def">default</string>
+    <string name="calendar">Calendar</string>
+    <string name="progress">" progress"</string>
+    <string name="highlighted">Highlighted session</string>
+    <string name="lastProgress">last progress</string>
+    <string name="totalProgress">total progress</string>
+    <string name="bestSession">Best session</string>
+
+</resources>

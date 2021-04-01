@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SessionsActivity"
+    android:padding="10dp"
+    android:id="@+id/parentConstraintLayout"
+    android:animateLayoutChanges="true">
+
+    <ImageView
+        android:id="@+id/imgRep"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtRep"
+        app:layout_constraintEnd_toStartOf="@+id/txtRep"
+        app:layout_constraintTop_toTopOf="@+id/txtRep"
+        android:src="@drawable/ic_hexagon_triple_empty"/>
+
+    <ImageView
+        android:id="@+id/imgLoad"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtLoad"
+        app:layout_constraintEnd_toStartOf="@+id/txtLoad"
+        app:layout_constraintTop_toTopOf="@+id/txtLoad"
+        android:src="@drawable/ic_hexagon_triple_empty" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnAddSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        style="@style/eFABStyle"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnNextExercise"
+        style="@style/eFABStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/nextExer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnAddSession"
+        app:layout_constraintTop_toTopOf="@+id/btnAddSession" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnViewChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_chart"
+        android:visibility="visible"
+        style="@style/eFABStyle"
+        app:layout_constraintBottom_toTopOf="@id/btnAddSession"
+        app:layout_constraintEnd_toEndOf="@id/btnAddSession"
+        android:layout_marginBottom="10dp"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnPreviousExercise"
+        style="@style/eFABStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnNextExercise"
+        app:layout_constraintTop_toTopOf="@+id/btnNextExercise" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sessionsRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintTop_toBottomOf="@+id/edtRep"
+        android:paddingBottom="48dp"
+        android:clipToPadding="false"
+        />
+
+    <View
+        android:id="@+id/viewDisableRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#40000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/sessionsRV"
+        app:layout_constraintLeft_toLeftOf="@id/sessionsRV"
+        app:layout_constraintRight_toRightOf="@id/sessionsRV"
+        app:layout_constraintTop_toTopOf="@id/sessionsRV"
+        app:cornerRadius="10sp"/>
+
+    <EditText
+        android:id="@+id/edtRep"
+        style="@style/EditTextStyle"
+        android:layout_width="70sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:inputType="number"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txtRep"
+        app:layout_constraintStart_toEndOf="@+id/txtRep"
+        app:layout_constraintTop_toTopOf="@+id/txtRep" />
+
+    <EditText
+        android:id="@+id/edtLoad"
+        style="@style/EditTextStyle"
+        android:layout_width="70sp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txtLoad"
+        app:layout_constraintStart_toStartOf="@+id/edtRep"
+        app:layout_constraintTop_toTopOf="@+id/txtLoad" />
+
+    <TextView
+        android:id="@+id/txtLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/loadSet"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtRep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/repsSet"
+        app:layout_constraintStart_toStartOf="@+id/txtLoad"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoad"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nextSet"
+        android:visibility="gone"
+        app:cornerRadius="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edtLoad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edtLoad"
+        app:layout_constraintTop_toTopOf="@+id/edtRep" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

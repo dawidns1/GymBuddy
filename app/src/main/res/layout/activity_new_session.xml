@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:fillViewport="true"
+    tools:context=".NewSessionActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtSetCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="3/8"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/setTxt"
+            app:layout_constraintStart_toEndOf="@+id/setTxt"
+            app:layout_constraintTop_toTopOf="@+id/setTxt" />
+
+        <TextView
+            android:id="@+id/tempoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tempo"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/setTxt"
+            app:layout_constraintTop_toBottomOf="@+id/setTxt" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:indeterminateOnly="false"
+            android:progressDrawable="@drawable/circular_progressbar"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            tools:progress="50" />
+
+
+        <TextView
+            android:id="@+id/txtTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00"
+            android:textSize="60sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar"
+            app:layout_constraintStart_toStartOf="@+id/progressBar"
+            app:layout_constraintTop_toTopOf="@+id/progressBar" />
+
+        <!--    <TextView-->
+        <!--        android:visibility="gone"-->
+        <!--        android:id="@+id/txtExercise"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginStart="25dp"-->
+        <!--        android:layout_marginTop="25dp"-->
+        <!--        android:text="Exercise"-->
+        <!--        android:textSize="20sp"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+        <TextView
+            android:id="@+id/setTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/set"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--    <TextView-->
+        <!--        android:visibility="gone"-->
+        <!--        android:id="@+id/txtExerciseCount"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginStart="25dp"-->
+        <!--        android:text="1/8"-->
+        <!--        android:textSize="20sp"-->
+        <!--        app:layout_constraintBottom_toBottomOf="@+id/txtExercise"-->
+        <!--        app:layout_constraintStart_toEndOf="@+id/txtExercise"-->
+        <!--        app:layout_constraintTop_toTopOf="@+id/txtExercise" />-->
+
+        <TextView
+            android:id="@+id/txtTempoSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1010"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tempoTxt"
+            app:layout_constraintStart_toStartOf="@+id/txtSetCount"
+            app:layout_constraintTop_toTopOf="@+id/tempoTxt" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <Button
+            android:id="@+id/btnNextSet"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/nextSet"
+            android:backgroundTint="@drawable/btn_color"
+            android:textColor="@drawable/btn_text_color"
+            app:cornerRadius="20sp"
+            app:layout_constraintStart_toStartOf="@+id/btnSkipTimer"
+            app:layout_constraintTop_toBottomOf="@+id/btnSkipTimer" />
+
+        <Button
+            android:id="@+id/btnSkipTimer"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/skipTimer"
+            android:backgroundTint="@drawable/btn_color"
+            android:textColor="@drawable/btn_text_color"
+            app:cornerRadius="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/newSessionExercisesRV" />
+
+        <TextView
+            android:id="@+id/loadTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:text="@string/loadSet"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSkipTimer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnSkipTimer" />
+
+        <TextView
+            android:id="@+id/repsTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/repsSet"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNextSet"
+            app:layout_constraintStart_toStartOf="@+id/loadTxt"
+            app:layout_constraintTop_toTopOf="@+id/btnNextSet" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="300dp" />
+
+        <EditText
+            android:id="@+id/edtLoads"
+            style="@style/EditTextStyle"
+            android:layout_width="70sp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="@+id/loadTxt"
+            app:layout_constraintStart_toEndOf="@+id/loadTxt"
+            app:layout_constraintTop_toTopOf="@+id/loadTxt" />
+
+        <EditText
+            android:id="@+id/edtReps"
+            style="@style/EditTextStyle"
+            android:layout_width="70sp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/repsTxt"
+            app:layout_constraintStart_toStartOf="@+id/edtLoads"
+            app:layout_constraintTop_toTopOf="@+id/repsTxt" />
+
+        <ImageView
+            android:id="@+id/imgReps"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_hexagon_triple_empty"
+            app:layout_constraintBottom_toBottomOf="@+id/repsTxt"
+            app:layout_constraintEnd_toStartOf="@+id/repsTxt"
+            app:layout_constraintTop_toTopOf="@+id/repsTxt" />
+
+        <ImageView
+            android:id="@+id/imgLoads"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_hexagon_triple_empty"
+            app:layout_constraintBottom_toBottomOf="@+id/loadTxt"
+            app:layout_constraintEnd_toStartOf="@+id/loadTxt"
+            app:layout_constraintTop_toTopOf="@+id/loadTxt" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="471dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newSessionsRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNextSet"
+            tools:layout_editor_absoluteX="206dp" />
+
+        <!--    <TextView-->
+        <!--        android:id="@+id/insertRepsAndLoadTxt"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="Insert reps and load"-->
+        <!--        android:textColor="#FF0000"-->
+        <!--        android:visibility="gone"-->
+        <!--        app:layout_constraintBottom_toTopOf="@+id/edtLoads"-->
+        <!--        app:layout_constraintEnd_toEndOf="@+id/edtLoads"-->
+        <!--        app:layout_constraintStart_toStartOf="@+id/loadTxt" />-->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newSessionExercisesRV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

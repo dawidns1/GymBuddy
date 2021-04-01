@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentSession"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginBottom="3dp"
+    app:cardBackgroundColor="@color/grey_700"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YYYY-mm-dd"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtTotal"
+            app:layout_constraintTop_toBottomOf="@+id/totalTxt" />
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="total"
+            app:layout_constraintBottom_toBottomOf="@+id/totalTxt"
+            app:layout_constraintEnd_toStartOf="@+id/btnMenuSession"
+            app:layout_constraintTop_toTopOf="@+id/totalTxt" />
+
+        <TextView
+            android:id="@+id/txtLxR1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:text="LxR1"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/separator1"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtLxR2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="LxR2"
+            android:textSize="14dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR1"
+            app:layout_constraintEnd_toStartOf="@+id/separator2"
+            app:layout_constraintStart_toEndOf="@+id/separator1"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR1"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txtLxR3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="LxR3"
+            android:gravity="center"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR2"
+            app:layout_constraintEnd_toStartOf="@+id/separator3"
+            app:layout_constraintStart_toEndOf="@+id/separator2"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txtLxR4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="LxR4"
+            android:textSize="14dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR3"
+            app:layout_constraintEnd_toStartOf="@+id/totalTxt"
+            app:layout_constraintStart_toEndOf="@+id/separator3"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR3" />
+
+        <TextView
+            android:id="@+id/txtLxR5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="LxR5"
+            android:textSize="14dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/separator4"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/txtLxR1" />
+
+        <TextView
+            android:id="@+id/txtLxR6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="LxR6"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR5"
+            app:layout_constraintEnd_toStartOf="@+id/separator5"
+            app:layout_constraintStart_toEndOf="@+id/separator4"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR5" />
+
+        <TextView
+            android:id="@+id/txtLxR7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="LxR7"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR6"
+            app:layout_constraintEnd_toStartOf="@+id/separator6"
+            app:layout_constraintStart_toEndOf="@+id/separator5"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR6" />
+
+        <TextView
+            android:id="@+id/txtLxR8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="LxR8"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLxR7"
+            app:layout_constraintEnd_toStartOf="@+id/totalTxt"
+            app:layout_constraintStart_toEndOf="@+id/separator6"
+            app:layout_constraintTop_toTopOf="@+id/txtLxR7" />
+
+        <TextView
+            android:id="@+id/totalTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="Total:"
+            app:layout_constraintEnd_toStartOf="@+id/txtTotal"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnMenuSession"
+            android:layout_width="21sp"
+            android:layout_height="21sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_hexagon_triple_vertical"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_hexagon_triple" />
+
+        <View
+            android:id="@+id/separator1"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR1"
+            app:layout_constraintEnd_toStartOf="@+id/separator2"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@id/txtLxR1" />
+
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR2"
+            app:layout_constraintEnd_toStartOf="@+id/totalTxt"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@id/txtLxR3" />
+
+        <View
+            android:id="@+id/separator3"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/orange_500"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR3"
+            app:layout_constraintEnd_toStartOf="@+id/totalTxt"
+            app:layout_constraintStart_toEndOf="@+id/separator2"
+            app:layout_constraintTop_toTopOf="@id/txtLxR3" />
+
+        <View
+            android:id="@+id/separator4"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR5"
+            app:layout_constraintStart_toStartOf="@+id/separator1"
+            app:layout_constraintTop_toTopOf="@id/txtLxR5" />
+
+        <View
+            android:id="@+id/separator5"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR6"
+            app:layout_constraintStart_toStartOf="@+id/separator2"
+            app:layout_constraintTop_toTopOf="@id/txtLxR6" />
+
+        <View
+            android:id="@+id/separator6"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/txtLxR7"
+            app:layout_constraintStart_toStartOf="@+id/separator3"
+            app:layout_constraintTop_toTopOf="@id/txtLxR7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

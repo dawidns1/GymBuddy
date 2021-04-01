@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuItem0"
+        android:icon="@drawable/ic_hexagon_quad_empty"
+        android:title="dropdownMenu"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/submenuDeleteAllSessions"
+                android:title="@string/deleteAllSessions"/>
+        </menu>
+    </item>
+</menu>
