@@ -608,42 +608,36 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
 
     @Override
     public void onItemLongClick(int positionRV, View v) {
-        Toast.makeText(this, ""+ positionRV, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+ positionRV, Toast.LENGTH_SHORT).show();
         PopupMenu popupMenu = new PopupMenu(this, v);
         popupMenu.inflate(R.menu.popup_menu_session);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-//                            case R.id.menuEdit:
-//                                Toast.makeText(this, "Handle session edit", Toast.LENGTH_SHORT).show();
-//                                return true;
-                    case R.id.menuDeleteSession:
-                        new AlertDialog.Builder(SessionsActivity.this, R.style.DefaultAlertDialogTheme)
-                                .setMessage(R.string.sureDeleteThisSession)
-                                .setIcon(R.drawable.ic_delete)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            sessions.remove(sessions.get(positionRV));
-                                            exercises.get(position).setSessions(sessions);
-                                            Utils.getInstance(SessionsActivity.this).updateWorkoutsExercisesWithoutWorkout(exercises);
-                                            adapter.notifyItemRemoved(positionRV);
-                                            adapter.notifyItemRangeChanged(positionRV, sessions.size()-2- positionRV);
-                                            if (sessions.size() < 2) btnViewChart.hide();
-                                        } catch (Exception e) {
-                                            Toast.makeText(SessionsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
-                                        }
-
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menuDeleteSession:
+                    new AlertDialog.Builder(SessionsActivity.this, R.style.DefaultAlertDialogTheme)
+                            .setMessage(R.string.sureDeleteThisSession)
+                            .setIcon(R.drawable.ic_delete)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        sessions.remove(sessions.get(positionRV));
+                                        exercises.get(position).setSessions(sessions);
+                                        Utils.getInstance(SessionsActivity.this).updateWorkoutsExercisesWithoutWorkout(exercises);
+                                        adapter.notifyItemRemoved(positionRV);
+                                        adapter.notifyItemRangeChanged(positionRV, sessions.size()-2- positionRV);
+                                        if (sessions.size() < 2) btnViewChart.hide();
+                                    } catch (Exception e) {
+                                        Toast.makeText(SessionsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
                                     }
-                                })
-                                .setNegativeButton(R.string.no, null)
-                                .show();
-                        return true;
-                    default:
-                        return false;
-                }
+
+                                }
+                            })
+                            .setNegativeButton(R.string.no, null)
+                            .show();
+                    return true;
+                default:
+                    return false;
             }
         });
         popupMenu.show();
