@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -70,6 +72,7 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
     private Workout displayedWorkout;
     private View viewDisableRV;
     public static final String CHART_KEY = "chart";
+    private AdView sessionsAd;
 
     @Override
     public void onBackPressed() {
@@ -135,6 +138,10 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
 //        getSupportActionBar().setBackgroundDrawable(
 //                new ColorDrawable(getResources().getColor(R.color.orange_500)));
         setTitleAndTempo();
+
+        sessionsAd=findViewById(R.id.sessionsAd);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        sessionsAd.loadAd(adRequest);
 
         txtLoad = findViewById(R.id.txtLoad);
         txtRep = findViewById(R.id.txtRep);

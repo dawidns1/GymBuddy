@@ -24,6 +24,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class ChartActivity extends AppCompatActivity {
     private ArrayList<ILineDataSet> dataSet;
     private LineData data;
     private LineChart exerciseChart;
+    private AdView chartAd;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -288,7 +291,9 @@ public class ChartActivity extends AppCompatActivity {
         txtLastProgress=findViewById(R.id.txtLastProgress);
         txtLastProgressPercentage=findViewById(R.id.txtLastProgressPercentage);
         txtTotalProgressPercentage=findViewById(R.id.txtTotalProgressPercentage);
-//        viewHighlighted();
+        chartAd=findViewById(R.id.chartAd);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        chartAd.loadAd(adRequest);
 
     }
 

@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:padding="10dp"
     tools:context=".ExercisesActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/chartAd">
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnAddExercise"
         style="@style/eFABStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:icon="@drawable/ic_add" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -25,11 +29,11 @@
         style="@style/eFABStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
         android:layout_alignTop="@+id/btnAddExercise"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@id/btnAddExercise"
+        app:layout_constraintTop_toTopOf="@id/btnAddExercise"
+        app:layout_constraintBottom_toBottomOf="@id/btnAddExercise"
+        app:layout_constraintEnd_toStartOf="@id/btnAddExercise"
         android:text="@string/startWorkout" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -37,13 +41,12 @@
         style="@style/eFABStyle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_alignTop="@id/btnStartWorkout"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@id/btnStartWorkout"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintTop_toTopOf="@id/btnStartWorkout"
+        app:layout_constraintBottom_toBottomOf="@id/btnStartWorkout"
+        app:layout_constraintEnd_toStartOf="@id/btnStartWorkout"
         android:text="@string/resume"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercisesRV"
@@ -52,4 +55,14 @@
         android:paddingBottom="48dp"
         android:clipToPadding="false"/>
 
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/chartAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

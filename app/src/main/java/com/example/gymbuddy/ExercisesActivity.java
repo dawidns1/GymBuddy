@@ -21,8 +21,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class  ExercisesActivity extends AppCompatActivity {
     private int[] workoutIDs;
     private boolean[] areChecked;
     private boolean isScrolled;
+    private AdView exercisesAd;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -137,6 +139,10 @@ public class  ExercisesActivity extends AppCompatActivity {
             incomingWorkout = (Workout) intent.getSerializableExtra(EXERCISES_KEY);
             exercises = incomingWorkout.getExercises();
         }
+
+        exercisesAd=findViewById(R.id.chartAd);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        exercisesAd.loadAd(adRequest);
 
         btnStartWorkout = findViewById(R.id.btnStartWorkout);
         btnResumeWorkout = findViewById(R.id.btnResumeWorkout);

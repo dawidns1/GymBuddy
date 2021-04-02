@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.state.State;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
@@ -45,6 +47,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Workout> workouts = new ArrayList<>();
     ArrayList<Workout> returnList = new ArrayList<>();
     public final static String NEW_WORKOUT_KEY = "new workout key";
-    private RelativeLayout parent;
+    private ConstraintLayout parent;
     private ExtendedFloatingActionButton btnAddWorkout;
     public WorkoutsRVAdapter adapter = new WorkoutsRVAdapter(this);
     private boolean areExercisesShown;
@@ -87,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton btnSchedule;
     private ArrayList<String> calendarId, calendarName;
     private int selected;
+    private AdView mainAd;
 
 
     public boolean verifyStoragePermissions(Activity activity) {
@@ -694,10 +700,15 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(this, areExercisesShown + "", Toast.LENGTH_SHORT).show();
 
         //workoutsRV=findViewById(R.id.workoutsRV);
+        mainAd=findViewById(R.id.mainAd);
         parent = findViewById(R.id.parent);
         btnAddWorkout = findViewById(R.id.btnAddWorkout);
         workoutsRV = findViewById(R.id.workoutsRV);
         btnSchedule = findViewById(R.id.btnSchedule);
+
+        MobileAds.initialize(this);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mainAd.loadAd(adRequest);
 
         workouts = Utils.getInstance(this).getAllWorkouts();
         loggingEnabled = Utils.getInstance(this).isLoggingEnabled();

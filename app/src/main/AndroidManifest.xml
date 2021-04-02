@@ -19,6 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GymBuddy.Launcher">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3836143618707347~6728860966"/>
         <activity android:name=".ChartActivity"
             android:screenOrientation="portrait"/>
         <activity

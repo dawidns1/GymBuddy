@@ -43,6 +43,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,6 +93,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
     int startingTime = 0;
     private boolean breakRunning;
     private Workout workout;
+    private AdView newSessionAd;
 
     @Override
     protected void onResume() {
@@ -438,6 +442,9 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         imgReps = findViewById(R.id.imgReps);
 
         repsTxt = findViewById(R.id.repsTxt);
+        newSessionAd=findViewById(R.id.newSessionAd);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        newSessionAd.loadAd(adRequest);
     }
 
     private void setTempo(int exerciseNo) {
