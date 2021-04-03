@@ -151,24 +151,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -695,7 +677,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
 
-        setupActionBar(getString(R.string.workouts), "");
+        Helpers.setupActionBar(getString(R.string.workouts),"",getSupportActionBar(),this);
 
 //        Toast.makeText(this, areExercisesShown + "", Toast.LENGTH_SHORT).show();
 

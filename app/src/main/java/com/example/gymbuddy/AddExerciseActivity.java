@@ -64,7 +64,7 @@ public class AddExerciseActivity extends AppCompatActivity {
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
 //        setTitle("Add new exercise");
 
-        setupActionBar(getString(R.string.addNewExercise), "");
+        Helpers.setupActionBar(getString(R.string.addNewExercise), "",getSupportActionBar(),this);
 
         edtIso = findViewById(R.id.edtIso);
         edtSets = findViewById(R.id.edtSets);
@@ -193,7 +193,7 @@ public class AddExerciseActivity extends AppCompatActivity {
                 workout = (Workout) intent.getSerializableExtra(WORKOUT_KEY);
                 isEdited = true;
 //                setTitle("Editing " + allExercises.get(position).getName());
-                setupActionBar(getString(R.string.editing) + " " + allExercises.get(position).getName(), "");
+                Helpers.setupActionBar(getString(R.string.editing) + " " + allExercises.get(position).getName(), "", getSupportActionBar(),this);
                 edtExerciseName.setText(allExercises.get(position).getName());
                 edtExerciseName.setSelection(edtExerciseName.getText().length());
                 edtMuscleGroupE.setText(allExercises.get(position).getMuscleGroup());
@@ -339,23 +339,5 @@ public class AddExerciseActivity extends AppCompatActivity {
                 .ofFloat(v, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
                 .setDuration(200)
                 .start();
-    }
-
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
     }
 }

@@ -119,7 +119,7 @@
 
             <ImageView
                 android:id="@+id/btnMenuExercise"
-                android:layout_width="30dp"
+                android:layout_width="15dp"
                 android:layout_height="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -143,7 +143,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txtExerciseName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtExerciseName"
-                app:srcCompat="@drawable/ic_hexagon_double_vertical" />
+                android:src="@drawable/ic_hexagon_double_vertical" />
 
             <ImageView
                 android:id="@+id/imgSuperset"
@@ -152,152 +152,9 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_superset" />
+                android:src="@drawable/ic_superset" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/expandedExerciseView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/collapsedView"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:padding="10dp"-->
-<!--            android:visibility="gone">-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edtNewTempo"-->
-<!--                style="@style/EditTextStyle"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:digits="0123456789"-->
-<!--                android:maxLength="4"-->
-<!--                android:hint="New tempo"-->
-<!--                android:inputType="number"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/edtNewMuscleGroupSecondaryE"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/edtNewMuscleGroupSecondaryE"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtNewMuscleGroupSecondaryE" />-->
-
-<!--            <View-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:background="@android:color/darker_gray"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btnDoneEditing"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="SAVE"-->
-<!--                app:cornerRadius="20sp"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/btnCancelEditing"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/btnCancelEditing"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/btnCancelEditing" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btnCancelEditing"-->
-<!--                android:layout_width="110sp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Cancel"-->
-<!--                app:cornerRadius="20sp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent" />-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnMoveUp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:backgroundTint="@color/orange_500"-->
-<!--                android:src="@drawable/ic_up"-->
-<!--                app:cornerRadius="10sp"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/btnDoneEditing"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:visibility="gone"/>-->
-
-<!--            <EditText-->
-<!--                style="@style/EditTextStyle"-->
-<!--                android:id="@+id/edtNewExerciseName"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="12dp"-->
-<!--                android:layout_marginEnd="25dp"-->
-<!--                android:hint="New exercise name"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/btnMoveUp"-->
-<!--                app:layout_constraintHorizontal_bias="0.0"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView6"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:text="New set number:"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/edtNewBreakLength"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtNewBreakLength" />-->
-
-<!--            <Spinner-->
-<!--                android:id="@+id/edtNewSets"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:entries="@array/setsNumber"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/textView6"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/textView6"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/textView6" />-->
-
-<!--            <EditText-->
-<!--                style="@style/EditTextStyle"-->
-<!--                android:id="@+id/edtNewMuscleGroupE"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="New muscle group"-->
-<!--                android:inputType="textPersonName"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/edtNewExerciseName"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/edtNewExerciseName"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtNewExerciseName" />-->
-
-<!--            <EditText-->
-<!--                style="@style/EditTextStyle"-->
-<!--                android:id="@+id/edtNewMuscleGroupSecondaryE"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="New secondary muscle group"-->
-<!--                android:inputType="textPersonName"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/edtNewMuscleGroupE"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/edtNewMuscleGroupE"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtNewMuscleGroupE" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edtNewBreakLength"-->
-<!--                style="@style/EditTextStyle"-->
-<!--                android:layout_width="150sp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:digits="0123456789"-->
-<!--                android:hint="New break length"-->
-<!--                android:inputType="number"-->
-<!--                android:textSize="14sp"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/edtNewMuscleGroupSecondaryE"-->
-<!--                app:layout_constraintHorizontal_bias="0.0"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/edtNewMuscleGroupSecondaryE"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtNewTempo" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="seconds"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/textView6"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/edtNewBreakLength"-->
-<!--                app:layout_constraintTop_toTopOf="@+id/edtNewBreakLength" />-->
-
-
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </RelativeLayout>
 

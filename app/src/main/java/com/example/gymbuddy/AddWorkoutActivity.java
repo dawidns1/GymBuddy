@@ -48,9 +48,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-//        setTitle("Add new workout");
-        setupActionBar(getString(R.string.addNewWorkout),"");
+        Helpers.setupActionBar(getString(R.string.addNewWorkout),"",getSupportActionBar(),this);
 
         edtWorkoutName = findViewById(R.id.edtWorkoutName);
         spinnerWorkoutType = findViewById(R.id.spinnerWorkoutType);
@@ -96,8 +94,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 allWorkouts = (ArrayList<Workout>) intent.getSerializableExtra(WORKOUTS_KEY);
                 position = (int) intent.getIntExtra(POSITION_KEY, 0);
                 isEdited = true;
-//                setTitle("Editing "+ allWorkouts.get(position).getName());
-                setupActionBar(getString(R.string.editing)+" "+ allWorkouts.get(position).getName(),"");
+                Helpers.setupActionBar(getString(R.string.editing)+" "+ allWorkouts.get(position).getName(),"",getSupportActionBar(),this);
                 edtWorkoutName.setText(allWorkouts.get(position).getName());
                 edtWorkoutName.setSelection(edtWorkoutName.getText().length());
                 edtMuscleGroup.setText(allWorkouts.get(position).getMuscleGroup());
@@ -205,23 +202,5 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 .ofFloat(v, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
                 .setDuration(200)
                 .start();
-    }
-
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params=new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar= LayoutInflater.from(this).inflate(R.layout.action_bar,null);
-        actionBar.setCustomView(customActionBar,params);
-        TextView abText1=findViewById(R.id.abText1);
-        TextView abText2=findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
     }
 }

@@ -89,7 +89,7 @@ public class ChartActivity extends AppCompatActivity {
         txtDateB.setText(sessions.get(bestSessionPosition).getDate());
         txtTotalB.setText(String.valueOf(entries.get(entries.size()-1-bestSessionPosition).getY()));
 
-        setupActionBar(exercise.getName() + getResources().getString(R.string.progress), "");
+        Helpers.setupActionBar(exercise.getName() + getResources().getString(R.string.progress),"",getSupportActionBar(),this);
 
         exerciseChart = findViewById(R.id.exerciseChart);
 
@@ -171,24 +171,6 @@ public class ChartActivity extends AppCompatActivity {
         time.set(year, month, day);
         long millis = time.getTimeInMillis();
         return millis;
-    }
-
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
     }
 
     private void initViews() {

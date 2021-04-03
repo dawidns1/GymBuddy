@@ -60,8 +60,8 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
     private boolean isInputFinished = false;
     private boolean isInputOngoing = false;
     private boolean editing = false;
-    private float load[] = {0, 0, 0, 0, 0, 0, 0, 0};
-    private int reps[] = {0, 0, 0, 0, 0, 0, 0, 0};
+    private float[] load = {0, 0, 0, 0, 0, 0, 0, 0};
+    private int[] reps = {0, 0, 0, 0, 0, 0, 0, 0};
     private ConstraintLayout parentConstraintLayout;
     SessionsRVAdapter adapter = new SessionsRVAdapter(this);
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

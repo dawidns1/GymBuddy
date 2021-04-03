@@ -171,7 +171,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 //        getSupportActionBar().setBackgroundDrawable(
 //                new ColorDrawable(getResources().getColor(R.color.orange_500)));
 //        setTitle(workout.getName());
-        setupActionBar(workout.getName(), "");
+        Helpers.setupActionBar(workout.getName(), "", getSupportActionBar(), this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Name";
@@ -442,7 +442,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         imgReps = findViewById(R.id.imgReps);
 
         repsTxt = findViewById(R.id.repsTxt);
-        newSessionAd=findViewById(R.id.newSessionAd);
+        newSessionAd = findViewById(R.id.newSessionAd);
         AdRequest adRequest = new AdRequest.Builder().build();
         newSessionAd.loadAd(adRequest);
     }
@@ -690,23 +690,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
                 .start();
     }
 
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
-    }
 
     @Override
     public void onItemClick(int positionRV) {
