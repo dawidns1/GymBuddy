@@ -1,19 +1,14 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerImage;
@@ -27,11 +22,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static com.example.gymbuddy.SessionsActivity.CHART_KEY;
-import static com.example.gymbuddy.SessionsRVAdapter.stringFormat;
 
 public class ChartActivity extends AppCompatActivity {
     private TextView txtDateH, txtTotalH, txtLxR1H, txtLxR2H, txtLxR3H, txtLxR4H, txtLxR5H, txtLxR6H, txtLxR7H, txtLxR8H;
@@ -55,7 +48,6 @@ public class ChartActivity extends AppCompatActivity {
     private LineChart exerciseChart;
     private AdView chartAd;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_GymBuddy);
@@ -161,7 +153,6 @@ public class ChartActivity extends AppCompatActivity {
         return total;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private float stringDateToMillis(String date) {
         String[] values = date.split("-");
         int year = Integer.parseInt(values[0]);

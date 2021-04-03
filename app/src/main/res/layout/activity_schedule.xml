@@ -319,14 +319,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="155dp" />
+        app:layout_constraintGuide_percent="0.33" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="274dp" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scheduleViews"
@@ -350,7 +350,7 @@
             style="@style/EditTextStyle"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:hint="@string/hintOptional"
             app:layout_constraintBottom_toBottomOf="@id/txtTitle"
             app:layout_constraintEnd_toEndOf="parent"
@@ -456,7 +456,7 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/scheduleAd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent" />

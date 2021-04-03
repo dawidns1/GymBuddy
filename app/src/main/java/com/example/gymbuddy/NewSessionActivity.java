@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,24 +20,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.icu.util.TimeZone;
 import android.icu.util.Calendar;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.CalendarContract;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -136,7 +132,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         }, 2000);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_GymBuddy);
@@ -173,18 +168,18 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 //        setTitle(workout.getName());
         Helpers.setupActionBar(workout.getName(), "", getSupportActionBar(), this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Name";
-            String description = "Description";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{0, 50, 50, 50});
-            channel.enableLights(true);
-            notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        CharSequence name = "Name";
+        String description = "Description";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = null;
+        channel = new NotificationChannel(CHANNEL_ID, name, importance);
+        channel.setDescription(description);
+        channel.enableVibration(true);
+        channel.setVibrationPattern(new long[]{0, 50, 50, 50});
+        channel.enableLights(true);
+        notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+
 
         builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification_icon)
@@ -314,9 +309,9 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
                 if (edtLoad.getText().toString().isEmpty() || edtReps.getText().toString().isEmpty()) {
                     Toast.makeText(NewSessionActivity.this, R.string.insertRepsAndLoad, Toast.LENGTH_SHORT).show();
                     imgLoads.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    shake(imgLoads);
+                    Helpers.shake(imgLoads);
                     imgReps.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    shake(imgReps);
+                    Helpers.shake(imgReps);
                 } else if (isWorkoutFinished) {
                     getValuesAndClear(v, workout);
                     workout.setState(new int[]{1, 1, 1});
@@ -479,9 +474,9 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
             CardView superSetParent = superSetView.itemView.findViewById(R.id.parentExerciseSimple);
             ImageView superSetImgView = superSetView.itemView.findViewById(R.id.imgExerciseSimple);
 
-            superSetTxtName.setTextColor(getResources().getColor(R.color.grey_700));
-            superSetTxtSets.setTextColor(getResources().getColor(R.color.grey_700));
-            superSetParent.setCardBackgroundColor(getResources().getColor(R.color.orange_200));
+            superSetTxtName.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+            superSetTxtSets.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+            superSetParent.setCardBackgroundColor(ContextCompat.getColor(this,R.color.orange_200));
             superSetImgView.setImageResource(R.drawable.ic_hexagon_double_vertical_empty);
         } else if (exercises.get(exerciseNo - 1).getSuperSet() == 2) {
             RecyclerView.ViewHolder superSetView = exercisesRV.findViewHolderForAdapterPosition(exerciseNo + 2);
@@ -490,9 +485,9 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
             CardView superSetParent = superSetView.itemView.findViewById(R.id.parentExerciseSimple);
             ImageView superSetImgView = superSetView.itemView.findViewById(R.id.imgExerciseSimple);
 
-            superSetTxtName.setTextColor(getResources().getColor(R.color.grey_700));
-            superSetTxtSets.setTextColor(getResources().getColor(R.color.grey_700));
-            superSetParent.setCardBackgroundColor(getResources().getColor(R.color.orange_200));
+            superSetTxtName.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+            superSetTxtSets.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+            superSetParent.setCardBackgroundColor(ContextCompat.getColor(this,R.color.orange_200));
             superSetImgView.setImageResource(R.drawable.ic_hexagon_double_vertical_empty);
         }
 
@@ -502,9 +497,9 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         CardView oldParent = oldView.itemView.findViewById(R.id.parentExerciseSimple);
         ImageView oldImgView = oldView.itemView.findViewById(R.id.imgExerciseSimple);
 
-        oldTxtName.setTextColor(getResources().getColor(R.color.grey_200));
-        oldTxtSets.setTextColor(getResources().getColor(R.color.grey_200));
-        oldParent.setCardBackgroundColor(getResources().getColor(R.color.grey_500));
+        oldTxtName.setTextColor(ContextCompat.getColor(this,R.color.grey_200));
+        oldTxtSets.setTextColor(ContextCompat.getColor(this,R.color.grey_200));
+        oldParent.setCardBackgroundColor(ContextCompat.getColor(this,R.color.grey_500));
 
         RecyclerView.ViewHolder newView = exercisesRV.findViewHolderForAdapterPosition(exerciseNo);
         TextView newTxtName = newView.itemView.findViewById(R.id.txtExerciseNameSimple);
@@ -512,11 +507,10 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         CardView newParent = newView.itemView.findViewById(R.id.parentExerciseSimple);
         ImageView newImgView = newView.itemView.findViewById(R.id.imgExerciseSimple);
 
-        newTxtName.setTextColor(getResources().getColor(R.color.grey_700));
-        newTxtSets.setTextColor(getResources().getColor(R.color.grey_700));
-        newParent.setCardBackgroundColor(getResources().getColor(R.color.orange_500));
+        newTxtName.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+        newTxtSets.setTextColor(ContextCompat.getColor(this,R.color.grey_700));
+        newParent.setCardBackgroundColor(ContextCompat.getColor(this,R.color.orange_500));
         newImgView.setImageResource(R.drawable.ic_hexagon_double_vertical_empty);
-
     }
 
     private void changeSupersetColor(int exerciseNo, int superset) {
@@ -538,16 +532,13 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         newParent.setCardBackgroundColor(getResources().getColor(R.color.orange_500));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void vibrate() {
-
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         long[] wave_time = {50, 50, 50};
         int[] wave_ampl = {25, 0, 25};
         VibrationEffect vibrationEffect = null;
         vibrationEffect = VibrationEffect.createWaveform(wave_time, wave_ampl, -1);
         v.vibrate(vibrationEffect);
-//        Toast.makeText(this, "Do the set!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -588,7 +579,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         return workoutLog.toString();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void handleAddCalendarEntry(String entry) {
         long startMillis = 0;
         long endMillis = 0;
@@ -626,7 +616,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         btnNextSet.setEnabled(false);
         btnSkipTimer.setEnabled(true);
         countDownTimer = new CountDownTimer(time + 1000, 1000) {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setMax(Integer.parseInt(String.valueOf(time)));
@@ -634,8 +623,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
                 timeLeftInMs = millisUntilFinished;
                 updateTimer(timeLeftInMs);
             }
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFinish() {
                 breakRunning = false;
@@ -682,14 +669,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         exercises.get(exerciseNo - 1).setSessions(sessions);
         Utils.getInstance(v.getContext()).updateWorkoutsExercises(workout, exercises);
     }
-
-    private void shake(View v) {
-        ObjectAnimator
-                .ofFloat(v, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
-                .setDuration(200)
-                .start();
-    }
-
 
     @Override
     public void onItemClick(int positionRV) {

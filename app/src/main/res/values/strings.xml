@@ -77,7 +77,7 @@
     <!--MainActivity-->
     <string name="permissions">Permissions</string>
     <string name="permissionInfo">In order to share, save or load a file this app needs to be granted permission to access storage</string>
-    <string name="ok" translatable="false">Ok</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="pressBackToExit">Press BACK again to exit</string>
     <string name="selectWorkoutsToShare">Select workouts to share</string>
     <string name="share">Share</string>
@@ -218,5 +218,7 @@
     <string name="lastProgress">last progress</string>
     <string name="totalProgress">total progress</string>
     <string name="bestSession">Best session</string>
+    <string name="cannotAddMoreExercises">Can\'t add more than 9 exercises</string>
+    <string name="maximumExerciseNumberReached">Max exercise number reached</string>
 
 </resources>

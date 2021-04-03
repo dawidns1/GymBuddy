@@ -1,6 +1,5 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -142,7 +141,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         });
 
         btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 String title;
@@ -204,7 +202,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void handleAddCalendarEntry(int offset, int position, String title, String description, int weekMultiplier) {
         long startMillis = 0;
         Calendar now = Calendar.getInstance(TimeZone.getDefault());

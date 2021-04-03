@@ -377,12 +377,6 @@ public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.
         private TextView txtTempo;
         private ImageView btnMenuExercise;
         private ImageView imgSuperset;
-        //        private Spinner edtNewSets;
-//        private EditText edtNewExerciseName, edtNewMuscleGroupE, edtNewMuscleGroupSecondaryE, edtNewTempo;
-//        private Button btnDoneEditing, btnCancelEditing;
-//                private ImageButton btnMoveUp, btnMoveDown;
-//        private ConstraintLayout expandedExerciseView;
-//        private TextView edtNewBreakLength;
         private TextView txtIdE;
 
         public ViewHolder(@NonNull View itemView) {
@@ -397,19 +391,8 @@ public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.
             exerciseSeparator = itemView.findViewById(R.id.exerciseSeparator);
             muscleGroupETxt = itemView.findViewById(R.id.muscleGroupETxt);
             btnMenuExercise = itemView.findViewById(R.id.btnMenuExercise);
-//            btnDoneEditing = itemView.findViewById(R.id.btnDoneEditing);
-//            btnCancelEditing = itemView.findViewById(R.id.btnCancelEditing);
-//            btnMoveDown=itemView.findViewById(R.id.btnMoveDown);
-//            btnMoveUp=itemView.findViewById(R.id.btnMoveUp);
-//            expandedExerciseView = itemView.findViewById(R.id.expandedExerciseView);
-//            edtNewSets = itemView.findViewById(R.id.edtNewSets);
-//            edtNewExerciseName = itemView.findViewById(R.id.edtNewExerciseName);
-//            edtNewMuscleGroupE = itemView.findViewById(R.id.edtNewMuscleGroupE);
-//            edtNewMuscleGroupSecondaryE = itemView.findViewById(R.id.edtNewMuscleGroupSecondaryE);
-//            edtNewBreakLength = itemView.findViewById(R.id.edtNewBreakLength);
             txtIdE = itemView.findViewById(R.id.txtIdE);
             txtTempo = itemView.findViewById(R.id.txtTempo);
-//            edtNewTempo = itemView.findViewById(R.id.edtNewTempo);
             imgSuperset = itemView.findViewById(R.id.imgSuperset);
 
             parentExercise.setOnClickListener(new View.OnClickListener() {
@@ -423,164 +406,163 @@ public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.
                 }
             });
 
-
-
             btnMenuExercise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mContext, v);
-                    popupMenu.inflate(R.menu.popup_menu_exercise);
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.menuEditE:
-                                    Intent intent = new Intent(mContext, AddExerciseActivity.class);
-                                    intent.putExtra(EXERCISES_KEY, exercises);
-                                    intent.putExtra(POSITION_KEY, getAdapterPosition());
-                                    intent.putExtra(WORKOUT_KEY, displayedWorkout);
-                                    mContext.startActivity(intent);
-                                    return true;
-                                case R.id.menuDeleteE:
-                                    new AlertDialog.Builder(mContext,R.style.DefaultAlertDialogTheme)
-                                            .setTitle(R.string.deletingExercise)
-                                            .setMessage(R.string.sureDeleteThis)
-                                            .setIcon(R.drawable.ic_delete)
-                                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    if (exercises.get(getAdapterPosition()).getSuperSet() != 0) {
-                                                        handleDisableSuperset();
-                                                    }
-                                                    Utils.getInstance(mContext).deleteExerciseFromWorkout(exercises.get(getAdapterPosition()));
-                                                    exercises.remove(exercises.get(getAdapterPosition()));
-                                                    notifyItemRemoved(getAdapterPosition());
-
-                                                }
-                                            })
-                                            .setNegativeButton(R.string.no, null)
-                                            .show();
-                                    return true;
-                                case R.id.menuSuperset:
-                                    if (exercises.get(getAdapterPosition()).getSuperSet() != 0) {
-                                        new AlertDialog.Builder(mContext, R.style.DefaultAlertDialogTheme)
-                                                .setTitle(R.string.disablingSuperset)
-                                                .setMessage(R.string.disablingSupersetMsg)
-                                                .setIcon(R.drawable.ic_superset)
-                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        handleDisableSuperset();
-                                                        switch (exercises.get(getAdapterPosition()).getSuperSet()) {
-                                                            case 1:
-                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
-                                                                notifyItemChanged(getAdapterPosition());
-                                                                exercises.get(getAdapterPosition() + 1).setSuperSet(0);
-                                                                notifyItemChanged(getAdapterPosition() + 1);
-                                                                break;
-                                                            case 3:
-                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
-                                                                notifyItemChanged(getAdapterPosition());
-                                                                exercises.get(getAdapterPosition() - 1).setSuperSet(0);
-                                                                notifyItemChanged(getAdapterPosition() - 1);
-                                                                break;
-                                                            case 2:
-                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
-                                                                notifyItemChanged(getAdapterPosition());
-                                                                if(getAdapterPosition()==0){
-                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(0);
-                                                                    notifyItemChanged(getAdapterPosition() + 1);
-                                                                } else if(getAdapterPosition()==exercises.size()-1){
-                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(0);
-                                                                    notifyItemChanged(getAdapterPosition() - 1);
-                                                                }else if (exercises.get(getAdapterPosition() - 1).getSuperSet() == 1) {
-                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(0);
-                                                                    notifyItemChanged(getAdapterPosition() - 1);
-                                                                } else {
-                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(0);
-                                                                    notifyItemChanged(getAdapterPosition() + 1);
-                                                                }
-                                                                break;
-                                                            default:
-                                                                break;
-                                                        }
-                                                        Utils.getInstance(mContext).updateWorkoutsExercises(displayedWorkout,exercises);
-                                                    }
-                                                })
-                                                .setNegativeButton(R.string.no, null)
-                                                .show();
-
-                                    } else {
-                                        boolean available = true;
-                                        if (exercises.size() == 1 || (getAdapterPosition() == 0 && exercises.get(1).getSuperSet() != 0) ||
-                                                (getAdapterPosition() == exercises.size() - 1 && exercises.get(exercises.size() - 2).getSuperSet() != 0)) {
-                                            Toast.makeText(mContext, R.string.noAvailableExercises, Toast.LENGTH_SHORT).show();
-                                            available = false;
-                                        } else if (getAdapterPosition() == 0) {
-                                            exercisesForSuperset = new String[]{exercises.get(1).getName()};
-                                        } else if (getAdapterPosition() == exercises.size() - 1) {
-                                            exercisesForSuperset = new String[]{exercises.get(exercises.size() - 2).getName()};
-                                        } else if (exercises.get(getAdapterPosition() - 1).getSuperSet() != 0 && exercises.get(getAdapterPosition() + 1).getSuperSet() != 0) {
-                                            Toast.makeText(mContext, R.string.noAvailableExercises, Toast.LENGTH_SHORT).show();
-                                            available = false;
-                                        } else if (exercises.get(getAdapterPosition() - 1).getSuperSet() != 0) {
-                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() + 1).getName()};
-                                        } else if (exercises.get(getAdapterPosition() + 1).getSuperSet() != 0) {
-                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() - 1).getName()};
-                                        } else {
-                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() - 1).getName(), exercises.get(getAdapterPosition() + 1).getName()};
-                                        }
-                                        if (available) {
-                                            new AlertDialog.Builder(mContext, R.style.DefaultAlertDialogTheme)
-                                                    .setTitle(exercises.get(getAdapterPosition()).getName() + " " + mContext.getResources().getString(R.string.supersetWith))
-                                                    .setIcon(R.drawable.ic_superset)
-                                                    .setSingleChoiceItems(exercisesForSuperset, 0, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            selectedExercise = which;
-                                                        }
-                                                    })
-                                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            if (getAdapterPosition() == 0) {
-                                                                exercises.get(getAdapterPosition()).setSuperSet(1);
-                                                                notifyItemChanged(getAdapterPosition());
-                                                                exercises.get(1).setSuperSet(2);
-                                                                notifyItemChanged(1);
-                                                            } else if (getAdapterPosition() == exercises.size() - 1) {
-                                                                exercises.get(getAdapterPosition()).setSuperSet(2);
-                                                                notifyItemChanged(getAdapterPosition());
-                                                                exercises.get(exercises.size() - 2).setSuperSet(1);
-                                                                notifyItemChanged(exercises.size() - 2);
-                                                            } else {
-                                                                if (selectedExercise == 0) {
-                                                                    exercises.get(getAdapterPosition()).setSuperSet(2);
-                                                                    notifyItemChanged(getAdapterPosition());
-                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(1);
-                                                                    notifyItemChanged(getAdapterPosition() - 1);
-                                                                } else {
-                                                                    exercises.get(getAdapterPosition()).setSuperSet(1);
-                                                                    notifyItemChanged(getAdapterPosition());
-                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(2);
-                                                                    notifyItemChanged(getAdapterPosition() + 1);
-                                                                }
-                                                            }
-                                                            Utils.getInstance(mContext).updateWorkoutsExercises(displayedWorkout, exercises);
-                                                        }
-                                                    })
-                                                    .setNegativeButton(R.string.cancel, null)
-                                                    .show();
-                                        }
-                                    }
-
-                                    return true;
-                                default:
-                                    return false;
-                            }
-                        }
-                    });
-                    popupMenu.show();
+                    onItemClickListener.onItemClick(getAdapterPosition(),v);
+//                    PopupMenu popupMenu = new PopupMenu(mContext, v);
+//                    popupMenu.inflate(R.menu.popup_menu_exercise);
+//                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                        @Override
+//                        public boolean onMenuItemClick(MenuItem item) {
+//                            switch (item.getItemId()) {
+//                                case R.id.menuEditE:
+//                                    Intent intent = new Intent(mContext, AddExerciseActivity.class);
+//                                    intent.putExtra(EXERCISES_KEY, exercises);
+//                                    intent.putExtra(POSITION_KEY, getAdapterPosition());
+//                                    intent.putExtra(WORKOUT_KEY, displayedWorkout);
+//                                    mContext.startActivity(intent);
+//                                    return true;
+//                                case R.id.menuDeleteE:
+//                                    new AlertDialog.Builder(mContext,R.style.DefaultAlertDialogTheme)
+//                                            .setTitle(R.string.deletingExercise)
+//                                            .setMessage(R.string.sureDeleteThis)
+//                                            .setIcon(R.drawable.ic_delete)
+//                                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialog, int which) {
+//                                                    if (exercises.get(getAdapterPosition()).getSuperSet() != 0) {
+//                                                        handleDisableSuperset();
+//                                                    }
+//                                                    Utils.getInstance(mContext).deleteExerciseFromWorkout(exercises.get(getAdapterPosition()));
+//                                                    exercises.remove(exercises.get(getAdapterPosition()));
+//                                                    notifyItemRemoved(getAdapterPosition());
+//
+//                                                }
+//                                            })
+//                                            .setNegativeButton(R.string.no, null)
+//                                            .show();
+//                                    return true;
+//                                case R.id.menuSuperset:
+//                                    if (exercises.get(getAdapterPosition()).getSuperSet() != 0) {
+//                                        new AlertDialog.Builder(mContext, R.style.DefaultAlertDialogTheme)
+//                                                .setTitle(R.string.disablingSuperset)
+//                                                .setMessage(R.string.disablingSupersetMsg)
+//                                                .setIcon(R.drawable.ic_superset)
+//                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+//                                                    @Override
+//                                                    public void onClick(DialogInterface dialog, int which) {
+//                                                        handleDisableSuperset();
+//                                                        switch (exercises.get(getAdapterPosition()).getSuperSet()) {
+//                                                            case 1:
+//                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
+//                                                                notifyItemChanged(getAdapterPosition());
+//                                                                exercises.get(getAdapterPosition() + 1).setSuperSet(0);
+//                                                                notifyItemChanged(getAdapterPosition() + 1);
+//                                                                break;
+//                                                            case 3:
+//                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
+//                                                                notifyItemChanged(getAdapterPosition());
+//                                                                exercises.get(getAdapterPosition() - 1).setSuperSet(0);
+//                                                                notifyItemChanged(getAdapterPosition() - 1);
+//                                                                break;
+//                                                            case 2:
+//                                                                exercises.get(getAdapterPosition()).setSuperSet(0);
+//                                                                notifyItemChanged(getAdapterPosition());
+//                                                                if(getAdapterPosition()==0){
+//                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(0);
+//                                                                    notifyItemChanged(getAdapterPosition() + 1);
+//                                                                } else if(getAdapterPosition()==exercises.size()-1){
+//                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(0);
+//                                                                    notifyItemChanged(getAdapterPosition() - 1);
+//                                                                }else if (exercises.get(getAdapterPosition() - 1).getSuperSet() == 1) {
+//                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(0);
+//                                                                    notifyItemChanged(getAdapterPosition() - 1);
+//                                                                } else {
+//                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(0);
+//                                                                    notifyItemChanged(getAdapterPosition() + 1);
+//                                                                }
+//                                                                break;
+//                                                            default:
+//                                                                break;
+//                                                        }
+//                                                        Utils.getInstance(mContext).updateWorkoutsExercises(displayedWorkout,exercises);
+//                                                    }
+//                                                })
+//                                                .setNegativeButton(R.string.no, null)
+//                                                .show();
+//
+//                                    } else {
+//                                        boolean available = true;
+//                                        if (exercises.size() == 1 || (getAdapterPosition() == 0 && exercises.get(1).getSuperSet() != 0) ||
+//                                                (getAdapterPosition() == exercises.size() - 1 && exercises.get(exercises.size() - 2).getSuperSet() != 0)) {
+//                                            Toast.makeText(mContext, R.string.noAvailableExercises, Toast.LENGTH_SHORT).show();
+//                                            available = false;
+//                                        } else if (getAdapterPosition() == 0) {
+//                                            exercisesForSuperset = new String[]{exercises.get(1).getName()};
+//                                        } else if (getAdapterPosition() == exercises.size() - 1) {
+//                                            exercisesForSuperset = new String[]{exercises.get(exercises.size() - 2).getName()};
+//                                        } else if (exercises.get(getAdapterPosition() - 1).getSuperSet() != 0 && exercises.get(getAdapterPosition() + 1).getSuperSet() != 0) {
+//                                            Toast.makeText(mContext, R.string.noAvailableExercises, Toast.LENGTH_SHORT).show();
+//                                            available = false;
+//                                        } else if (exercises.get(getAdapterPosition() - 1).getSuperSet() != 0) {
+//                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() + 1).getName()};
+//                                        } else if (exercises.get(getAdapterPosition() + 1).getSuperSet() != 0) {
+//                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() - 1).getName()};
+//                                        } else {
+//                                            exercisesForSuperset = new String[]{exercises.get(getAdapterPosition() - 1).getName(), exercises.get(getAdapterPosition() + 1).getName()};
+//                                        }
+//                                        if (available) {
+//                                            new AlertDialog.Builder(mContext, R.style.DefaultAlertDialogTheme)
+//                                                    .setTitle(exercises.get(getAdapterPosition()).getName() + " " + mContext.getResources().getString(R.string.supersetWith))
+//                                                    .setIcon(R.drawable.ic_superset)
+//                                                    .setSingleChoiceItems(exercisesForSuperset, 0, new DialogInterface.OnClickListener() {
+//                                                        @Override
+//                                                        public void onClick(DialogInterface dialog, int which) {
+//                                                            selectedExercise = which;
+//                                                        }
+//                                                    })
+//                                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                                                        @Override
+//                                                        public void onClick(DialogInterface dialog, int which) {
+//                                                            if (getAdapterPosition() == 0) {
+//                                                                exercises.get(getAdapterPosition()).setSuperSet(1);
+//                                                                notifyItemChanged(getAdapterPosition());
+//                                                                exercises.get(1).setSuperSet(2);
+//                                                                notifyItemChanged(1);
+//                                                            } else if (getAdapterPosition() == exercises.size() - 1) {
+//                                                                exercises.get(getAdapterPosition()).setSuperSet(2);
+//                                                                notifyItemChanged(getAdapterPosition());
+//                                                                exercises.get(exercises.size() - 2).setSuperSet(1);
+//                                                                notifyItemChanged(exercises.size() - 2);
+//                                                            } else {
+//                                                                if (selectedExercise == 0) {
+//                                                                    exercises.get(getAdapterPosition()).setSuperSet(2);
+//                                                                    notifyItemChanged(getAdapterPosition());
+//                                                                    exercises.get(getAdapterPosition() - 1).setSuperSet(1);
+//                                                                    notifyItemChanged(getAdapterPosition() - 1);
+//                                                                } else {
+//                                                                    exercises.get(getAdapterPosition()).setSuperSet(1);
+//                                                                    notifyItemChanged(getAdapterPosition());
+//                                                                    exercises.get(getAdapterPosition() + 1).setSuperSet(2);
+//                                                                    notifyItemChanged(getAdapterPosition() + 1);
+//                                                                }
+//                                                            }
+//                                                            Utils.getInstance(mContext).updateWorkoutsExercises(displayedWorkout, exercises);
+//                                                        }
+//                                                    })
+//                                                    .setNegativeButton(R.string.cancel, null)
+//                                                    .show();
+//                                        }
+//                                    }
+//
+//                                    return true;
+//                                default:
+//                                    return false;
+//                            }
+//                        }
+//                    });
+//                    popupMenu.show();
                 }
             });
 
@@ -623,4 +605,14 @@ public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.
             Utils.getInstance(mContext).updateWorkoutsExercises(displayedWorkout, exercises);
         }
     }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int positionRV, View v);
+    }
+
+    OnItemClickListener onItemClickListener;
 }

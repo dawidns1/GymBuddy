@@ -146,5 +146,7 @@
     <string name="lastProgress">ostatni progres</string>
     <string name="totalProgress">całkowity progres</string>
     <string name="bestSession">Najlepsza sesja</string>
+    <string name="cannotAddMoreExercises">Nie można dodać więcej niż 9 ćwiczeń</string>
+    <string name="maximumExerciseNumberReached">Osiągnięto limit ćwiczeń</string>
 
 </resources>

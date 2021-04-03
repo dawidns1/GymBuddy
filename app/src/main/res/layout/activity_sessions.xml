@@ -8,13 +8,6 @@
     android:animateLayoutChanges="true"
     tools:context=".SessionsActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@id/sessionsAd"
-        app:layout_constraintTop_toTopOf="parent">
-
         <ImageView
             android:id="@+id/imgRep"
             android:layout_width="20dp"
@@ -38,10 +31,12 @@
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnAddSession"
             style="@style/eFABStyle"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sessionsAd"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -63,16 +58,16 @@
             android:layout_marginBottom="10dp"
             android:visibility="visible"
             app:icon="@drawable/ic_chart"
-            app:layout_constraintStart_toStartOf="@id/btnAddSession"
             app:layout_constraintBottom_toTopOf="@id/btnAddSession"
-            app:layout_constraintEnd_toEndOf="@id/btnAddSession" />
+            app:layout_constraintEnd_toEndOf="@id/btnAddSession"
+            app:layout_constraintStart_toStartOf="@id/btnAddSession" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnPreviousExercise"
             style="@style/eFABStyle"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/previous"
             app:layout_constraintBottom_toBottomOf="@id/btnNextExercise"
             app:layout_constraintEnd_toStartOf="@id/btnNextExercise"
@@ -83,6 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            tools:listitem="@layout/item_list_session"
             android:clipToPadding="false"
             android:paddingBottom="48dp"
             app:layout_constraintTop_toBottomOf="@+id/edtRep" />
@@ -157,13 +155,10 @@
             app:layout_constraintStart_toEndOf="@+id/edtLoad"
             app:layout_constraintTop_toTopOf="@+id/edtRep" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     <com.google.android.gms.ads.AdView
         android:id="@+id/sessionsAd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent" />

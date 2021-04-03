@@ -204,13 +204,5 @@ public class SessionsRVAdapter extends RecyclerView.Adapter<SessionsRVAdapter.Vi
         void onItemLongClick(int positionRV, View v);
     }
 
-    public static void setBottomMargin(View view, int bottomMargin) {
-        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-            params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, bottomMargin);
-            view.requestLayout();
-        }
-    }
-
 }
 

@@ -32,7 +32,7 @@
         android:id="@+id/highlightedTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/highlighted"
         android:textColor="@color/orange_500"
@@ -196,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_hexagon_triple" />
+                android:src="@drawable/ic_hexagon_triple" />
 
             <View
                 android:id="@+id/separator1H"
@@ -431,7 +431,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_hexagon_triple" />
+                android:src="@drawable/ic_hexagon_triple" />
 
             <View
                 android:id="@+id/separator1B"
@@ -517,7 +517,7 @@
             android:id="@+id/imgCycle"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
             android:src="@drawable/ic_hexagon_single_transparent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -529,7 +529,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/ic_indicator1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -537,7 +537,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -573,7 +573,7 @@
             android:id="@+id/imgSet"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
             android:src="@drawable/ic_hexagon_single_transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
@@ -584,7 +584,7 @@
             android:id="@+id/indicator2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_indicator2"
             app:layout_constraintBottom_toBottomOf="@id/imgSet"
@@ -594,7 +594,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
             android:gravity="left"
             android:text="@string/totalProgress"
@@ -632,7 +632,7 @@
     <com.google.android.gms.ads.AdView
         android:id="@+id/chartAd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent" />

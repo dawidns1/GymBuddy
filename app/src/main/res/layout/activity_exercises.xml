@@ -8,6 +8,16 @@
     android:animateLayoutChanges="true"
     tools:context=".ExercisesActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exercisesRV"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        tools:listitem="@layout/item_list_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="48dp"
+        android:clipToPadding="false"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -48,21 +58,14 @@
         android:text="@string/resume"
         android:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exercisesRV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="48dp"
-        android:clipToPadding="false"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/chartAd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

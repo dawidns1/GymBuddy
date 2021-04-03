@@ -36,7 +36,7 @@
                    android:id="@+id/txtSetsNoSimple"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_toRightOf="@+id/txtExerciseName"
+                   android:layout_toEndOf="@+id/txtExerciseNameSimple"
                    android:text="# sets"
                    android:textSize="13dp"
                    app:layout_constraintBottom_toBottomOf="@+id/txtExerciseNameSimple"
@@ -50,7 +50,7 @@
                    app:layout_constraintBottom_toBottomOf="@+id/txtExerciseNameSimple"
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toTopOf="@+id/txtExerciseNameSimple"
-                   app:srcCompat="@drawable/ic_hexagon_double_vertical" />
+                   android:src="@drawable/ic_hexagon_double_vertical" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

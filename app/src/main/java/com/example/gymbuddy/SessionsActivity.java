@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -252,9 +253,9 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
                 if (edtRep.getText().toString().isEmpty() || edtLoad.getText().toString().isEmpty()) {
                     Toast.makeText(SessionsActivity.this, R.string.insertRepsAndLoad, Toast.LENGTH_SHORT).show();
                     imgLoad.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    shake(imgLoad);
+                    Helpers.shake(imgLoad);
                     imgRep.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    shake(imgRep);
+                    Helpers.shake(imgRep);
                 } else if (isInputFinished) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -308,35 +309,13 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         });
 
         if (exercises.size() == position + 1) {
-            disableEFABClickable(btnNextExercise);
+            Helpers.disableEFABClickable(btnNextExercise, this);
 
         }
 
         if (position == 0) {
-            disableEFABClickable(btnPreviousExercise);
+            Helpers.disableEFABClickable(btnPreviousExercise,this);
         }
-    }
-
-    private void enableEFABClickable(ExtendedFloatingActionButton efab) {
-        efab.setClickable(true);
-        efab.setTextColor(getResources().getColor(R.color.white));
-        int colorInt = getResources().getColor(R.color.orange_500);
-        ColorStateList csl = ColorStateList.valueOf(colorInt);
-        efab.setStrokeColor(csl);
-        int colorIntB = getResources().getColor(R.color.orange_500_alpha);
-        ColorStateList cslB = ColorStateList.valueOf(colorIntB);
-        efab.setBackgroundTintList(cslB);
-    }
-
-    private void disableEFABClickable(ExtendedFloatingActionButton efab) {
-        efab.setClickable(false);
-        efab.setTextColor(getResources().getColor(R.color.grey_500));
-        int colorInt = getResources().getColor(R.color.grey_500);
-        ColorStateList csl = ColorStateList.valueOf(colorInt);
-        efab.setStrokeColor(csl);
-        int colorIntB = getResources().getColor(R.color.grey_700_alpha);
-        ColorStateList cslB = ColorStateList.valueOf(colorIntB);
-        efab.setBackgroundTintList(cslB);
     }
 
     private void handleNextAndPrevious(int position) {
@@ -346,14 +325,14 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         adapter.setExercise(exercises.get(position));
         adapter.notifyDataSetChanged();
         if (position + 1 == exercises.size()) {
-            disableEFABClickable(btnNextExercise);
+            Helpers.disableEFABClickable(btnNextExercise,this);
         } else {
-            enableEFABClickable(btnNextExercise);
+            Helpers.enableEFABClickable(btnNextExercise,this);
         }
         if (position == 0) {
-            disableEFABClickable(btnPreviousExercise);
+            Helpers.disableEFABClickable(btnPreviousExercise, this);
         } else {
-            enableEFABClickable(btnPreviousExercise);
+            Helpers.enableEFABClickable(btnPreviousExercise,this);
         }
         if (sessions.size() < 2) btnViewChart.setVisibility(GONE);
         else btnViewChart.show();
@@ -390,7 +369,7 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         }
 
 //        setTitle(exercises.get(position).getName() + "    " + tempo);
-        setupActionBar(exercises.get(position).getName(), tempo);
+        Helpers.setupActionBar(exercises.get(position).getName(), tempo, getSupportActionBar(),this);
     }
 
     private void handleImportSessions() {
@@ -588,13 +567,6 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         viewDisableRV.setVisibility(GONE);
     }
 
-    private void shake(View v) {
-        ObjectAnimator
-                .ofFloat(v, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
-                .setDuration(200)
-                .start();
-    }
-
     @Override
     public void onItemClick(int positionRV) {
         if (editing) {
@@ -655,29 +627,5 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
             return String.format("%d", (long) d);
         else
             return String.format("%s", d);
-    }
-
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        ImageView imgSupersetBar = findViewById(R.id.imgSupersetBar);
-        abText1.setText(text1);
-        abText2.setText(text2);
-        if (exercises.get(position).getSuperSet() != 0) {
-            imgSupersetBar.setVisibility(View.VISIBLE);
-        } else {
-            imgSupersetBar.setVisibility(GONE);
-        }
     }
 }
