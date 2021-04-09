@@ -4,461 +4,511 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:animateLayoutChanges="true"
+    android:fillViewport="true"
     tools:context=".ScheduleActivity">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/scheduleAd"
-    android:animateLayoutChanges="true"
-    android:padding="10dp">
-
-    <CheckBox
-        android:id="@+id/cbMon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:text="@string/monday"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineStart"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/startingTime"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/duration"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/cbMon"
-        app:layout_constraintBottom_toBottomOf="@id/cbSun"
-        app:layout_constraintLeft_toLeftOf="@id/guidelineStart"
-        android:background="@color/orange_500"/>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/cbMon"
-        app:layout_constraintBottom_toBottomOf="@id/cbSun"
-        app:layout_constraintLeft_toLeftOf="@id/guidelineDuration"
-        android:background="@color/orange_500"/>
-
-    <CheckBox
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:id="@+id/cbTue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tuesday"
-        android:buttonTint="@drawable/cbox_color"
-        app:layout_constraintStart_toStartOf="@+id/cbMon"
-        app:layout_constraintTop_toBottomOf="@+id/cbMon" />
-
-    <CheckBox
-        android:id="@+id/cbWed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wednesday"
-        android:minWidth="0dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="@+id/cbTue"
-        app:layout_constraintTop_toBottomOf="@+id/cbTue" />
-
-    <CheckBox
-        android:id="@+id/cbThu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/thursday"
-        android:minWidth="0dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="@+id/cbWed"
-        app:layout_constraintTop_toBottomOf="@+id/cbWed" />
-
-    <CheckBox
-        android:id="@+id/cbFri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/friday"
-        android:minWidth="0dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="@+id/cbThu"
-        app:layout_constraintTop_toBottomOf="@+id/cbThu" />
-
-    <CheckBox
-        android:id="@+id/cbSat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/saturday"
-        android:minWidth="0dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="@+id/cbFri"
-        app:layout_constraintTop_toBottomOf="@+id/cbFri" />
-
-    <CheckBox
-        android:id="@+id/cbSun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sunday"
-        android:minWidth="0dp"
-        android:buttonTint="@drawable/cbox_color"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="@+id/cbSat"
-        app:layout_constraintTop_toBottomOf="@+id/cbSat" />
-
-    <TextView
-        android:id="@+id/startMon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbMon"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbMon" />
-
-    <TextView
-        android:id="@+id/startTue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbTue"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbTue" />
-
-    <TextView
-        android:id="@+id/startWed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbWed"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbWed" />
-
-    <TextView
-        android:id="@+id/startThu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbThu"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbThu" />
-
-    <TextView
-        android:id="@+id/startFri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbFri"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbFri" />
-
-    <TextView
-        android:id="@+id/startSat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbSat"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbSat" />
-
-    <TextView
-        android:id="@+id/startSun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="12:33"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cbSun"
-        android:gravity="center"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStart"
-        app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/cbSun" />
-
-    <TextView
-        android:id="@+id/durationMon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startMon"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startMon" />
-
-    <TextView
-        android:id="@+id/durationTue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startTue"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startTue" />
-
-    <TextView
-        android:id="@+id/durationWed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startWed"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startWed" />
-
-    <TextView
-        android:id="@+id/durationThu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startThu"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startThu" />
-
-    <TextView
-        android:id="@+id/durationFri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startFri"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startFri" />
-
-    <TextView
-        android:id="@+id/durationSat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startSat"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startSat" />
-
-    <TextView
-        android:id="@+id/durationSun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1:00"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/startSun"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
-        app:layout_constraintTop_toTopOf="@id/startSun" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/scheduleViews"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/cbSun"
-        android:visibility="visible">
+        android:layout_height="0dp"
+        android:animateLayoutChanges="true"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@id/scheduleAdContainer"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtTitle"
+        <CheckBox
+            android:id="@+id/cbMon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/title"
+            android:layout_marginTop="20dp"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/monday"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineStart"
+            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/startingTime"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/edtTitle"
-            style="@style/EditTextStyle"
-            android:layout_width="200dp"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:hint="@string/hintOptional"
-            app:layout_constraintBottom_toBottomOf="@id/txtTitle"
+            android:gravity="center"
+            android:text="@string/duration"
+            app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/txtTitle"
-            app:layout_constraintTop_toTopOf="@id/txtTitle" />
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/cbSun"
+            app:layout_constraintLeft_toLeftOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/cbMon" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/orange_500"
+            app:layout_constraintBottom_toBottomOf="@id/cbSun"
+            app:layout_constraintLeft_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbMon" />
+
+        <CheckBox
+            android:id="@+id/cbTue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/tuesday"
+            app:layout_constraintStart_toStartOf="@+id/cbMon"
+            app:layout_constraintTop_toBottomOf="@+id/cbMon" />
+
+        <CheckBox
+            android:id="@+id/cbWed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/wednesday"
+            app:layout_constraintStart_toStartOf="@+id/cbTue"
+            app:layout_constraintTop_toBottomOf="@+id/cbTue" />
+
+        <CheckBox
+            android:id="@+id/cbThu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/thursday"
+            app:layout_constraintStart_toStartOf="@+id/cbWed"
+            app:layout_constraintTop_toBottomOf="@+id/cbWed" />
+
+        <CheckBox
+            android:id="@+id/cbFri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/friday"
+            app:layout_constraintStart_toStartOf="@+id/cbThu"
+            app:layout_constraintTop_toBottomOf="@+id/cbThu" />
+
+        <CheckBox
+            android:id="@+id/cbSat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/saturday"
+            app:layout_constraintStart_toStartOf="@+id/cbFri"
+            app:layout_constraintTop_toBottomOf="@+id/cbFri" />
+
+        <CheckBox
+            android:id="@+id/cbSun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@drawable/cbox_color"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/sunday"
+            app:layout_constraintStart_toStartOf="@+id/cbSat"
+            app:layout_constraintTop_toBottomOf="@+id/cbSat" />
 
         <TextView
-            android:id="@+id/txtDescription"
+            android:id="@+id/startMon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/description"
-            app:layout_constraintLeft_toLeftOf="@id/txtTitle"
-            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
-
-        <EditText
-            android:id="@+id/edtDescription"
-            style="@style/EditTextStyle"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/hintOptional"
-            app:layout_constraintBottom_toBottomOf="@+id/txtDescription"
-            app:layout_constraintLeft_toLeftOf="@+id/edtTitle"
-            app:layout_constraintTop_toTopOf="@id/txtDescription" />
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbMon"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbMon" />
 
         <TextView
-            android:id="@+id/txtReminder"
+            android:id="@+id/startTue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/reminder"
-            app:layout_constraintLeft_toLeftOf="@id/txtDescription"
-            app:layout_constraintTop_toBottomOf="@id/txtDescription"/>
-
-        <Spinner
-            android:id="@+id/edtReminder"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/spinner"
-            android:ems="10"
-            android:entries="@array/scheduleReminder"
-            android:popupBackground="@color/grey_700"
-            app:layout_constraintBottom_toBottomOf="@id/txtReminder"
-            app:layout_constraintStart_toStartOf="@+id/edtDescription"
-            app:layout_constraintTop_toTopOf="@+id/txtReminder" />
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbTue"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbTue" />
 
         <TextView
-            android:id="@+id/txtPlan"
+            android:id="@+id/startWed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/plan"
-            app:layout_constraintLeft_toLeftOf="@id/txtReminder"
-            app:layout_constraintTop_toBottomOf="@id/txtReminder" />
-
-        <Spinner
-            android:id="@+id/edtSchedule"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:popupBackground="@color/grey_700"
-            android:background="@drawable/spinner"
-            android:ems="10"
-            android:entries="@array/scheduleDuration"
-            app:layout_constraintBottom_toBottomOf="@id/txtPlan"
-            app:layout_constraintStart_toStartOf="@+id/edtReminder"
-            app:layout_constraintTop_toTopOf="@+id/txtPlan" />
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbWed"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbWed" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/calendarTxt"
-            android:layout_height="wrap_content"
-            android:text="@string/calendar"
-            app:layout_constraintTop_toBottomOf="@id/txtPlan"
-            app:layout_constraintLeft_toLeftOf="@id/txtPlan"
-            android:layout_marginTop="30dp"/>
-        
-        <TextView
+            android:id="@+id/startThu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtCalendar"
-            android:text="@string/def"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:textColor="@color/orange_500"
-            app:layout_constraintLeft_toLeftOf="@id/edtSchedule"
-            app:layout_constraintTop_toTopOf="@id/calendarTxt"
-            app:layout_constraintBottom_toBottomOf="@id/calendarTxt"/>
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbThu"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbThu" />
 
-        <Button
-            android:id="@+id/btnSchedule"
+        <TextView
+            android:id="@+id/startFri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@string/schedule"
-            app:cornerRadius="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/txtCalendar"
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbFri"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbFri" />
+
+        <TextView
+            android:id="@+id/startSat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="12:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbSat"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbSat" />
+
+        <TextView
+            android:id="@+id/startSun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="12:33"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cbSun"
+            app:layout_constraintLeft_toRightOf="@id/guidelineStart"
+            app:layout_constraintRight_toLeftOf="@id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/cbSun" />
+
+        <TextView
+            android:id="@+id/durationMon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startMon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startMon" />
+
+        <TextView
+            android:id="@+id/durationTue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startTue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startTue" />
+
+        <TextView
+            android:id="@+id/durationWed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startWed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startWed" />
+
+        <TextView
+            android:id="@+id/durationThu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startThu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startThu" />
+
+        <TextView
+            android:id="@+id/durationFri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startFri"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startFri" />
+
+        <TextView
+            android:id="@+id/durationSat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startSat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startSat" />
+
+        <TextView
+            android:id="@+id/durationSun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1:00"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/startSun"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDuration"
+            app:layout_constraintTop_toTopOf="@id/startSun" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scheduleViews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/cbSun">
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="50dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:text="@string/title"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTitle"
+                style="@style/textInputStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="50dp"
+                android:hint="@string/title"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+<!--                android:id="@+id/edtTitle"-->
+<!--                style="@style/EditTextStyle"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="50dp"-->
+<!--                android:hint="@string/hintOptional"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/txtTitle"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/txtTitle"-->
+<!--                app:layout_constraintTop_toTopOf="@id/txtTitle" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtDescription"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:text="@string/description"-->
+<!--                app:layout_constraintLeft_toLeftOf="@id/txtTitle"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/txtTitle" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/edtDescription"-->
+<!--                style="@style/EditTextStyle"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/hintOptional"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/txtDescription"-->
+<!--                app:layout_constraintLeft_toLeftOf="@+id/edtTitle"-->
+<!--                app:layout_constraintTop_toTopOf="@id/txtDescription" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDescription"
+                style="@style/textInputStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/description"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="@id/tilTitle"
+                app:layout_constraintStart_toStartOf="@id/tilTitle"
+                app:layout_constraintTop_toBottomOf="@id/tilTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/reminder"
+                app:layout_constraintLeft_toLeftOf="@id/tilDescription"
+                app:layout_constraintTop_toBottomOf="@id/tilDescription" />
+
+            <Spinner
+                android:id="@+id/edtReminder"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:entries="@array/scheduleReminder"
+                android:popupBackground="@color/grey_700"
+                app:layout_constraintBottom_toBottomOf="@id/txtReminder"
+                app:layout_constraintEnd_toEndOf="@+id/tilDescription"
+                app:layout_constraintTop_toTopOf="@+id/txtReminder" />
+
+            <TextView
+                android:id="@+id/txtPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/plan"
+                app:layout_constraintLeft_toLeftOf="@id/txtReminder"
+                app:layout_constraintTop_toBottomOf="@id/txtReminder" />
+
+            <Spinner
+                android:id="@+id/edtSchedule"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner"
+                android:ems="10"
+                android:entries="@array/scheduleDuration"
+                android:popupBackground="@color/grey_700"
+                app:layout_constraintBottom_toBottomOf="@id/txtPlan"
+                app:layout_constraintEnd_toEndOf="@+id/edtReminder"
+                app:layout_constraintTop_toTopOf="@+id/txtPlan" />
+
+            <TextView
+                android:id="@+id/calendarTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/calendar"
+                app:layout_constraintLeft_toLeftOf="@id/txtPlan"
+                app:layout_constraintTop_toBottomOf="@id/txtPlan" />
+
+            <TextView
+                android:id="@+id/txtCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/def"
+                android:textColor="@color/orange_500"
+                app:layout_constraintBottom_toBottomOf="@id/calendarTxt"
+                app:layout_constraintLeft_toLeftOf="@id/edtSchedule"
+                app:layout_constraintTop_toTopOf="@id/calendarTxt" />
+
+            <Button
+                android:id="@+id/btnSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/schedule"
+                app:cornerRadius="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCalendar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <com.google.android.gms.ads.AdView-->
+<!--        android:id="@+id/scheduleAd"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:adSize="BANNER"-->
+<!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/scheduleAd"
+    <FrameLayout
+        android:id="@+id/scheduleAdContainer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

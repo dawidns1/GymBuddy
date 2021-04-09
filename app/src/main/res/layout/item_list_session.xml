@@ -161,7 +161,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_hexagon_triple_vertical"
             android:visibility="gone"
-            tools:ignore="VectorDrawableCompat" />
+            tools:ignore="ContentDescription,VectorDrawableCompat" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -170,7 +170,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_hexagon_triple" />
+            android:src="@drawable/ic_hexagon_triple"
+            tools:ignore="ContentDescription" />
 
         <View
             android:id="@+id/separator1"

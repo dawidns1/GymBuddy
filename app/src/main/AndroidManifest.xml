@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.gymbuddy">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -22,6 +24,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3836143618707347~6728860966"/>
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
         <activity android:name=".ChartActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -60,7 +65,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.dawpie.gymbuddy.fileprovider"
+            android:authorities="com.example.gymbuddy.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

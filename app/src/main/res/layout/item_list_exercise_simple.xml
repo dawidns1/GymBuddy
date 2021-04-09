@@ -50,7 +50,8 @@
                    app:layout_constraintBottom_toBottomOf="@+id/txtExerciseNameSimple"
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toTopOf="@+id/txtExerciseNameSimple"
-                   android:src="@drawable/ic_hexagon_double_vertical" />
+                   android:src="@drawable/ic_hexagon_double_vertical"
+                   tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

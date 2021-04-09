@@ -41,10 +41,10 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:indeterminateOnly="false"
-            app:layout_constraintDimensionRatio="1"
             android:progressDrawable="@drawable/circular_progressbar"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/setTxt"
@@ -105,9 +105,9 @@
             android:text="@string/nextSet"
             android:textColor="@drawable/btn_text_color"
             app:cornerRadius="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/edtReps"
+            app:layout_constraintBottom_toBottomOf="@id/tilReps"
             app:layout_constraintStart_toStartOf="@+id/btnSkipTimer"
-            app:layout_constraintTop_toTopOf="@id/edtReps" />
+            app:layout_constraintTop_toTopOf="@id/tilReps" />
 
         <Button
             android:id="@+id/btnSkipTimer"
@@ -117,82 +117,126 @@
             android:text="@string/skipTimer"
             android:textColor="@drawable/btn_text_color"
             app:cornerRadius="20sp"
-            app:layout_constraintBottom_toBottomOf="@id/edtLoads"
+            app:layout_constraintBottom_toBottomOf="@id/tilLoads"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/edtLoads"
+            app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="@id/tilLoads"
             tools:layout_editor_absoluteY="320dp" />
 
-        <TextView
-            android:id="@+id/loadTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="@string/loadSet"
-            app:layout_constraintBottom_toBottomOf="@id/edtLoads"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/edtLoads"
-            tools:layout_editor_absoluteY="349dp" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/loadTxt"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="32dp"-->
+        <!--            android:text="@string/loadSet"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/edtLoads"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/edtLoads"-->
+        <!--            tools:layout_editor_absoluteY="349dp" />-->
 
-        <TextView
-            android:id="@+id/repsTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/repsSet"
-            app:layout_constraintBottom_toBottomOf="@+id/edtReps"
-            app:layout_constraintStart_toStartOf="@+id/loadTxt"
-            app:layout_constraintTop_toBottomOf="@+id/edtLoads" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/repsTxt"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="@string/repsSet"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/edtReps"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/loadTxt"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/edtLoads" />-->
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
+            android:id="@+id/guidelineHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="300dp" />
 
-        <EditText
-            android:id="@+id/edtLoads"
-            style="@style/EditTextStyle"
-            android:layout_width="70sp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLoads"
+            style="@style/textInputStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            app:layout_constraintStart_toEndOf="@+id/loadTxt"
-            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
+            android:hint="@string/loadSet"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="@id/guidelineVertical"
+            app:layout_constraintStart_toEndOf="@id/imgLoads"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal">
 
-        <EditText
-            android:id="@+id/edtReps"
-            style="@style/EditTextStyle"
-            android:layout_width="70sp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLoads"
+                android:inputType="numberDecimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilReps"
+            style="@style/textInputStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="@+id/edtLoads"
-            app:layout_constraintTop_toBottomOf="@+id/edtLoads" />
+            android:hint="@string/repsSet"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="@id/tilLoads"
+            app:layout_constraintStart_toStartOf="@id/tilLoads"
+            app:layout_constraintTop_toBottomOf="@id/tilLoads">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtReps"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/edtLoads"-->
+        <!--            style="@style/EditTextStyle"-->
+        <!--            android:layout_width="70sp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="28dp"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="numberDecimal"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/loadTxt"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"-->
+        <!--            tools:ignore="LabelFor" />-->
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/edtReps"-->
+        <!--            style="@style/EditTextStyle"-->
+        <!--            android:layout_width="70sp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:ems="10"-->
+        <!--            android:inputType="number"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/edtLoads"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/edtLoads" />-->
 
         <ImageView
             android:id="@+id/imgReps"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginEnd="5dp"
             android:src="@drawable/ic_hexagon_triple_empty"
-            app:layout_constraintBottom_toBottomOf="@+id/repsTxt"
-            app:layout_constraintEnd_toStartOf="@+id/repsTxt"
-            app:layout_constraintTop_toTopOf="@+id/repsTxt" />
+            app:layout_constraintBottom_toBottomOf="@id/tilReps"
+            app:layout_constraintStart_toStartOf="@id/imgLoads"
+            app:layout_constraintTop_toTopOf="@id/tilReps"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/imgLoads"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="5dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
             android:src="@drawable/ic_hexagon_triple_empty"
-            app:layout_constraintBottom_toBottomOf="@+id/loadTxt"
-            app:layout_constraintEnd_toStartOf="@+id/loadTxt"
-            app:layout_constraintTop_toTopOf="@+id/loadTxt" />
+            app:layout_constraintBottom_toBottomOf="@id/tilLoads"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tilLoads"
+            tools:ignore="ContentDescription" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+            android:id="@+id/guidelineVertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -202,9 +246,9 @@
             android:id="@+id/newSessionExercisesRV"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_list_exercise_simple" />
 
@@ -215,15 +259,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:clipToPadding="false"
+        android:paddingBottom="48dp"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:layout_editor_absoluteX="0dp" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/newSessionAd"
+    <FrameLayout
+        android:id="@+id/newSessionAdContainer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

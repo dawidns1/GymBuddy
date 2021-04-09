@@ -126,7 +126,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_hexagon_triple_vertical"
-                tools:ignore="VectorDrawableCompat"
+                tools:ignore="ContentDescription,VectorDrawableCompat"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
             <TextView
@@ -145,7 +145,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txtExerciseName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtExerciseName"
-                android:src="@drawable/ic_hexagon_double_vertical" />
+                android:src="@drawable/ic_hexagon_double_vertical"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/imgSuperset"
@@ -154,7 +155,8 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/ic_superset" />
+                android:src="@drawable/ic_superset"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

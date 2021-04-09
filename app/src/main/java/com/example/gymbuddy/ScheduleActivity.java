@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -56,7 +57,8 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
     private TextView txtCalendar;
     private ArrayList<String> calendarId, calendarName;
     private int selected = 0;
-    private AdView scheduleAd;
+//    private AdView scheduleAd;
+    private FrameLayout scheduleAdContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,9 +402,8 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         duration.add(findViewById(R.id.durationThu));
         duration.add(findViewById(R.id.durationFri));
         duration.add(findViewById(R.id.durationSat));
-        scheduleAd=findViewById(R.id.scheduleAd);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        scheduleAd.loadAd(adRequest);
+        scheduleAdContainer=findViewById(R.id.scheduleAdContainer);
+        Helpers.handleAds(scheduleAdContainer,this);
     }
 
     private void getGmailCalendarIds(Context c) {

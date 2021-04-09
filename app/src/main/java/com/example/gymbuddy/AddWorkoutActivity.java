@@ -17,18 +17,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+import com.google.android.material.textfield.TextInputLayout;
 
-import static com.example.gymbuddy.MainActivity.NEW_WORKOUT_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.POSITION_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.WORKOUTS_KEY;
+import java.util.ArrayList;
 
 public class AddWorkoutActivity extends AppCompatActivity {
 
-    private EditText edtWorkoutName;
+    private EditText edtWorkoutName,edtMuscleGroup,edtMuscleGroupSecondary;
     private Spinner spinnerWorkoutType;
-    private EditText edtMuscleGroup;
-    private EditText edtMuscleGroupSecondary;
+    private TextInputLayout tilWorkoutName, tilMuscleGroup, tilMuscleGroupSecondary;
     private Button btnAdd;
     private ImageView imgWorkoutName;
     boolean isEdited = false, changeMade = false;
@@ -47,6 +44,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         spinnerWorkoutType = findViewById(R.id.spinnerWorkoutType);
         edtMuscleGroup = findViewById(R.id.edtMuscleGroup);
         edtMuscleGroupSecondary = findViewById(R.id.edtMuscleGroupSecondary);
+        tilMuscleGroupSecondary=findViewById(R.id.tilMuscleGroupSecondary);
         btnAdd = findViewById(R.id.btnAdd);
         imgWorkoutName = findViewById(R.id.imgWorkoutName);
 
@@ -54,7 +52,8 @@ public class AddWorkoutActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-        edtMuscleGroupSecondary.setEnabled(false);
+//        edtMuscleGroupSecondary.setEnabled(false);
+        tilMuscleGroupSecondary.setEnabled(false);
 //        edtMuscleGroupSecondary.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
 
         edtMuscleGroup.addTextChangedListener(new TextWatcher() {
@@ -65,13 +64,8 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() != 0) {
-                    edtMuscleGroupSecondary.setEnabled(true);
-//                    edtMuscleGroupSecondary.getBackground().setColorFilter(Color.parseColor("#FF5722"), PorterDuff.Mode.SRC_IN);
-                } else {
-                    edtMuscleGroupSecondary.setEnabled(false);
-//                    edtMuscleGroupSecondary.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
-                }
+//                  edtMuscleGroupSecondary.setEnabled(s.length() != 0);
+                  tilMuscleGroupSecondary.setEnabled(s.length() != 0);
 
             }
 
@@ -83,9 +77,9 @@ public class AddWorkoutActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            if (intent.getSerializableExtra(WORKOUTS_KEY) != null) {
-                allWorkouts = (ArrayList<Workout>) intent.getSerializableExtra(WORKOUTS_KEY);
-                position = (int) intent.getIntExtra(POSITION_KEY, 0);
+            if (intent.getSerializableExtra(Helpers.WORKOUTS_KEY) != null) {
+                allWorkouts = (ArrayList<Workout>) intent.getSerializableExtra(Helpers.WORKOUTS_KEY);
+                position = intent.getIntExtra(Helpers.POSITION_KEY, 0);
                 isEdited = true;
                 Helpers.setupActionBar(getString(R.string.editing)+" "+ allWorkouts.get(position).getName(),"",getSupportActionBar(),this);
                 edtWorkoutName.setText(allWorkouts.get(position).getName());
@@ -94,9 +88,6 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 edtMuscleGroupSecondary.setText((allWorkouts.get(position).getMuscleGroupSecondary()));
                 btnAdd.setText(R.string.save);
                 switch (allWorkouts.get(position).getType()) {
-                    case "---":
-                        spinnerWorkoutType.setSelection(0);
-                        break;
                     case "FBW":
                         spinnerWorkoutType.setSelection(1);
                         break;
@@ -125,68 +116,65 @@ public class AddWorkoutActivity extends AppCompatActivity {
             }
         }
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isEdited) {
-                    if (!edtWorkoutName.getText().toString().isEmpty() &&
-                            !edtWorkoutName.getText().toString().equals(allWorkouts.get(position).getName())) {
+        btnAdd.setOnClickListener(v -> {
+            if (isEdited) {
+                if (!edtWorkoutName.getText().toString().isEmpty() &&
+                        !edtWorkoutName.getText().toString().equals(allWorkouts.get(position).getName())) {
+                    changeMade = true;
+                    allWorkouts.get(position).setName(edtWorkoutName.getText().toString());
+                }
+                if (!spinnerWorkoutType.getSelectedItem().toString().equals(allWorkouts.get(position).getType())) {
+                    changeMade = true;
+                    allWorkouts.get(position).setType(spinnerWorkoutType.getSelectedItem().toString());
+                }
+                if (edtMuscleGroup.getText().toString().isEmpty()) {
+                    allWorkouts.get(position).setMuscleGroup("");
+                    allWorkouts.get(position).setMuscleGroupSecondary("");
+                    changeMade = true;
+                } else {
+                    if (!edtMuscleGroup.getText().toString().equals(allWorkouts.get(position).getMuscleGroup())) {
                         changeMade = true;
-                        allWorkouts.get(position).setName(edtWorkoutName.getText().toString());
+                        allWorkouts.get(position).setMuscleGroup(edtMuscleGroup.getText().toString());
                     }
-                    if (!spinnerWorkoutType.getSelectedItem().toString().equals(allWorkouts.get(position).getType())) {
+                    if (!edtMuscleGroupSecondary.getText().toString().equals(allWorkouts.get(position).getMuscleGroupSecondary())) {
                         changeMade = true;
-                        allWorkouts.get(position).setType(spinnerWorkoutType.getSelectedItem().toString());
+                        allWorkouts.get(position).setMuscleGroupSecondary(edtMuscleGroupSecondary.getText().toString());
                     }
-                    if (edtMuscleGroup.getText().toString().isEmpty()) {
-                        allWorkouts.get(position).setMuscleGroup("");
-                        allWorkouts.get(position).setMuscleGroupSecondary("");
-                        changeMade = true;
-                    } else {
-                        if (!edtMuscleGroup.getText().toString().equals(allWorkouts.get(position).getMuscleGroup())) {
-                            changeMade = true;
-                            allWorkouts.get(position).setMuscleGroup(edtMuscleGroup.getText().toString());
-                        }
-                        if (!edtMuscleGroupSecondary.getText().toString().equals(allWorkouts.get(position).getMuscleGroupSecondary())) {
-                            changeMade = true;
-                            allWorkouts.get(position).setMuscleGroupSecondary(edtMuscleGroupSecondary.getText().toString());
-                        }
-                    }
-                    if(changeMade){
-                        Utils.getInstance(AddWorkoutActivity.this).updateWorkouts(allWorkouts);
-                    }
+                }
+                if(changeMade){
+                    Utils.getInstance(AddWorkoutActivity.this).updateWorkouts(allWorkouts);
+                }
 //                    Intent intent=new Intent(AddWorkoutActivity.this, MainActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    startActivity(intent);
-                    finish();
+                finish();
 
 
+            } else {
+                if (edtWorkoutName.getText().toString().isEmpty()) {
+                    Toast.makeText(AddWorkoutActivity.this, R.string.nameIsRequired, Toast.LENGTH_SHORT).show();
+                    imgWorkoutName.setImageResource(R.drawable.ic_hexagon_single_red);
+                    shake(imgWorkoutName);
                 } else {
-                    if (edtWorkoutName.getText().toString().isEmpty()) {
-                        Toast.makeText(AddWorkoutActivity.this, R.string.nameIsRequired, Toast.LENGTH_SHORT).show();
-                        imgWorkoutName.setImageResource(R.drawable.ic_hexagon_single_red);
-                        shake(imgWorkoutName);
-                    } else {
-                        String workoutName = edtWorkoutName.getText().toString();
-                        String workoutType = spinnerWorkoutType.getSelectedItem().toString();
-                        String muscleGroup = edtMuscleGroup.getText().toString();
-                        String muscleGroupSecondary = "";
-                        if (edtMuscleGroupSecondary.isEnabled()) {
-                            muscleGroupSecondary = edtMuscleGroupSecondary.getText().toString();
-                        }
-                        Workout workout = new Workout(5, workoutName, workoutType, muscleGroup, muscleGroupSecondary, 0);
-//                        Toast.makeText(AddWorkoutActivity.this, workout.toString(), Toast.LENGTH_SHORT).show();
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra(NEW_WORKOUT_KEY, workout);
-                        setResult(Activity.RESULT_OK, returnIntent);
-                        InputMethodManager imm = null;
-                        imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        finish();
+                    String workoutName = edtWorkoutName.getText().toString();
+                    String workoutType = spinnerWorkoutType.getSelectedItem().toString();
+                    String muscleGroup = edtMuscleGroup.getText().toString();
+                    String muscleGroupSecondary = "";
+                    if (edtMuscleGroupSecondary.isEnabled()) {
+                        muscleGroupSecondary = edtMuscleGroupSecondary.getText().toString();
                     }
+                    Workout workout = new Workout(5, workoutName, workoutType, muscleGroup, muscleGroupSecondary, 0);
+//                        Toast.makeText(AddWorkoutActivity.this, workout.toString(), Toast.LENGTH_SHORT).show();
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra(Helpers.NEW_WORKOUT_KEY, workout);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    InputMethodManager imm1;
+                    imm1 = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    finish();
                 }
-
             }
+
         });
     }
 

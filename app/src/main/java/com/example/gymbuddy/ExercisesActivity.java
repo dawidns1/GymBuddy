@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.view.View.GONE;
-import static com.example.gymbuddy.ExercisesRVAdapter.WORKOUT_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.EXERCISES_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.POSITION_KEY;
 
 public class ExercisesActivity extends AppCompatActivity implements ExercisesRVAdapter.OnItemClickListener {
 
@@ -38,14 +36,12 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
     private ExtendedFloatingActionButton btnAddExercise;
     private ExtendedFloatingActionButton btnStartWorkout, btnResumeWorkout;
     ExercisesRVAdapter adapter = new ExercisesRVAdapter(this);
-    public final static String NEW_EXERCISE_KEY = "new exercise key";
-    public final static String NEW_SESSION_KEY = "new session key";
-    public static final String RESUMED_KEY = "resumed";
     private int selectedWorkoutID, selectedExercise, selectedOptions;
     private int[] workoutIDs;
     private boolean[] areChecked;
     private boolean isScrolled;
     private String[] exercisesForSuperset;
+    private FrameLayout exercisesAdContainer;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -53,7 +49,7 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                Exercise newExercise = (Exercise) data.getSerializableExtra(NEW_EXERCISE_KEY);
+                Exercise newExercise = (Exercise) data.getSerializableExtra(Helpers.NEW_EXERCISE_KEY);
                 exercises.add(newExercise);
                 Utils.getInstance(this).addExerciseToWorkout(incomingWorkout, newExercise);
                 adapter.notifyDataSetChanged();
@@ -129,13 +125,12 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
 
         Intent intent = getIntent();
         if (intent != null) {
-            incomingWorkout = (Workout) intent.getSerializableExtra(EXERCISES_KEY);
+            incomingWorkout = (Workout) intent.getSerializableExtra(Helpers.EXERCISES_KEY);
             exercises = incomingWorkout.getExercises();
         }
 
-        AdView exercisesAd = findViewById(R.id.chartAd);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        exercisesAd.loadAd(adRequest);
+        exercisesAdContainer=findViewById(R.id.exercisesdAdContainer);
+        Helpers.handleAds(exercisesAdContainer,this);
 
         btnStartWorkout = findViewById(R.id.btnStartWorkout);
         btnResumeWorkout = findViewById(R.id.btnResumeWorkout);
@@ -221,15 +216,15 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
         btnStartWorkout.setOnClickListener(v -> {
             Intent intent12 = new Intent(ExercisesActivity.this, NewSessionActivity.class);
             incomingWorkout.setExercises(adapter.getExercises());
-            intent12.putExtra(NEW_SESSION_KEY, incomingWorkout);
+            intent12.putExtra(Helpers.NEW_SESSION_KEY, incomingWorkout);
             startActivity(intent12);
         });
 
         btnResumeWorkout.setOnClickListener(v -> {
             Intent intent1 = new Intent(ExercisesActivity.this, NewSessionActivity.class);
             incomingWorkout.setExercises(adapter.getExercises());
-            intent1.putExtra(NEW_SESSION_KEY, incomingWorkout);
-            intent1.putExtra(RESUMED_KEY, true);
+            intent1.putExtra(Helpers.NEW_SESSION_KEY, incomingWorkout);
+            intent1.putExtra(Helpers.RESUMED_KEY, true);
             startActivity(intent1);
         });
     }
@@ -303,13 +298,9 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
     }
 
     private void handleImporting() {
-        switch (selectedOptions) {
-            case 0:
-                exercises = new ArrayList<>();
-                adapter.setExercises(exercises);
-                break;
-            default:
-                break;
+        if (selectedOptions == 0) {
+            exercises = new ArrayList<>();
+            adapter.setExercises(exercises);
         }
         for (int i = 0; i < exercisesImporting.size(); i++) {
             if (areChecked[i] && exercises.size() < 9) {
@@ -353,9 +344,9 @@ public class ExercisesActivity extends AppCompatActivity implements ExercisesRVA
                 switch (item.getItemId()) {
                     case R.id.menuEditE:
                         Intent intent = new Intent(ExercisesActivity.this, AddExerciseActivity.class);
-                        intent.putExtra(EXERCISES_KEY, exercises);
-                        intent.putExtra(POSITION_KEY, positionRV);
-                        intent.putExtra(WORKOUT_KEY, incomingWorkout);
+                        intent.putExtra(Helpers.EXERCISES_KEY, exercises);
+                        intent.putExtra(Helpers.POSITION_KEY, positionRV);
+                        intent.putExtra(Helpers.WORKOUT_KEY, incomingWorkout);
                         startActivity(intent);
                         return true;
                     case R.id.menuDeleteE:

@@ -34,10 +34,6 @@ import java.util.ArrayList;
 
 public class WorkoutsRVAdapter extends RecyclerView.Adapter<WorkoutsRVAdapter.ViewHolder> {
 
-    public static final String EXERCISES_KEY = "exercises";
-    public static final String WORKOUTS_KEY = "edit workout key";
-    public static final String POSITION_KEY = "position";
-
     private ArrayList<Workout> workouts = new ArrayList<>();
     private Context mContext;
     private boolean editsStarted = false, changeMade = false, wasVisible = false;
@@ -417,7 +413,7 @@ public class WorkoutsRVAdapter extends RecyclerView.Adapter<WorkoutsRVAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, ExercisesActivity.class);
-                    intent.putExtra(EXERCISES_KEY, workouts.get(getAdapterPosition()));
+                    intent.putExtra(Helpers.EXERCISES_KEY, workouts.get(getAdapterPosition()));
                     mContext.startActivity(intent);
                 }
             });
@@ -433,8 +429,8 @@ public class WorkoutsRVAdapter extends RecyclerView.Adapter<WorkoutsRVAdapter.Vi
                             switch (item.getItemId()) {
                                 case R.id.menuEdit:
                                     Intent intent = new Intent(mContext, AddWorkoutActivity.class);
-                                    intent.putExtra(WORKOUTS_KEY, workouts);
-                                    intent.putExtra(POSITION_KEY, getAdapterPosition());
+                                    intent.putExtra(Helpers.WORKOUTS_KEY, workouts);
+                                    intent.putExtra(Helpers.POSITION_KEY, getAdapterPosition());
                                     mContext.startActivity(intent);
                                     return true;
                                 case R.id.menuDelete:

@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         android:padding="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/chartAd">
+        app:layout_constraintBottom_toTopOf="@id/exercisesdAdContainer">
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnAddExercise"
@@ -60,12 +60,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/chartAd"
+    <FrameLayout
+        android:id="@+id/exercisesdAdContainer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+<!--    <com.google.android.gms.ads.AdView-->
+<!--        android:id="@+id/chartAd"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:adSize="BANNER"-->
+<!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

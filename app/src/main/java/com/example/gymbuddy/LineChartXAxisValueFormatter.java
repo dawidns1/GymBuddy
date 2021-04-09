@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LineChartXAxisValueFormatter extends IndexAxisValueFormatter {
-    private long refTime;
+    private final long refTime;
 
     public LineChartXAxisValueFormatter(long refTime) {
         this.refTime = refTime;

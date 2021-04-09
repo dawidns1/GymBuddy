@@ -1,39 +1,33 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,9 +36,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import static android.view.View.GONE;
-import static com.example.gymbuddy.ExercisesRVAdapter.WORKOUT_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.EXERCISES_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.POSITION_KEY;
 
 public class SessionsActivity extends AppCompatActivity implements SessionsRVAdapter.OnItemClickListener, SessionsRVAdapter.OnItemLongClickListener {
 
@@ -54,8 +45,9 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
     private ArrayList<Session> sessions;
     private RecyclerView sessionsRV;
     private int position, positionSession;
-    private TextView txtLoad, txtRep;
+//    private TextView txtLoad, txtRep;
     private EditText edtLoad, edtRep;
+    private TextInputLayout tilLoad, tilRep;
     private Button btnNext;
     private int setNo = 1;
     private boolean isInputFinished = false;
@@ -72,12 +64,12 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
     private ImageView imgRep, imgLoad;
     private Workout displayedWorkout;
     private View viewDisableRV;
-    public static final String CHART_KEY = "chart";
-    private AdView sessionsAd;
+//    private AdView sessionsAd;
+    private FrameLayout sessionsAdContainer;
 
     @Override
     public void onBackPressed() {
-        if (edtLoad.isShown()) {
+        if (tilLoad.isShown()) {
             hideViewsAndReset();
         } else {
             super.onBackPressed();
@@ -125,9 +117,9 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         setContentView(R.layout.activity_sessions);
 
         Intent intent = getIntent();
-        exercises = (ArrayList<Exercise>) intent.getSerializableExtra(EXERCISES_KEY);
-        position = (int) intent.getIntExtra(POSITION_KEY, 0);
-        displayedWorkout = (Workout) intent.getSerializableExtra(WORKOUT_KEY);
+        exercises = (ArrayList<Exercise>) intent.getSerializableExtra(Helpers.EXERCISES_KEY);
+        position = (int) intent.getIntExtra(Helpers.POSITION_KEY, 0);
+        displayedWorkout = (Workout) intent.getSerializableExtra(Helpers.WORKOUT_KEY);
 
 //        if (exercises.get(position).getSessions().isEmpty()) {
 //            sessions = new ArrayList<Session>();
@@ -140,18 +132,19 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
 //                new ColorDrawable(getResources().getColor(R.color.orange_500)));
         setTitleAndTempo();
 
-        sessionsAd=findViewById(R.id.sessionsAd);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        sessionsAd.loadAd(adRequest);
+        sessionsAdContainer=findViewById(R.id.sessionsAdContainer);
+        Helpers.handleAds(sessionsAdContainer,this);
 
-        txtLoad = findViewById(R.id.txtLoad);
-        txtRep = findViewById(R.id.txtRep);
+//        txtLoad = findViewById(R.id.txtLoad);
+//        txtRep = findViewById(R.id.txtRep);
 
         imgRep = findViewById(R.id.imgRep);
         imgLoad = findViewById(R.id.imgLoad);
 
         edtLoad = findViewById(R.id.edtLoad);
         edtRep = findViewById(R.id.edtRep);
+        tilLoad=findViewById(R.id.tilLoad);
+        tilRep=findViewById(R.id.tilRep);
         btnNext = findViewById(R.id.btnNext);
         parentConstraintLayout = findViewById(R.id.parentConstraintLayout);
 
@@ -185,7 +178,7 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SessionsActivity.this, ChartActivity.class);
-                intent.putExtra(CHART_KEY, exercises.get(position));
+                intent.putExtra(Helpers.CHART_KEY, exercises.get(position));
                 startActivity(intent);
             }
         });
@@ -222,20 +215,20 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
             @Override
             public void onClick(View v) {
                 showViews();
-                isInputOngoing = true;
-                btnNext.setVisibility(View.VISIBLE);
-                txtLoad.setVisibility(View.VISIBLE);
-                txtRep.setVisibility(View.VISIBLE);
-                edtLoad.setVisibility(View.VISIBLE);
-                edtRep.setVisibility(View.VISIBLE);
-                imgLoad.setVisibility(View.VISIBLE);
-                imgRep.setVisibility(View.VISIBLE);
-                btnAddSession.setVisibility(View.GONE);
-                btnNextExercise.setVisibility(View.GONE);
-                btnPreviousExercise.setVisibility(View.GONE);
-                edtLoad.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+//                isInputOngoing = true;
+//                btnNext.setVisibility(View.VISIBLE);
+////                txtLoad.setVisibility(View.VISIBLE);
+////                txtRep.setVisibility(View.VISIBLE);
+//                tilLoad.setVisibility(View.VISIBLE);
+//                tilRep.setVisibility(View.VISIBLE);
+//                imgLoad.setVisibility(View.VISIBLE);
+//                imgRep.setVisibility(View.VISIBLE);
+//                btnAddSession.setVisibility(View.GONE);
+//                btnNextExercise.setVisibility(View.GONE);
+//                btnPreviousExercise.setVisibility(View.GONE);
+//                edtLoad.requestFocus();
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
             }
         });
 
@@ -342,10 +335,10 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
         isInputOngoing = true;
         viewDisableRV.setVisibility(View.VISIBLE);
         btnNext.setVisibility(View.VISIBLE);
-        txtLoad.setVisibility(View.VISIBLE);
-        txtRep.setVisibility(View.VISIBLE);
-        edtLoad.setVisibility(View.VISIBLE);
-        edtRep.setVisibility(View.VISIBLE);
+//        txtLoad.setVisibility(View.VISIBLE);
+//        txtRep.setVisibility(View.VISIBLE);
+        tilLoad.setVisibility(View.VISIBLE);
+        tilRep.setVisibility(View.VISIBLE);
         imgLoad.setVisibility(View.VISIBLE);
         imgRep.setVisibility(View.VISIBLE);
         btnAddSession.setVisibility(View.GONE);
@@ -553,10 +546,10 @@ public class SessionsActivity extends AppCompatActivity implements SessionsRVAda
 //        }
         if (sessions.size() > 1) btnViewChart.show();
         btnAddSession.setVisibility(View.VISIBLE);
-        txtRep.setVisibility(View.GONE);
-        txtLoad.setVisibility(View.GONE);
-        edtRep.setVisibility(View.GONE);
-        edtLoad.setVisibility(View.GONE);
+//        txtRep.setVisibility(View.GONE);
+//        txtLoad.setVisibility(View.GONE);
+        tilRep.setVisibility(View.GONE);
+        tilLoad.setVisibility(View.GONE);
         edtRep.setText(null);
         edtLoad.setText(null);
         imgRep.setVisibility(View.GONE);

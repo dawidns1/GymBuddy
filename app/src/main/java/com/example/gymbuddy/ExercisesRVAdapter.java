@@ -34,14 +34,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.example.gymbuddy.WorkoutsRVAdapter.EXERCISES_KEY;
-import static com.example.gymbuddy.WorkoutsRVAdapter.POSITION_KEY;
-
 public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.ViewHolder> {
 
     private ArrayList<Exercise> exercises = new ArrayList<>();
     private Context mContext;
-    public static final String WORKOUT_KEY = "workout";
     private boolean editsStarted = false;
     private boolean changeMade = false;
     private Workout displayedWorkout;
@@ -399,9 +395,9 @@ public class ExercisesRVAdapter extends RecyclerView.Adapter<ExercisesRVAdapter.
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, SessionsActivity.class);
-                    intent.putExtra(EXERCISES_KEY, exercises);
-                    intent.putExtra(POSITION_KEY, getAdapterPosition());
-                    intent.putExtra(WORKOUT_KEY, displayedWorkout);
+                    intent.putExtra(Helpers.EXERCISES_KEY, exercises);
+                    intent.putExtra(Helpers.POSITION_KEY, getAdapterPosition());
+                    intent.putExtra(Helpers.WORKOUT_KEY, displayedWorkout);
                     mContext.startActivity(intent);
                 }
             });

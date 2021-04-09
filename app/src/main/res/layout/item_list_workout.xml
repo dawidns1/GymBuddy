@@ -126,7 +126,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_hexagon_triple_vertical"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -135,7 +136,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txtWorkoutName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtWorkoutName"
-                android:src="@drawable/ic_hexagon_single" />
+                android:src="@drawable/ic_hexagon_single"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

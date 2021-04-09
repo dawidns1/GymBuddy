@@ -1,7 +1,5 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
@@ -10,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -34,6 +31,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,14 +39,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import static android.view.View.GONE;
-import static com.example.gymbuddy.ExercisesActivity.NEW_SESSION_KEY;
-import static com.example.gymbuddy.ExercisesActivity.RESUMED_KEY;
 
 public class NewSessionActivity extends AppCompatActivity implements SessionsRVAdapter.OnItemClickListener {
 
@@ -57,6 +54,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
     private TextView tempoTxt, txtTempoSession, repsTxt;
     private EditText edtLoad;
     private EditText edtReps;
+    private TextInputLayout tilReps;
     private Button btnSkipTimer;
     private Button btnNextSet;
     private float[] load = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -77,7 +75,6 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     private NotificationManagerCompat notificationManagerCompat;
-    public static final String CHANNEL_ID = "id";
     private boolean isInBackground = false;
     private ImageView imgReps, imgLoads;
     private boolean wasBackPressed = false, wasDoubleBackPressed = false;
@@ -89,7 +86,8 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
     int startingTime = 0;
     private boolean breakRunning;
     private Workout workout;
-    private AdView newSessionAd;
+//    private AdView newSessionAd;
+    private FrameLayout newSessionAdContainer;
 
     @Override
     protected void onResume() {
@@ -123,13 +121,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 
         Toast.makeText(this, R.string.pressBackToExitSession, Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override
@@ -143,36 +135,27 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         timerHandler = new Handler();
-        timerRunnable = new Runnable() {
-            @Override
-            public void run() {
-                timerHandler.postDelayed(timerRunnable, 1000);
-                startingTime++;
-                if (startingTime > 300) {
-                    timerHandler.removeCallbacks(timerRunnable);
-                }
-                updateTimer((startingTime - 1) * 1000);
+        timerRunnable = () -> {
+            timerHandler.postDelayed(timerRunnable, 1000);
+            startingTime++;
+            if (startingTime > 300) {
+                timerHandler.removeCallbacks(timerRunnable);
             }
+            updateTimer((startingTime - 1) * 1000);
         };
 
         Intent intent = getIntent();
-        workout = (Workout) intent.getSerializableExtra(NEW_SESSION_KEY);
+        workout = (Workout) intent.getSerializableExtra(Helpers.NEW_SESSION_KEY);
 
         exercises = workout.getExercises();
-//        if (exercises.get(0).getSessions().isEmpty()) {
-//            sessions = new ArrayList<Session>();
-//        }
 
-//        getSupportActionBar().setBackgroundDrawable(
-//                new ColorDrawable(getResources().getColor(R.color.orange_500)));
-//        setTitle(workout.getName());
         Helpers.setupActionBar(workout.getName(), "", getSupportActionBar(), this);
 
         CharSequence name = "Name";
         String description = "Description";
         int importance = NotificationManager.IMPORTANCE_HIGH;
-        NotificationChannel channel = null;
-        channel = new NotificationChannel(CHANNEL_ID, name, importance);
+        NotificationChannel channel;
+        channel = new NotificationChannel(Helpers.CHANNEL_ID, name, importance);
         channel.setDescription(description);
         channel.enableVibration(true);
         channel.setVibrationPattern(new long[]{0, 50, 50, 50});
@@ -181,7 +164,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         notificationManager.createNotificationChannel(channel);
 
 
-        builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+        builder = new NotificationCompat.Builder(this, Helpers.CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(getString(R.string.breakFinished))
@@ -195,7 +178,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 
         initViews();
 
-        if (intent.getBooleanExtra(RESUMED_KEY, false)) {
+        if (intent.getBooleanExtra(Helpers.RESUMED_KEY, false)) {
             state = workout.getState();
             exerciseNo = state[1];
             setNo = state[2];
@@ -209,8 +192,8 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
             }
             if (Utils.getInstance(this).getBreakLeft() != 0) {
                 if (System.currentTimeMillis() - Utils.getInstance(this).getSystemTime() < Utils.getInstance(this).getBreakLeft()) {
-
                     startTimer(Utils.getInstance(this).getBreakLeft() - System.currentTimeMillis() + Utils.getInstance(this).getSystemTime());
+                    breakRunning=true;
                 }
             }
 
@@ -225,7 +208,7 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 
         txtSetCount.setText(String.valueOf(setNo));
         setTempo(exerciseNo);
-        if (exercises.get(exerciseNo - 1).getTempo() == 9999) {
+        if (exercises.get(exerciseNo - 1).getTempo() == 9999 && !breakRunning) {
             btnSkipTimer.setText(R.string.start);
         }
 
@@ -251,116 +234,108 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 
 //        vibrate();
 
-        btnSkipTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stopwatchRequired) {
-                    if (isStopped) {
-                        startingTime = 0;
-                        txtTimer.setText("0:00");
-                        isRunning = false;
-                        isStopped = false;
-                        btnSkipTimer.setText(R.string.start);
-                    } else if (isRunning) {
-                        timerHandler.removeCallbacks(timerRunnable);
-                        edtReps.setText(String.valueOf(startingTime - 1));
-                        edtReps.setSelection(edtReps.getText().length());
-                        isRunning = false;
-                        isStopped = true;
-                        btnSkipTimer.setText(R.string.reset);
-                        btnNextSet.setEnabled(true);
-                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    } else if (!isRunning & !isStopped) {
-
-                        timerHandler.post(timerRunnable);
-                        isRunning = true;
-                        btnSkipTimer.setText(R.string.stop);
-                        btnNextSet.setEnabled(false);
-                        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    }
-
-
-                } else {
-                    breakRunning = false;
-                    progressBar.setProgress(0, true);
+        btnSkipTimer.setOnClickListener(v -> {
+            if (stopwatchRequired) {
+                if (isStopped) {
+                    startingTime = 0;
                     txtTimer.setText("0:00");
-                    countDownTimer.cancel();
+                    isRunning = false;
+                    isStopped = false;
+                    btnSkipTimer.setText(R.string.start);
+                } else if (isRunning) {
+                    timerHandler.removeCallbacks(timerRunnable);
+                    edtReps.setText(String.valueOf(startingTime - 1));
+                    edtReps.setSelection(edtReps.getText().length());
+                    isRunning = false;
+                    isStopped = true;
+                    btnSkipTimer.setText(R.string.reset);
                     btnNextSet.setEnabled(true);
-                    btnSkipTimer.setEnabled(false);
-                    vibrate();
-                    if (exercises.get(exerciseNo - 1).getTempo() == 9999) {
-                        stopwatchRequired = true;
-                        btnSkipTimer.setText(R.string.start);
-                        btnSkipTimer.setEnabled(true);
-                    }
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                } else {
+                    timerHandler.post(timerRunnable);
+                    isRunning = true;
+                    btnSkipTimer.setText(R.string.stop);
+                    btnNextSet.setEnabled(false);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }
+            } else {
+                breakRunning = false;
+                progressBar.setProgress(0, true);
+                txtTimer.setText("0:00");
+                countDownTimer.cancel();
+                btnNextSet.setEnabled(true);
+                btnSkipTimer.setEnabled(false);
+                vibrate();
+                if (exercises.get(exerciseNo - 1).getTempo() == 9999) {
+                    stopwatchRequired = true;
+                    btnSkipTimer.setText(R.string.start);
+                    btnSkipTimer.setEnabled(true);
                 }
             }
         });
 
 
-        btnNextSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnNextSet.setOnClickListener(v -> {
 
-                isRunning = false;
-                isStopped = false;
-                startingTime = 0;
+            isRunning = false;
+            isStopped = false;
+            startingTime = 0;
 
-                if (edtLoad.getText().toString().isEmpty() || edtReps.getText().toString().isEmpty()) {
-                    Toast.makeText(NewSessionActivity.this, R.string.insertRepsAndLoad, Toast.LENGTH_SHORT).show();
-                    imgLoads.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    Helpers.shake(imgLoads);
-                    imgReps.setImageResource(R.drawable.ic_hexagon_triple_red);
-                    Helpers.shake(imgReps);
-                } else if (isWorkoutFinished) {
-                    getValuesAndClear(v, workout);
-                    workout.setState(new int[]{1, 1, 1});
-                    Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
-                    InputMethodManager imm = null;
-                    if (Utils.getInstance(NewSessionActivity.this).isLoggingEnabled()) {
-                        try {
-                            handleAddCalendarEntry(calendarEntryStringBuilder());
-                        } catch (Exception e) {
-                            Toast.makeText(NewSessionActivity.this, getResources().getString(R.string.grantPermission), Toast.LENGTH_LONG).show();
-                            Utils.getInstance(NewSessionActivity.this).setLoggingEnabled(false);
-                        }
-
+            if (edtLoad.getText().toString().isEmpty() || edtReps.getText().toString().isEmpty()) {
+                Toast.makeText(NewSessionActivity.this, R.string.insertRepsAndLoad, Toast.LENGTH_SHORT).show();
+                imgLoads.setImageResource(R.drawable.ic_hexagon_triple_red);
+                Helpers.shake(imgLoads);
+                imgReps.setImageResource(R.drawable.ic_hexagon_triple_red);
+                Helpers.shake(imgReps);
+            } else if (isWorkoutFinished) {
+                getValuesAndClear(v, workout);
+                workout.setState(new int[]{1, 1, 1});
+                Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
+                InputMethodManager imm1;
+                if (Utils.getInstance(NewSessionActivity.this).isLoggingEnabled()) {
+                    try {
+                        handleAddCalendarEntry(calendarEntryStringBuilder());
+                    } catch (Exception e) {
+                        Toast.makeText(NewSessionActivity.this, getResources().getString(R.string.grantPermission), Toast.LENGTH_LONG).show();
+                        Utils.getInstance(NewSessionActivity.this).setLoggingEnabled(false);
                     }
-                    imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+                }
+                imm1 = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 //                    Intent intent = new Intent(NewSessionActivity.this, MainActivity.class);
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                    startActivity(intent);
-                    finish();
-                } else if (isSetFinished) {
-                    imgLoads.setImageResource(R.drawable.ic_hexagon_triple_empty);
-                    imgReps.setImageResource(R.drawable.ic_hexagon_triple_empty);
-                    getValuesAndClear(v, workout);
-                    sessions = exercises.get(exerciseNo).getSessions();
-                    adapter.setExercise(exercises.get(exerciseNo));
-                    adapter.setSessions(sessions);
-                    adapter.notifyDataSetChanged();
-                    startTimer(Long.parseLong(String.valueOf(exercises.get(exerciseNo).getBreaks())) * 1000);
-                    changeColor(exerciseNo);
-                    exerciseNo++;
-                    setTempo(exerciseNo);
-                    setNo = 1;
-                    workout.setState(new int[]{0, exerciseNo, setNo});
-                    Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
-                    txtSetCount.setText(String.valueOf(setNo));
-                    btnNextSet.setText(R.string.nextSet);
-                    stopwatchRequired = false;
-                    isSetFinished = false;
+                finish();
+            } else if (isSetFinished) {
+                imgLoads.setImageResource(R.drawable.ic_hexagon_triple_empty);
+                imgReps.setImageResource(R.drawable.ic_hexagon_triple_empty);
+                getValuesAndClear(v, workout);
+                sessions = exercises.get(exerciseNo).getSessions();
+                adapter.setExercise(exercises.get(exerciseNo));
+                adapter.setSessions(sessions);
+                adapter.notifyDataSetChanged();
+                startTimer(Long.parseLong(String.valueOf(exercises.get(exerciseNo).getBreaks())) * 1000);
+                changeColor(exerciseNo);
+                exerciseNo++;
+                setTempo(exerciseNo);
+                setNo = 1;
+                workout.setState(new int[]{0, exerciseNo, setNo});
+                Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
+                txtSetCount.setText(String.valueOf(setNo));
+                btnNextSet.setText(R.string.nextSet);
+                stopwatchRequired = false;
+                isSetFinished = false;
 
-                } else {
-                    if (setNo == 1) {
-                        sessions.add(0, new Session(0, new float[]{0, 0, 0, 0, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}));
-                        sessions.get(0).setDate(df.format(Calendar.getInstance().getTime()));
-                        load = sessions.get(0).getLoad();
-                        reps = sessions.get(0).getReps();
-                        adapter.notifyItemInserted(0);
-                        sessionsRV.smoothScrollToPosition(0);
-                    }
+            } else {
+                if (setNo == 1) {
+                    sessions.add(0, new Session(0, new float[]{0, 0, 0, 0, 0, 0, 0, 0}, new int[]{0, 0, 0, 0, 0, 0, 0, 0}));
+                    sessions.get(0).setDate(df.format(Calendar.getInstance().getTime()));
+                    load = sessions.get(0).getLoad();
+                    reps = sessions.get(0).getReps();
+                    adapter.notifyItemInserted(0);
+                    sessionsRV.smoothScrollToPosition(0);
+                }
 
 
 //                    if (exercises.size() == exerciseNo && exercises.get(exerciseNo - 1).getSets() == setNo + 1) {
@@ -371,44 +346,43 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
 //                        btnNextSet.setText(R.string.nextExercise);
 //                        isSetFinished = true;
 //                    }
-                    btnSkipTimer.setText(R.string.skipTimer);
-                    stopwatchRequired = false;
-                    imgLoads.setImageResource(R.drawable.ic_hexagon_triple_empty);
-                    imgReps.setImageResource(R.drawable.ic_hexagon_triple_empty);
-                    getValuesAndClear(v, workout);
-                    adapter.notifyItemChanged(0);
-                    if (exercises.get(exerciseNo - 1).getSuperSet() == 0) {
+                btnSkipTimer.setText(R.string.skipTimer);
+                stopwatchRequired = false;
+                imgLoads.setImageResource(R.drawable.ic_hexagon_triple_empty);
+                imgReps.setImageResource(R.drawable.ic_hexagon_triple_empty);
+                getValuesAndClear(v, workout);
+                adapter.notifyItemChanged(0);
+                if (exercises.get(exerciseNo - 1).getSuperSet() == 0) {
+                    setNo++;
+                    startTimer(Long.parseLong(String.valueOf(exercises.get(exerciseNo - 1).getBreaks())) * 1000);
+                } else {
+                    if (exercises.get(exerciseNo - 1).getSuperSet() == 1) {
+                        changeSupersetColor(exerciseNo, 1);
+                        exerciseNo++;
+                    } else if (exercises.get(exerciseNo - 1).getSuperSet() == 2) {
+                        changeSupersetColor(exerciseNo, 2);
+                        exerciseNo--;
                         setNo++;
                         startTimer(Long.parseLong(String.valueOf(exercises.get(exerciseNo - 1).getBreaks())) * 1000);
-                    } else {
-                        if (exercises.get(exerciseNo - 1).getSuperSet() == 1) {
-                            changeSupersetColor(exerciseNo, 1);
-                            exerciseNo++;
-                        } else if (exercises.get(exerciseNo - 1).getSuperSet() == 2) {
-                            changeSupersetColor(exerciseNo, 2);
-                            exerciseNo--;
-                            setNo++;
-                            startTimer(Long.parseLong(String.valueOf(exercises.get(exerciseNo - 1).getBreaks())) * 1000);
-                        }
-                        sessions = exercises.get(exerciseNo - 1).getSessions();
-                        load = sessions.get(0).getLoad();
-                        reps = sessions.get(0).getReps();
-                        adapter.setExercise(exercises.get(exerciseNo - 1));
-                        adapter.setSessions(sessions);
-                        adapter.notifyDataSetChanged();
-                        setTempo(exerciseNo);
                     }
-                    txtSetCount.setText(String.valueOf(setNo));
-                    workout.setState(new int[]{0, exerciseNo, setNo});
-                    Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
-                    if (exercises.size() == exerciseNo && exercises.get(exerciseNo - 1).getSets() == setNo) {
-                        btnNextSet.setText(R.string.finishWorkout);
-                        isWorkoutFinished = true;
-                    }
-                    if (exercises.get(exerciseNo - 1).getSets() == setNo && !isWorkoutFinished && exercises.get(exerciseNo - 1).getSuperSet() != 1) {
-                        btnNextSet.setText(R.string.nextExercise);
-                        isSetFinished = true;
-                    }
+                    sessions = exercises.get(exerciseNo - 1).getSessions();
+                    load = sessions.get(0).getLoad();
+                    reps = sessions.get(0).getReps();
+                    adapter.setExercise(exercises.get(exerciseNo - 1));
+                    adapter.setSessions(sessions);
+                    adapter.notifyDataSetChanged();
+                    setTempo(exerciseNo);
+                }
+                txtSetCount.setText(String.valueOf(setNo));
+                workout.setState(new int[]{0, exerciseNo, setNo});
+                Utils.getInstance(NewSessionActivity.this).updateSingleWorkouts(workout);
+                if (exercises.size() == exerciseNo && exercises.get(exerciseNo - 1).getSets() == setNo) {
+                    btnNextSet.setText(R.string.finishWorkout);
+                    isWorkoutFinished = true;
+                }
+                if (exercises.get(exerciseNo - 1).getSets() == setNo && !isWorkoutFinished && exercises.get(exerciseNo - 1).getSuperSet() != 1) {
+                    btnNextSet.setText(R.string.nextExercise);
+                    isSetFinished = true;
                 }
             }
         });
@@ -436,22 +410,24 @@ public class NewSessionActivity extends AppCompatActivity implements SessionsRVA
         imgLoads = findViewById(R.id.imgLoads);
         imgReps = findViewById(R.id.imgReps);
 
-        repsTxt = findViewById(R.id.repsTxt);
-        newSessionAd = findViewById(R.id.newSessionAd);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        newSessionAd.loadAd(adRequest);
+//        repsTxt = findViewById(R.id.repsTxt);
+        tilReps=findViewById(R.id.tilReps);
+        newSessionAdContainer = findViewById(R.id.newSessionAdContainer);
+        Helpers.handleAds(newSessionAdContainer,this);
     }
 
     private void setTempo(int exerciseNo) {
         if (exercises.get(exerciseNo - 1).getTempo() == 9999) {
-            repsTxt.setText(R.string.timeSet);
+//            repsTxt.setText(R.string.timeSet);
+            tilReps.setHint(R.string.timeSet);
             txtTempoSession.setVisibility(GONE);
             tempoTxt.setText(R.string.isometric);
             tempoTxt.setVisibility(View.VISIBLE);
             btnSkipTimer.setEnabled(true);
-            stopwatchRequired = true;
+            if(!breakRunning)stopwatchRequired = true;
         } else {
-            repsTxt.setText(R.string.repsSet);
+//            repsTxt.setText(R.string.repsSet);
+            tilReps.setHint(R.string.repsSet);
             btnSkipTimer.setText(R.string.skipTimer);
             stopwatchRequired = false;
             if (exercises.get(exerciseNo - 1).getTempo() == 0) {
