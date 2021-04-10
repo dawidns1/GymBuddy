@@ -1,24 +1,9 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ShareCompat;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,28 +11,42 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
-import android.icu.util.TimeZone;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.CalendarContract;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView workoutsRV, workoutsExercisesRV;
     ArrayList<Workout> workouts = new ArrayList<>();
     ArrayList<Workout> returnList = new ArrayList<>();
-    public final static String NEW_WORKOUT_KEY = "new workout key";
-    private RelativeLayout parent;
+    private ConstraintLayout parent;
     private ExtendedFloatingActionButton btnAddWorkout;
     public WorkoutsRVAdapter adapter = new WorkoutsRVAdapter(this);
     private boolean areExercisesShown;
@@ -87,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton btnSchedule;
     private ArrayList<String> calendarId, calendarName;
     private int selected;
+//    private AdView mainAd;
+    private FrameLayout mainAdContainer;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     public boolean verifyStoragePermissions(Activity activity) {
@@ -97,15 +98,10 @@ public class MainActivity extends AppCompatActivity {
                     .setTitle(R.string.permissions)
                     .setIcon(R.drawable.ic_info)
                     .setMessage(R.string.permissionInfo)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(
-                                    activity,
-                                    PERMISSIONS_STORAGE,
-                                    REQUEST_EXTERNAL_STORAGE);
-                        }
-                    })
+                    .setPositiveButton(R.string.ok, (dialog, which) -> ActivityCompat.requestPermissions(
+                            activity,
+                            PERMISSIONS_STORAGE,
+                            REQUEST_EXTERNAL_STORAGE))
                     .show();
             return false;
         } else return true;
@@ -119,15 +115,10 @@ public class MainActivity extends AppCompatActivity {
                     .setTitle(R.string.permissions)
                     .setIcon(R.drawable.ic_info)
                     .setMessage(R.string.permissionInfoCalendar)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(
-                                    activity,
-                                    PERMISSIONS_CALENDAR,
-                                    REQUEST_CALENDAR);
-                        }
-                    })
+                    .setPositiveButton(R.string.ok, (dialog, which) -> ActivityCompat.requestPermissions(
+                            activity,
+                            PERMISSIONS_CALENDAR,
+                            REQUEST_CALENDAR))
                     .show();
             return false;
         } else return true;
@@ -145,31 +136,13 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                Workout newWorkout = (Workout) data.getSerializableExtra(NEW_WORKOUT_KEY);
+                Workout newWorkout = (Workout) data.getSerializableExtra(Helpers.NEW_WORKOUT_KEY);
                 Utils.getInstance(this).addToAllWorkouts(newWorkout);
                 adapter.setWorkouts(Utils.getInstance(this).getAllWorkouts());
             }
@@ -187,13 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, R.string.pressBackToExit, Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override
@@ -227,12 +194,9 @@ public class MainActivity extends AppCompatActivity {
                                 .setTitle(R.string.disableLogging)
                                 .setIcon(R.drawable.ic_calendar)
                                 .setMessage(R.string.disableLoggingMsg)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        loggingEnabled = false;
-                                        Utils.getInstance(MainActivity.this).setLoggingEnabled(loggingEnabled);
-                                    }
+                                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                                    loggingEnabled = false;
+                                    Utils.getInstance(MainActivity.this).setLoggingEnabled(loggingEnabled);
                                 })
                                 .setNegativeButton(R.string.no, null)
                                 .show();
@@ -241,12 +205,7 @@ public class MainActivity extends AppCompatActivity {
                                 .setTitle(R.string.enableLogging)
                                 .setIcon(R.drawable.ic_calendar)
                                 .setMessage(R.string.enableLoggingMsg)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                            handleCalendarSelection();
-                                    }
-                                })
+                                .setPositiveButton(R.string.yes, (dialog, which) -> handleCalendarSelection())
                                 .setNegativeButton(R.string.no, null)
                                 .show();
                     }
@@ -287,55 +246,44 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this, R.style.DefaultAlertDialogTheme)
                 .setTitle(R.string.selectWorkoutsToShare)
                 .setIcon(R.drawable.ic_share)
-                .setMultiChoiceItems(workoutNames, areChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        areChecked[which] = isChecked;
+                .setMultiChoiceItems(workoutNames, areChecked, (dialog, which, isChecked) -> areChecked[which] = isChecked)
+                .setPositiveButton(R.string.share, (dialog, which) -> {
+                    ArrayList<Workout> exportedWorkouts = new ArrayList<>();
+                    int removed = 0;
+                    int size = workouts.size();
+                    for (int i = 0; i < size; i++) {
+                        if (areChecked[i]) {
+                            exportedWorkouts.add(workouts.get(i - removed));
+                        }
                     }
-                })
-                .setPositiveButton(R.string.share, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<Workout> exportedWorkouts = new ArrayList<>();
-                        int removed = 0;
-                        int size = workouts.size();
-                        for (int i = 0; i < size; i++) {
-                            if (areChecked[i]) {
-                                exportedWorkouts.add(workouts.get(i - removed));
-                            }
+                    if (exportedWorkouts.isEmpty()) {
+                        Toast.makeText(MainActivity.this, R.string.noWorkoutsSelected, Toast.LENGTH_SHORT).show();
+                    } else {
+                        File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
+                        if (!directory.exists()) {
+                            directory.mkdirs();
                         }
-                        if (exportedWorkouts.isEmpty()) {
-                            Toast.makeText(MainActivity.this, R.string.noWorkoutsSelected, Toast.LENGTH_SHORT).show();
-                        } else {
-                            File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
-                            if (!directory.exists()) {
-                                directory.mkdirs();
-                            }
 
-                            String filename = "gbExport";
-                            ObjectOutput out = null;
+                        String filename = "gbExport";
+                        ObjectOutput out;
 
-                            try {
-                                out = new ObjectOutputStream(new FileOutputStream(directory
-                                        + File.separator + filename));
-                                out.writeObject(exportedWorkouts);
-                                out.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                                Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
-                            }
-                            ShareCompat.IntentBuilder shareIntent = ShareCompat.IntentBuilder.from(MainActivity.this).setType("*/*");
-                            File directoryFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
-                                    File.separator + filename);
-                            Uri uri = FileProvider.getUriForFile(MainActivity.this, "com.example.gymbuddy.fileprovider", directoryFile);
-                            shareIntent.addStream(uri);
-                            Intent intent = shareIntent.getIntent();
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            MainActivity.this.startActivity(Intent.createChooser(intent, getString(R.string.shareWorkoutsVia)));
+                        try {
+                            out = new ObjectOutputStream(new FileOutputStream(directory
+                                    + File.separator + filename));
+                            out.writeObject(exportedWorkouts);
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
                         }
+                        ShareCompat.IntentBuilder shareIntent = ShareCompat.IntentBuilder.from(MainActivity.this).setType("*/*");
+                        File directoryFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) +
+                                File.separator + filename);
+                        Uri uri = FileProvider.getUriForFile(MainActivity.this, "com.example.gymbuddy.fileprovider", directoryFile);
+                        shareIntent.addStream(uri);
+                        Intent intent = shareIntent.getIntent();
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        MainActivity.this.startActivity(Intent.createChooser(intent, getString(R.string.shareWorkoutsVia)));
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -347,88 +295,74 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle(R.string.fileLocation)
                 .setIcon(R.drawable.ic_info)
                 .setMessage(R.string.fileLocationInfo)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        final EditText exportName = new EditText(MainActivity.this);
-                        exportName.getBackground().setColorFilter(Color.parseColor("#FF5722"), PorterDuff.Mode.SRC_IN);
-                        exportName.setTextColor(Color.WHITE);
-                        new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
-                                .setTitle(R.string.fileName)
-                                .setIcon(R.drawable.ic_load)
-                                .setView(exportName)
-                                .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
-                                        String filename = exportName.getText().toString();
-                                        ObjectInput in = null;
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.til_dialog, null);
+                    final EditText exportName = dialogView.findViewById(R.id.edtDialog);
+                    final TextInputLayout exportTil=dialogView.findViewById(R.id.tilDialog);
+                    exportTil.setHint(R.string.fileName);
+                    exportName.requestFocus();
+                    new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
+                            .setTitle(R.string.load)
+                            .setIcon(R.drawable.ic_load)
+                            .setView(dialogView)
+                            .setPositiveButton(R.string.next, (dialog13, which13) -> {
+                                File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
+                                String filename = exportName.getText().toString();
+                                ObjectInput in;
 
-                                        try {
-                                            in = new ObjectInputStream(new FileInputStream(directory
-                                                    + File.separator + filename));
-                                            returnList = (ArrayList<Workout>) in.readObject();
-                                            in.close();
-                                            if (returnList == null || returnList.isEmpty()) {
-                                                Toast.makeText(MainActivity.this, R.string.noWorkoutsToLoad, Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                boolean[] areChecked = new boolean[returnList.size()];
-                                                String[] workoutNames = new String[returnList.size()];
-                                                for (int i = 0; i < returnList.size(); i++) {
-                                                    workoutNames[i] = returnList.get(i).getName();
-                                                    areChecked[i] = false;
-                                                }
-                                                new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
-                                                        .setTitle(R.string.selectWorkoutsToLoad)
-                                                        .setIcon(R.drawable.ic_load)
-                                                        .setMultiChoiceItems(workoutNames, areChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                                                areChecked[which] = isChecked;
-                                                            }
-                                                        })
-                                                        .setPositiveButton(R.string.load, new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                int removed = 0;
-                                                                int size = returnList.size();
-                                                                workouts = Utils.getInstance(MainActivity.this).getAllWorkouts();
-                                                                for (int i = 0; i < size; i++) {
-                                                                    if (areChecked[i]) {
-                                                                        workouts.add(returnList.get(i - removed));
-                                                                        Utils.getInstance(MainActivity.this).addToAllWorkouts(returnList.get(i - removed));
-                                                                        returnList.remove(i - removed);
-                                                                        removed++;
-                                                                    }
-                                                                }
-                                                                adapter.setWorkouts(workouts);
-                                                            }
-                                                        })
-                                                        .setNegativeButton(R.string.cancel, null)
-                                                        .show();
-                                            }
-                                        } catch (FileNotFoundException e) {
-                                            e.printStackTrace();
-//                                            Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_LONG).show();
-                                            new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
-                                                    .setTitle(R.string.fileNotFound)
-                                                    .setIcon(R.drawable.ic_warning)
-                                                    .setMessage(R.string.checkLocationName)
-                                                    .setPositiveButton(R.string.ok, null)
-                                                    .show();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                            Toast.makeText(MainActivity.this, "" + e, Toast.LENGTH_SHORT).show();
-                                        } catch (ClassNotFoundException e) {
-                                            e.printStackTrace();
-                                            Toast.makeText(MainActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                                try {
+                                    in = new ObjectInputStream(new FileInputStream(directory
+                                            + File.separator + filename));
+                                    returnList = (ArrayList<Workout>) in.readObject();
+                                    in.close();
+                                    if (returnList == null || returnList.isEmpty()) {
+                                        Toast.makeText(MainActivity.this, R.string.noWorkoutsToLoad, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        boolean[] areChecked = new boolean[returnList.size()];
+                                        String[] workoutNames = new String[returnList.size()];
+                                        for (int i = 0; i < returnList.size(); i++) {
+                                            workoutNames[i] = returnList.get(i).getName();
+                                            areChecked[i] = false;
                                         }
-
+                                        new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
+                                                .setTitle(R.string.selectWorkoutsToLoad)
+                                                .setIcon(R.drawable.ic_load)
+                                                .setMultiChoiceItems(workoutNames, areChecked, (dialog12, which12, isChecked) -> areChecked[which12] = isChecked)
+                                                .setPositiveButton(R.string.load, (dialog1, which1) -> {
+                                                    int removed = 0;
+                                                    int size = returnList.size();
+                                                    workouts = Utils.getInstance(MainActivity.this).getAllWorkouts();
+                                                    for (int i = 0; i < size; i++) {
+                                                        if (areChecked[i]) {
+                                                            workouts.add(returnList.get(i - removed));
+                                                            Utils.getInstance(MainActivity.this).addToAllWorkouts(returnList.get(i - removed));
+                                                            returnList.remove(i - removed);
+                                                            removed++;
+                                                        }
+                                                    }
+                                                    adapter.setWorkouts(workouts);
+                                                })
+                                                .setNegativeButton(R.string.cancel, null)
+                                                .show();
                                     }
-                                })
-                                .setNegativeButton(R.string.cancel, null)
-                                .show();
-                    }
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+//                                            Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_LONG).show();
+                                    new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
+                                            .setTitle(R.string.fileNotFound)
+                                            .setIcon(R.drawable.ic_warning)
+                                            .setMessage(R.string.checkLocationName)
+                                            .setPositiveButton(R.string.ok, null)
+                                            .show();
+                                } catch (IOException | ClassNotFoundException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MainActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                                }
+
+                            })
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
                 })
                 .show();
 
@@ -445,66 +379,55 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this, R.style.DefaultAlertDialogTheme)
                 .setTitle(R.string.selectWorkoutsToSave)
                 .setIcon(R.drawable.ic_save)
-                .setMultiChoiceItems(workoutNames, areChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        areChecked[which] = isChecked;
+                .setMultiChoiceItems(workoutNames, areChecked, (dialog, which, isChecked) -> areChecked[which] = isChecked)
+                .setPositiveButton(R.string.next, (dialog, which) -> {
+                    ArrayList<Workout> exportedWorkouts = new ArrayList<>();
+                    int removed = 0;
+                    int size = workouts.size();
+                    for (int i = 0; i < size; i++) {
+                        if (areChecked[i]) {
+                            exportedWorkouts.add(workouts.get(i - removed));
+                        }
                     }
-                })
-                .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<Workout> exportedWorkouts = new ArrayList<>();
-                        int removed = 0;
-                        int size = workouts.size();
-                        for (int i = 0; i < size; i++) {
-                            if (areChecked[i]) {
-                                exportedWorkouts.add(workouts.get(i - removed));
-                            }
+                    if (exportedWorkouts.isEmpty()) {
+                        Toast.makeText(MainActivity.this, R.string.noWorkoutsSelected, Toast.LENGTH_SHORT).show();
+                    } else {
+                        File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
+                        if (!directory.exists()) {
+                            directory.mkdirs();
                         }
-                        if (exportedWorkouts.isEmpty()) {
-                            Toast.makeText(MainActivity.this, R.string.noWorkoutsSelected, Toast.LENGTH_SHORT).show();
-                        } else {
-                            File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)));
-                            if (!directory.exists()) {
-                                directory.mkdirs();
-                            }
 
-                            final EditText exportName = new EditText(MainActivity.this);
-                            exportName.getBackground().setColorFilter(Color.parseColor("#FF5722"), PorterDuff.Mode.SRC_IN);
-                            exportName.setTextColor(Color.WHITE);
-                            new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
-                                    .setTitle(R.string.fileName)
-                                    .setIcon(R.drawable.ic_save)
-                                    .setView(exportName)
-                                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (exportName.getText().toString().isEmpty()) {
-                                                Toast.makeText(MainActivity.this, R.string.insertFileName, Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                String filename = exportName.getText().toString();
-                                                ObjectOutput out = null;
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.til_dialog, null);
+                        final EditText exportName = dialogView.findViewById(R.id.edtDialog);
+                        final TextInputLayout exportTil=dialogView.findViewById(R.id.tilDialog);
+                        exportTil.setHint(R.string.fileName);
+                        exportName.requestFocus();
+                        new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
+                                .setTitle(R.string.save)
+                                .setIcon(R.drawable.ic_save)
+                                .setView(dialogView)
+                                .setPositiveButton(R.string.save, (dialog1, which1) -> {
+                                    if (exportName.getText().toString().isEmpty()) {
+                                        Toast.makeText(MainActivity.this, R.string.insertFileName, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        String filename = exportName.getText().toString();
+                                        ObjectOutput out;
 
-                                                try {
-                                                    out = new ObjectOutputStream(new FileOutputStream(directory
-                                                            + File.separator + filename));
-                                                    out.writeObject(exportedWorkouts);
-                                                    out.close();
-                                                    Toast.makeText(MainActivity.this, getResources().getString(R.string.workoutsSavedIn) + " " + directory, Toast.LENGTH_LONG).show();
-                                                } catch (FileNotFoundException e) {
-                                                    e.printStackTrace();
-                                                    Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                    Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
+                                        try {
+                                            out = new ObjectOutputStream(new FileOutputStream(directory
+                                                    + File.separator + filename));
+                                            out.writeObject(exportedWorkouts);
+                                            out.close();
+                                            Toast.makeText(MainActivity.this, getResources().getString(R.string.workoutsSavedIn) + " " + directory, Toast.LENGTH_LONG).show();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
                                         }
-                                    })
-                                    .setNegativeButton(R.string.cancel, null)
-                                    .show();
-                        }
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, null)
+                                .show();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -523,45 +446,32 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle(R.string.savingToAppMemory)
                 .setMessage(R.string.savingToAppMemoryInfo)
                 .setIcon(R.drawable.ic_info)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
-                                .setTitle(R.string.selectWorkoutsToSave)
-                                .setIcon(R.drawable.ic_save)
-                                .setMultiChoiceItems(workoutNames, areChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                        areChecked[which] = isChecked;
-                                    }
-                                })
-                                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ArrayList<Workout> exportedWorkouts = Utils.getInstance(MainActivity.this).getExportedWorkouts();
-                                        if (exportedWorkouts == null) {
-                                            exportedWorkouts = new ArrayList<>();
-                                        }
-                                        int removed = 0;
-                                        int size = workouts.size();
-                                        for (int i = 0; i < size; i++) {
+                .setPositiveButton(R.string.ok, (dialog, which) -> new AlertDialog.Builder(MainActivity.this, R.style.DefaultAlertDialogTheme)
+                        .setTitle(R.string.selectWorkoutsToSave)
+                        .setIcon(R.drawable.ic_save)
+                        .setMultiChoiceItems(workoutNames, areChecked, (dialog12, which12, isChecked) -> areChecked[which12] = isChecked)
+                        .setPositiveButton(R.string.save, (dialog1, which1) -> {
+                            ArrayList<Workout> exportedWorkouts = Utils.getInstance(MainActivity.this).getExportedWorkouts();
+                            if (exportedWorkouts == null) {
+                                exportedWorkouts = new ArrayList<>();
+                            }
+                            int removed = 0;
+                            int size = workouts.size();
+                            for (int i = 0; i < size; i++) {
 
-                                            if (areChecked[i]) {
-                                                exportedWorkouts.add(workouts.get(i - removed));
-                                                workouts.remove(i - removed);
-                                                removed++;
+                                if (areChecked[i]) {
+                                    exportedWorkouts.add(workouts.get(i - removed));
+                                    workouts.remove(i - removed);
+                                    removed++;
 //
-                                            }
-                                        }
-                                        adapter.setWorkouts(workouts);
-                                        Utils.getInstance(MainActivity.this).updateWorkouts(workouts);
-                                        Utils.getInstance(MainActivity.this).setExportedWorkouts(exportedWorkouts);
-                                    }
-                                })
-                                .setNegativeButton(R.string.cancel, null)
-                                .show();
-                    }
-                }).show();
+                                }
+                            }
+                            adapter.setWorkouts(workouts);
+                            Utils.getInstance(MainActivity.this).updateWorkouts(workouts);
+                            Utils.getInstance(MainActivity.this).setExportedWorkouts(exportedWorkouts);
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show()).show();
 
     }
 
@@ -579,29 +489,21 @@ public class MainActivity extends AppCompatActivity {
             new AlertDialog.Builder(this, R.style.DefaultAlertDialogTheme)
                     .setTitle(R.string.selectWorkoutsToLoad)
                     .setIcon(R.drawable.ic_load)
-                    .setMultiChoiceItems(workoutNames, areChecked, new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                            areChecked[which] = isChecked;
-                        }
-                    })
-                    .setPositiveButton(R.string.load, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            int removed = 0;
-                            int size = workoutsImport.size();
-                            workouts = Utils.getInstance(MainActivity.this).getAllWorkouts();
-                            for (int i = 0; i < size; i++) {
-                                if (areChecked[i]) {
-                                    workouts.add(workoutsImport.get(i - removed));
-                                    workoutsImport.remove(i - removed);
-                                    removed++;
-                                }
+                    .setMultiChoiceItems(workoutNames, areChecked, (dialog, which, isChecked) -> areChecked[which] = isChecked)
+                    .setPositiveButton(R.string.load, (dialog, which) -> {
+                        int removed = 0;
+                        int size = workoutsImport.size();
+                        workouts = Utils.getInstance(MainActivity.this).getAllWorkouts();
+                        for (int i = 0; i < size; i++) {
+                            if (areChecked[i]) {
+                                workouts.add(workoutsImport.get(i - removed));
+                                workoutsImport.remove(i - removed);
+                                removed++;
                             }
-                            adapter.setWorkouts(workouts);
-                            Utils.getInstance(MainActivity.this).updateWorkouts(workouts);
-                            Utils.getInstance(MainActivity.this).setExportedWorkouts(workoutsImport);
                         }
+                        adapter.setWorkouts(workouts);
+                        Utils.getInstance(MainActivity.this).updateWorkouts(workouts);
+                        Utils.getInstance(MainActivity.this).setExportedWorkouts(workoutsImport);
                     })
                     .setNegativeButton(R.string.cancel, null)
                     .show();
@@ -628,24 +530,14 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this, R.style.DefaultAlertDialogTheme)
                 .setTitle(R.string.selectCalendar)
                 .setIcon(R.drawable.ic_calendar)
-                .setSingleChoiceItems(accountNames, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected=which;
-
-
-                    }
-                })
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        loggingEnabled = true;
-                        Utils.getInstance(MainActivity.this).setLoggingEnabled(true);
-                        if(selected==0){
-                            Utils.getInstance(MainActivity.this).setCalendarID("");
-                        }else{
-                            Utils.getInstance(MainActivity.this).setCalendarID(calendarId.get(selected-1));
-                        }
+                .setSingleChoiceItems(accountNames, checkedItem, (dialog, which) -> selected=which)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    loggingEnabled = true;
+                    Utils.getInstance(MainActivity.this).setLoggingEnabled(true);
+                    if(selected==0){
+                        Utils.getInstance(MainActivity.this).setCalendarID("");
+                    }else{
+                        Utils.getInstance(MainActivity.this).setCalendarID(calendarId.get(selected-1));
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -656,7 +548,7 @@ public class MainActivity extends AppCompatActivity {
     private void getGmailCalendarIds(Context c) {
         calendarId = new ArrayList<>();
         calendarName = new ArrayList<>();
-        String projection[] = {"_id", "calendar_displayName"};
+        String[] projection = {"_id", "calendar_displayName"};
         Uri calendars;
         calendars = Uri.parse("content://com.android.calendar/calendars");
         ContentResolver contentResolver = c.getContentResolver();
@@ -687,17 +579,27 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.Theme_GymBuddy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
 
-        setupActionBar(getString(R.string.workouts), "");
+        Helpers.setupActionBar(getString(R.string.workouts),"",getSupportActionBar(),this);
 
 //        Toast.makeText(this, areExercisesShown + "", Toast.LENGTH_SHORT).show();
 
         //workoutsRV=findViewById(R.id.workoutsRV);
+//        mainAd=findViewById(R.id.mainAd);
+        mainAdContainer=findViewById(R.id.mainAdContainer);
         parent = findViewById(R.id.parent);
         btnAddWorkout = findViewById(R.id.btnAddWorkout);
         workoutsRV = findViewById(R.id.workoutsRV);
         btnSchedule = findViewById(R.id.btnSchedule);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+
+        Helpers.handleAds(mainAdContainer,this);
 
         workouts = Utils.getInstance(this).getAllWorkouts();
         loggingEnabled = Utils.getInstance(this).isLoggingEnabled();
@@ -746,28 +648,20 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(workoutsRV);
 
-        btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (verifyCalendarPermissions(MainActivity.this))
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        handleSchedule();
-                    }
+        btnSchedule.setOnClickListener(v -> {
+            if (verifyCalendarPermissions(MainActivity.this)) {
+                handleSchedule();
             }
         });
 
-        btnAddWorkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int LAUNCH_SECOND_ACTIVITY = 1;
-                Intent i = new Intent(MainActivity.this, AddWorkoutActivity.class);
+        btnAddWorkout.setOnClickListener(v -> {
+            int LAUNCH_SECOND_ACTIVITY = 1;
+            Intent i = new Intent(MainActivity.this, AddWorkoutActivity.class);
 //                startActivity(i);
-                startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
-            }
+            startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void handleSchedule() {
         Intent intent = new Intent(this, ScheduleActivity.class);
         startActivity(intent);

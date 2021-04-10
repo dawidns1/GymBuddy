@@ -92,20 +92,20 @@ public class SessionsRVAdapter extends RecyclerView.Adapter<SessionsRVAdapter.Vi
             holder.txtLxR8.setVisibility(View.GONE);
             holder.separator6.setVisibility(View.GONE);
         }
-        holder.txtLxR1.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[0]) / 10.0) + "x" + sessions.get(position).getReps()[0]);
-        holder.txtLxR2.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[1]) / 10.0) + "x" + sessions.get(position).getReps()[1]);
-        holder.txtLxR3.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[2]) / 10.0) + "x" + sessions.get(position).getReps()[2]);
-        holder.txtLxR4.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[3]) / 10.0) + "x" + sessions.get(position).getReps()[3]);
-        holder.txtLxR5.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[4]) / 10.0) + "x" + sessions.get(position).getReps()[4]);
-        holder.txtLxR6.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[5]) / 10.0) + "x" + sessions.get(position).getReps()[5]);
-        holder.txtLxR7.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[6]) / 10.0) + "x" + sessions.get(position).getReps()[6]);
-        holder.txtLxR8.setText(stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[7]) / 10.0) + "x" + sessions.get(position).getReps()[7]);
+        holder.txtLxR1.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[0]) / 10.0) + "x" + sessions.get(position).getReps()[0]);
+        holder.txtLxR2.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[1]) / 10.0) + "x" + sessions.get(position).getReps()[1]);
+        holder.txtLxR3.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[2]) / 10.0) + "x" + sessions.get(position).getReps()[2]);
+        holder.txtLxR4.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[3]) / 10.0) + "x" + sessions.get(position).getReps()[3]);
+        holder.txtLxR5.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[4]) / 10.0) + "x" + sessions.get(position).getReps()[4]);
+        holder.txtLxR6.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[5]) / 10.0) + "x" + sessions.get(position).getReps()[5]);
+        holder.txtLxR7.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[6]) / 10.0) + "x" + sessions.get(position).getReps()[6]);
+        holder.txtLxR8.setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(position).getLoad()[7]) / 10.0) + "x" + sessions.get(position).getReps()[7]);
 
         float total = 0;
         for (int i = 0; i < sessions.get(position).getReps().length; i++) {
             total += sessions.get(position).getLoad()[i] * sessions.get(position).getReps()[i];
         }
-        holder.txtTotal.setText(stringFormat(Math.round(total)));
+        holder.txtTotal.setText(Helpers.stringFormat(Math.round(total)));
 
 //        if (position + 1 == getItemCount()) {
 //            setBottomMargin(holder.itemView, (int) (5 * Resources.getSystem().getDisplayMetrics().density));
@@ -158,30 +158,15 @@ public class SessionsRVAdapter extends RecyclerView.Adapter<SessionsRVAdapter.Vi
             btnMenuSession = itemView.findViewById(R.id.btnMenuSession);
             btnMenuSession.setVisibility(View.GONE);
 
-            parentSession.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(getAdapterPosition());
-                }
-            });
+            parentSession.setOnClickListener(v -> onItemClickListener.onItemClick(getAdapterPosition()));
 
             if (menuShown) {
-                parentSession.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        onItemLongClickListener.onItemLongClick(getAdapterPosition(),v);
-                    return true;
-                    }
+                parentSession.setOnLongClickListener(v -> {
+                    onItemLongClickListener.onItemLongClick(getAdapterPosition(),v);
+                return true;
                 });
             }
         }
-    }
-
-    public static String stringFormat(double d) {
-        if (d == (long) d)
-            return String.format("%d", (long) d);
-        else
-            return String.format("%s", d);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -202,14 +187,6 @@ public class SessionsRVAdapter extends RecyclerView.Adapter<SessionsRVAdapter.Vi
 
     public interface OnItemLongClickListener{
         void onItemLongClick(int positionRV, View v);
-    }
-
-    public static void setBottomMargin(View view, int bottomMargin) {
-        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-            params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, bottomMargin);
-            view.requestLayout();
-        }
     }
 
 }

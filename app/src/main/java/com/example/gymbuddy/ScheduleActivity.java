@@ -1,6 +1,5 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,10 +24,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -37,23 +40,25 @@ import static android.view.View.GONE;
 
 public class ScheduleActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
-    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
-    private ArrayList<TextView> startingTime = new ArrayList<>();
-    private ArrayList<TextView> duration = new ArrayList<>();
+    private final ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+    private final ArrayList<TextView> startingTime = new ArrayList<>();
+    private final ArrayList<TextView> duration = new ArrayList<>();
     private boolean selectionDone = false;
     private Button btnSchedule;
     private EditText edtTitle, edtDescription;
     private Spinner edtSchedule, edtReminder;
     private int weeks;
     private int reminderMins;
-    private int startingHrs[] = {0, 0, 0, 0, 0, 0, 0};
-    private int startingMins[] = {0, 0, 0, 0, 0, 0, 0};
-    private long durationMillis[] = {0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] startingHrs = {0, 0, 0, 0, 0, 0, 0};
+    private final int[] startingMins = {0, 0, 0, 0, 0, 0, 0};
+    private final long[] durationMillis = {0, 0, 0, 0, 0, 0, 0, 0};
     private int checkedNumber = 0;
     private ConstraintLayout scheduleViews;
     private TextView txtCalendar;
     private ArrayList<String> calendarId, calendarName;
     private int selected = 0;
+//    private AdView scheduleAd;
+    private FrameLayout scheduleAdContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +143,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         });
 
         btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 String title;
@@ -200,7 +204,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void handleAddCalendarEntry(int offset, int position, String title, String description, int weekMultiplier) {
         long startMillis = 0;
         Calendar now = Calendar.getInstance(TimeZone.getDefault());
@@ -298,7 +301,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
                     duration.get(position).setText("1:00");
                     duration.get(position).setVisibility(View.VISIBLE);
                     views.get(position).setVisibility(View.VISIBLE);
-                    views.get(position).setText(String.valueOf(numberPickerHrs.getValue()) + ":" + String.format("%02d", (numberPickerMin.getValue() * 5)));
+                    views.get(position).setText(numberPickerHrs.getValue() + ":" + String.format("%02d", (numberPickerMin.getValue() * 5)));
                     if (!selectionDone) {
                         handleTimeSelection(position, duration, getResources().getString(R.string.durationMsg), 1, 1, 4);
                         startingHrs[position] = numberPickerHrs.getValue();
@@ -399,12 +402,14 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         duration.add(findViewById(R.id.durationThu));
         duration.add(findViewById(R.id.durationFri));
         duration.add(findViewById(R.id.durationSat));
+        scheduleAdContainer=findViewById(R.id.scheduleAdContainer);
+        Helpers.handleAds(scheduleAdContainer,this);
     }
 
     private void getGmailCalendarIds(Context c) {
         calendarId = new ArrayList<>();
         calendarName = new ArrayList<>();
-        String projection[] = {"_id", "calendar_displayName"};
+        String[] projection = {"_id", "calendar_displayName"};
         Uri calendars;
         calendars = Uri.parse("content://com.android.calendar/calendars");
         ContentResolver contentResolver = c.getContentResolver();

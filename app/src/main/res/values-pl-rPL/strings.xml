@@ -33,7 +33,7 @@
     <string name="selectWorkoutsToShare">Wybierz treningi do udostępnienia</string>
     <string name="share">Udostępnij</string>
     <string name="noWorkoutsSelected">Nie wybrano treningów</string>
-    <string name="shareWorkoutsVia">Udostępnij treningi przez:</string>
+    <string name="shareWorkoutsVia">Udostępnij treningi przez</string>
     <string name="fileLocation">Lokalizacja pliku</string>
     <string name="fileLocationInfo">Upewnij się, że plik znajduje się w lokalizacji Documents i skopiuj jego nazwę</string>
     <string name="fileName">Nazwa pliku</string>
@@ -69,16 +69,16 @@
     <string name="sureDeleteThisWorkout">Czy na pewno chcesz usunąć ten trening?</string>
     <string name="hintOptional">opcjonalne</string>
     <string name="exerciseName">Nazwa ćwiczenia</string>
-    <string name="sets">Serii:</string>
-    <string name="muscleGroup">Partia:</string>
-    <string name="muscleGroupSecondary">Druga partia:</string>
-    <string name="breaks">Przerwy:</string>
+    <string name="sets">Serii</string>
+    <string name="muscleGroup">Partia</string>
+    <string name="muscleGroupSecondary">Druga partia</string>
+    <string name="breaks">Przerwy</string>
     <string name="seconds">sekund</string>
     <string name="workoutName">Nazwa treningu</string>
-    <string name="type">Typ:</string>
+    <string name="type">Typ</string>
     <string name="startWorkout">Rozpocznij trening</string>
     <string name="resume">Wznów</string>
-    <string name="set">Seria:</string>
+    <string name="set">Seria</string>
     <string name="skipTimer">Zeruj</string>
     <string name="loadSet">Obiążenie</string>
     <string name="repsSet">Powtórzenia</string>
@@ -93,7 +93,7 @@
     <string name="edit">Edytuj</string>
     <string name="delete">Usuń</string>
     <string name="deleteAllSessions">Usuń wszystkie sesje</string>
-    <string name="isometricAdd">Izometryczne:</string>
+    <string name="isometricAdd">Izometryczne</string>
     <string name="isometric">izometryczne</string>
     <string name="iso">izo</string>
     <string name="timeSet">Czas</string>
@@ -146,5 +146,7 @@
     <string name="lastProgress">ostatni progres</string>
     <string name="totalProgress">całkowity progres</string>
     <string name="bestSession">Najlepsza sesja</string>
+    <string name="cannotAddMoreExercises">Nie można dodać więcej niż 9 ćwiczeń</string>
+    <string name="maximumExerciseNumberReached">Osiągnięto limit ćwiczeń</string>
 
 </resources>

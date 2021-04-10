@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605584390995",
+    "project_id": "gym-buddy-99fd6",
+    "storage_bucket": "gym-buddy-99fd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605584390995:android:3d5634dd88b74dbfc37fa6",
+        "android_client_info": {
+          "package_name": "com.dawpie.gymbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605584390995-ll5mu9ov1dj396g7l0iqtvnsq5ijm35m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQrr1jMtCkXKwQdx2whjuQo7yShFoIvMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605584390995-ll5mu9ov1dj396g7l0iqtvnsq5ijm35m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

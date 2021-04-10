@@ -23,7 +23,7 @@ public class Exercise implements Serializable {
         this.tempo=tempo;
         this.muscleGroup = muscleGroup;
         this.muscleGroupSecondary=muscleGroupSecondary;
-        this.sessions=new ArrayList<Session>();
+        this.sessions= new ArrayList<>();
         this.superSet=0;
     }
 

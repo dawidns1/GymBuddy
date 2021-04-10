@@ -1,19 +1,14 @@
 package com.example.gymbuddy;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerImage;
@@ -24,12 +19,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static com.example.gymbuddy.SessionsActivity.CHART_KEY;
-import static com.example.gymbuddy.SessionsRVAdapter.stringFormat;
 
 public class ChartActivity extends AppCompatActivity {
     private TextView txtDateH, txtTotalH, txtLxR1H, txtLxR2H, txtLxR3H, txtLxR4H, txtLxR5H, txtLxR6H, txtLxR7H, txtLxR8H;
@@ -51,8 +44,9 @@ public class ChartActivity extends AppCompatActivity {
     private ArrayList<ILineDataSet> dataSet;
     private LineData data;
     private LineChart exerciseChart;
+//    private AdView chartAd;
+    private FrameLayout chartAdContainer;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_GymBuddy);
@@ -60,33 +54,35 @@ public class ChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart);
 
         Intent intent = getIntent();
-        exercise = (Exercise) intent.getSerializableExtra(CHART_KEY);
+        exercise = (Exercise) intent.getSerializableExtra(Helpers.CHART_KEY);
         sessions = exercise.getSessions();
         for (int i = 0; i < sessions.size(); i++) {
-            total = arrayToTotal(sessions.get(i).getReps(), sessions.get(i).getLoad());
+            total = Helpers.arrayToTotal(sessions.get(i).getReps(), sessions.get(i).getLoad());
             if (total > bestTotal) {
                 bestTotal = total;
                 bestSessionPosition = i;
             }
-            entries.add(0, new Entry(stringDateToMillis(sessions.get(i).getDate()), total));
-            entries.get(0).setIcon(getResources().getDrawable(R.drawable.ic_hexagon_icon));
+            entries.add(0, new Entry(Helpers.stringDateToMillis(sessions.get(i).getDate()), total));
+            entries.get(0).setIcon(ContextCompat.getDrawable(this,R.drawable.ic_hexagon_icon));
         }
 
         initViews();
 
-        txtTotalProgress.setText(stringFormat(entries.get(entries.size()-1).getY()-entries.get(0).getY()));
-        txtLastProgress.setText(stringFormat(entries.get(entries.size()-1).getY()-entries.get(entries.size()-2).getY()));
-        txtTotalProgressPercentage.setText(stringFormat((entries.get(entries.size()-1).getY()-entries.get(0).getY())/entries.get(0).getY()*100)+"%");
-        txtLastProgressPercentage.setText(stringFormat((entries.get(entries.size()-1).getY()-entries.get(entries.size()-2).getY())/entries.get(entries.size()-2).getY()*100)+"%");
+        Helpers.handleAds(chartAdContainer,this);
+
+        txtTotalProgress.setText(Helpers.stringFormat(entries.get(entries.size()-1).getY()-entries.get(0).getY()));
+        txtLastProgress.setText(Helpers.stringFormat(entries.get(entries.size()-1).getY()-entries.get(entries.size()-2).getY()));
+        txtTotalProgressPercentage.setText(Helpers.stringFormatPercentage((entries.get(entries.size()-1).getY()-entries.get(0).getY())/entries.get(0).getY()*100)+"%");
+        txtLastProgressPercentage.setText(Helpers.stringFormatPercentage((entries.get(entries.size()-1).getY()-entries.get(entries.size()-2).getY())/entries.get(entries.size()-2).getY()*100)+"%");
 
 
         for(int i=0; i<exercise.getSets();i++){
-            txtLxRB.get(i).setText(stringFormatRepsAndLoad(Math.round(10.0 * sessions.get(bestSessionPosition).getLoad()[i]) / 10.0) + "x" + sessions.get(bestSessionPosition).getReps()[i]);
+            txtLxRB.get(i).setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(bestSessionPosition).getLoad()[i]) / 10.0) + "x" + sessions.get(bestSessionPosition).getReps()[i]);
         }
         txtDateB.setText(sessions.get(bestSessionPosition).getDate());
         txtTotalB.setText(String.valueOf(entries.get(entries.size()-1-bestSessionPosition).getY()));
 
-        setupActionBar(exercise.getName() + getResources().getString(R.string.progress), "");
+        Helpers.setupActionBar(exercise.getName() + getResources().getString(R.string.progress),"",getSupportActionBar(),this);
 
         exerciseChart = findViewById(R.id.exerciseChart);
 
@@ -99,10 +95,10 @@ public class ChartActivity extends AppCompatActivity {
         exerciseChart.getLegend().setEnabled(false);
         exerciseChart.getDescription().setEnabled(false);
         exerciseChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        exerciseChart.getXAxis().setTextColor(getResources().getColor(R.color.white));
+        exerciseChart.getXAxis().setTextColor(ContextCompat.getColor(this,R.color.white));
         exerciseChart.getXAxis().setAxisLineWidth(2);
         exerciseChart.getAxisLeft().setDrawGridLines(false);
-        exerciseChart.getAxisLeft().setTextColor(getResources().getColor(R.color.orange_500));
+        exerciseChart.getAxisLeft().setTextColor(ContextCompat.getColor(this,R.color.orange_500));
         exerciseChart.getAxisLeft().setTextSize(15);
         exerciseChart.getAxisLeft().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         exerciseChart.getXAxis().setDrawGridLines(false);
@@ -132,60 +128,22 @@ public class ChartActivity extends AppCompatActivity {
 
     private LineDataSet newSet(ArrayList<Entry> yValues) {
         set1 = new LineDataSet(yValues, "Dataset1");
-        set1.setHighLightColor(getResources().getColor(R.color.orange_500));
+        set1.setHighLightColor(ContextCompat.getColor(this,R.color.orange_500));
         set1.setDrawHorizontalHighlightIndicator(false);
         set1.setDrawVerticalHighlightIndicator(false);
         set1.setHighlightLineWidth(0f);
         set1.setFillAlpha(110);
-        set1.setColor(getResources().getColor(R.color.orange_500));
+        set1.setColor(ContextCompat.getColor(this,R.color.orange_500));
         set1.setCircleRadius(2);
-        set1.setCircleColor(getResources().getColor(R.color.orange_700));
-        set1.setCircleHoleColor(getResources().getColor(R.color.grey_500));
+        set1.setCircleColor(ContextCompat.getColor(this,R.color.orange_700));
+        set1.setCircleHoleColor(ContextCompat.getColor(this,R.color.grey_500));
         set1.setCircleHoleRadius(1);
         set1.setDrawValues(false);
-        set1.setValueTextColor(getResources().getColor(R.color.grey_200));
+        set1.setValueTextColor(ContextCompat.getColor(this,R.color.grey_200));
         set1.setLineWidth(4);
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setCubicIntensity(0.2f);
         return set1;
-    }
-
-    private float arrayToTotal(int reps[], float load[]) {
-        float total = 0;
-        for (int i = 0; i < reps.length; i++) {
-            total += reps[i] * load[i];
-        }
-        return total;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private float stringDateToMillis(String date) {
-        String[] values = date.split("-");
-        int year = Integer.parseInt(values[0]);
-        int month = Integer.parseInt(values[1])-1;
-        int day = Integer.parseInt(values[2]);
-        Calendar time = Calendar.getInstance();
-        time.set(year, month, day);
-        long millis = time.getTimeInMillis();
-        return millis;
-    }
-
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
     }
 
     private void initViews() {
@@ -288,27 +246,15 @@ public class ChartActivity extends AppCompatActivity {
         txtLastProgress=findViewById(R.id.txtLastProgress);
         txtLastProgressPercentage=findViewById(R.id.txtLastProgressPercentage);
         txtTotalProgressPercentage=findViewById(R.id.txtTotalProgressPercentage);
-//        viewHighlighted();
+        chartAdContainer=findViewById(R.id.chartAdContainer);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        chartAd.loadAd(adRequest);
 
-    }
-
-    public static String stringFormat(double d) {
-        if (Math.round(1.0*d) == (long) d)
-            return String.valueOf((int)d);
-        else
-            return String.format("%.1f", d);
-    }
-
-    public static String stringFormatRepsAndLoad(double d) {
-        if (d == (long) d)
-            return String.format("%d", (long) d);
-        else
-            return String.format("%s", d);
     }
 
     private void viewHighlighted(int position) {
         for(int i=0; i<exercise.getSets();i++){
-            txtLxRH.get(i).setText(stringFormatRepsAndLoad(Math.round(10.0 * sessions.get(sessions.size()-1-position).getLoad()[i]) / 10.0) + "x" + sessions.get(sessions.size()-1-position).getReps()[i]);
+            txtLxRH.get(i).setText(Helpers.stringFormat(Math.round(10.0 * sessions.get(sessions.size()-1-position).getLoad()[i]) / 10.0) + "x" + sessions.get(sessions.size()-1-position).getReps()[i]);
         }
         txtDateH.setText(sessions.get(sessions.size()-1-position).getDate());
         txtTotalH.setText(String.valueOf(entries.get(position).getY()));
