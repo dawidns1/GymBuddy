@@ -5,10 +5,7 @@
     android:id="@+id/parentExercise"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
     app:cardBackgroundColor="@color/grey_700"
@@ -23,7 +20,8 @@
             android:id="@+id/collapsedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:paddingEnd="0dp">
 
             <TextView
                 android:id="@+id/txtTempo"
@@ -52,7 +50,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/txtExerciseName"
-                android:layout_marginEnd="5dp"
                 android:text="# sets"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtExerciseName"
@@ -103,7 +100,7 @@
                 android:id="@+id/breaksTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/breaks"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtExerciseName" />
@@ -119,10 +116,11 @@
                 app:layout_constraintTop_toTopOf="@+id/breaksTxt" />
 
             <ImageView
+                android:paddingEnd="14dp"
+                android:paddingStart="14dp"
                 android:id="@+id/btnMenuExercise"
-                android:layout_width="15dp"
+                android:layout_width="38dp"
                 android:layout_height="30dp"
-                android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_hexagon_triple_vertical"

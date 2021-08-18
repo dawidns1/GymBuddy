@@ -1,8 +1,9 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.view;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -10,6 +11,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.gymbuddy.R;
+import com.example.gymbuddy.helpers.TemplateView;
+import com.example.gymbuddy.helpers.Helpers;
+import com.example.gymbuddy.helpers.LineChartXAxisValueFormatter;
+import com.example.gymbuddy.model.Exercise;
+import com.example.gymbuddy.model.Session;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerImage;
 import com.github.mikephil.charting.components.XAxis;
@@ -18,9 +25,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
@@ -46,6 +53,7 @@ public class ChartActivity extends AppCompatActivity {
     private LineChart exerciseChart;
 //    private AdView chartAd;
     private FrameLayout chartAdContainer;
+    private TemplateView chartAdTemplate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +76,8 @@ public class ChartActivity extends AppCompatActivity {
 
         initViews();
 
-        Helpers.handleAds(chartAdContainer,this);
+//        Helpers.handleAds(chartAdContainer,this, Helpers.AD_ID_CHART);
+        Helpers.handleNativeAds(chartAdTemplate,this,Helpers.AD_ID_CHART_NATIVE,null);
 
         txtTotalProgress.setText(Helpers.stringFormat(entries.get(entries.size()-1).getY()-entries.get(0).getY()));
         txtLastProgress.setText(Helpers.stringFormat(entries.get(entries.size()-1).getY()-entries.get(entries.size()-2).getY()));
@@ -117,13 +126,54 @@ public class ChartActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onNothingSelected() {
-
             }
         });
         exerciseChart.highlightValue(entries.get(entries.size() - 1).getX(), 0, true);
+        exerciseChart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+                if (exerciseChart.getViewPortHandler().getScaleX() != 1) {
+                    exerciseChart.fitScreen();
+                }
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
     }
 
     private LineDataSet newSet(ArrayList<Entry> yValues) {
@@ -247,6 +297,7 @@ public class ChartActivity extends AppCompatActivity {
         txtLastProgressPercentage=findViewById(R.id.txtLastProgressPercentage);
         txtTotalProgressPercentage=findViewById(R.id.txtTotalProgressPercentage);
         chartAdContainer=findViewById(R.id.chartAdContainer);
+        chartAdTemplate=findViewById(R.id.chartAdTemplate);
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        chartAd.loadAd(adRequest);
 

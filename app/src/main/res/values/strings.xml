@@ -89,7 +89,7 @@
     <string name="noWorkoutsToLoad">No workouts to load</string>
     <string name="selectWorkoutsToLoad">Select workouts to load</string>
     <string name="fileNotFound">File not found</string>
-    <string name="checkLocationName">Check file location and name and try again</string>
+    <string name="checkLocationNamePermissions">Cannot open. Check app permissions, file location and name and try again.</string>
     <string name="selectWorkoutsToSave">Select workouts to save</string>
     <string name="insertFileName">Insert file name</string>
     <string name="workoutsSavedIn">Workouts saved in</string>
@@ -173,7 +173,7 @@
     <string name="disablingSupersetMsg">Are you sure you want to disable this superset?</string>
     <string name="noAvailableExercises">No available exercises</string>
     <string name="schedule">Schedule</string>
-    <string name="permissionInfoCalendar">In order to share, save or load a file this app needs to be granted permission to access storage</string>
+    <string name="permissionInfoCalendar">In order to schedule workouts or save them in calendar this app needs to be granted permission to access calendar</string>
     <string name="workout">Workout</string>
     <string name="logInCalendar">Log in calendar</string>
     <string name="disableLogging">Disable logging</string>
@@ -181,13 +181,13 @@
     <string name="enableLogging">Enable logging</string>>
     <string name="enableLoggingMsg">Are you sure you want to enable logging your workouts in calendar?</string>
     <string name="grantPermission">This app\'s calendar access permissision has been removed</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
     <string name="schedulingWorkouts">Scheduling workouts</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
@@ -220,5 +220,27 @@
     <string name="bestSession">Best session</string>
     <string name="cannotAddMoreExercises">Can\'t add more than 9 exercises</string>
     <string name="maximumExerciseNumberReached">Max exercise number reached</string>
+    <string name="breakFinish">Break finish</string>
+    <string name="breakCountdown">Break countdown</string>
+    <string name="breakNotification">Break</string>
+    <string name="grouping">Enable/disable grouping</string>
+    <string name="other">Other</string>
+    <string name="cloud">Cloud</string>
+    <string name="loadFromCloud">Load from cloud</string>
+    <string name="saveToCloud">Save to cloud</string>
+    <string name="deleteFromCloud">Delete from cloud</string>
+    <string name="signIn">Sign in</string>
+    <string name="signOut">Sign out</string>
+    <string name="signedInAs">Signed in as</string>
+    <string name="signedOut">Signed out</string>
+    <string name="errorSigningIn">Error signing in</string>
+    <string name="noWorkoutsToDelete">No workouts to delete</string>
+    <string name="selectWorkoutsToDelete">Select workouts to delete from cloud</string>
+    <string name="saved">workout saved</string>
+    <string name="unableToSave">Unable to save</string>
+    <string name="deleted">workout deleted</string>
+    <string name="unableToDelete">Unable to delete</string>
+    <string name="updated">workout updated</string>
+    <string name="unableToUpdate">unable to update</string>
 
 </resources>

@@ -7,7 +7,7 @@
     <path
         android:fillColor="#2e2e2e"
         android:pathData="M 29,10.7 L 79,10.7 104,54 79,97.3 29,97.3 4,54 z"
-        android:strokeWidth="3"
+        android:strokeWidth="7"
         android:strokeColor="#FF5722" />
 
     <group
@@ -18,9 +18,9 @@
 
         <path
 
-            android:strokeWidth="3"
+            android:strokeWidth="4"
             android:strokeColor="#FF5722"
-            android:pathData="M20,5 L20,3  12,-0 4,3 4,10 20,10 20,18 12,20 4,18 4,15" />
+            android:pathData="M20,5 L20,3  12,-2 4,3 4,10 20,10 20,18 12,22 4,18 4,15" />
 
     </group>
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:fillViewport="true"
-    tools:context=".AddExerciseActivity">
+    tools:context=".view.AddExerciseActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -40,6 +40,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
                 android:id="@+id/edtExerciseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,6 +121,7 @@
             app:layout_constraintVertical_bias="0.4">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
                 android:id="@+id/edtTempo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -232,6 +234,7 @@
             app:layout_constraintVertical_bias="0.4">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
                 android:id="@+id/edtMuscleGroupE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -254,6 +257,7 @@
             app:layout_constraintVertical_bias="0.4">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
                 android:id="@+id/edtMuscleGroupSecondaryE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -327,6 +331,7 @@
             app:layout_constraintTop_toTopOf="@id/imgBreaks">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
                 android:id="@+id/edtTxtBreaks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,16 +1,10 @@
-package com.example.gymbuddy;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+package com.example.gymbuddy.view;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.net.Uri;
@@ -30,8 +24,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+
+import com.example.gymbuddy.R;
+import com.example.gymbuddy.helpers.Helpers;
+import com.example.gymbuddy.helpers.TemplateView;
+import com.example.gymbuddy.helpers.Utils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -59,6 +59,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
     private int selected = 0;
 //    private AdView scheduleAd;
     private FrameLayout scheduleAdContainer;
+    private TemplateView scheduleAdTemplate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        setupActionBar(getString(R.string.schedulingWorkouts), "");
+        Helpers.setupActionBar(getString(R.string.schedulingWorkouts), "",getSupportActionBar(),this);
 
         initViews();
 
@@ -74,9 +75,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
-                        weeks = 1;
-                        break;
                     case 1:
                         weeks = 2;
                         break;
@@ -111,9 +109,6 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
-                        reminderMins = 0;
-                        break;
                     case 1:
                         reminderMins = 15;
                         break;
@@ -142,45 +137,37 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
             }
         });
 
-        btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title;
-                String message;
-                if (edtTitle.getText().toString().isEmpty()) {
-                    title = getResources().getString(R.string.workout);
-                } else {
-                    title = edtTitle.getText().toString();
-                }
-                if (edtDescription.getText().toString().isEmpty()) {
-                    message = "";
-                } else {
-                    message = edtDescription.getText().toString();
-                }
-                for (int k = 0; k < weeks; k++) {
-                    for (int i = 0; i < checkBoxes.size(); i++) {
-                        if (checkBoxes.get(i).isChecked()) {
-                            Calendar now = Calendar.getInstance(TimeZone.getDefault());
-                            int day = now.get(Calendar.DAY_OF_WEEK);
-                            for (int j = 0; j < 7; j++) {
-                                if ((day - 1 + j) % 7 == i) {
-                                    handleAddCalendarEntry(j, i, title, message, k);
-                                }
+        btnSchedule.setOnClickListener(v -> {
+            String title;
+            String message;
+            if (edtTitle.getText().toString().isEmpty()) {
+                title = getResources().getString(R.string.workout);
+            } else {
+                title = edtTitle.getText().toString();
+            }
+            if (edtDescription.getText().toString().isEmpty()) {
+                message = "";
+            } else {
+                message = edtDescription.getText().toString();
+            }
+            for (int k = 0; k < weeks; k++) {
+                for (int i = 0; i < checkBoxes.size(); i++) {
+                    if (checkBoxes.get(i).isChecked()) {
+                        Calendar now = Calendar.getInstance(TimeZone.getDefault());
+                        int day = now.get(Calendar.DAY_OF_WEEK);
+                        for (int j = 0; j < 7; j++) {
+                            if ((day - 1 + j) % 7 == i) {
+                                handleAddCalendarEntry(j, i, title, message, k);
                             }
                         }
                     }
                 }
-                Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.eventsAdded), Toast.LENGTH_SHORT).show();
-                finish();
             }
+            Toast.makeText(ScheduleActivity.this, getResources().getString(R.string.eventsAdded), Toast.LENGTH_SHORT).show();
+            finish();
         });
 
-        txtCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleCalendarSelection();
-            }
-        });
+        txtCalendar.setOnClickListener(v -> handleCalendarSelection());
     }
 
     @Override
@@ -205,7 +192,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
     }
 
     private void handleAddCalendarEntry(int offset, int position, String title, String description, int weekMultiplier) {
-        long startMillis = 0;
+        long startMillis;
         Calendar now = Calendar.getInstance(TimeZone.getDefault());
         Calendar beginTime = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
@@ -231,7 +218,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
             values.put(CalendarContract.Events.CALENDAR_ID, Utils.getInstance(this).getCalendarID());
         }
         values.put(CalendarContract.Events.HAS_ALARM, 1);
-        values.put(CalendarContract.Events.EVENT_COLOR, getResources().getColor(R.color.orange_500));
+        values.put(CalendarContract.Events.EVENT_COLOR, ContextCompat.getColor(this,R.color.orange_500));
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
@@ -256,7 +243,7 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         d.setView(dialogView);
         d.setCancelable(false);
         d.setIcon(R.drawable.ic_timer);
-        final NumberPicker numberPickerHrs = (NumberPicker) dialogView.findViewById(R.id.hoursNumberPicker);
+        final NumberPicker numberPickerHrs = dialogView.findViewById(R.id.hoursNumberPicker);
         numberPickerHrs.setMaxValue(max);
         numberPickerHrs.setMinValue(min);
         numberPickerHrs.setWrapSelectorWheel(false);
@@ -272,16 +259,11 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         } catch (Exception e) {
             e.printStackTrace();
         }
-        final NumberPicker numberPickerMin = (NumberPicker) dialogView.findViewById(R.id.minutesNumberPicker);
+        final NumberPicker numberPickerMin = dialogView.findViewById(R.id.minutesNumberPicker);
         numberPickerMin.setMaxValue(11);
         numberPickerMin.setMinValue(0);
         numberPickerMin.setWrapSelectorWheel(false);
-        numberPickerMin.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int i) {
-                return String.format("%02d", i * 5);
-            }
-        });
+        numberPickerMin.setFormatter(i -> String.format("%02d", i * 5));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             numberPickerMin.setTextSize(80);
         }
@@ -294,40 +276,34 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         } catch (Exception e) {
             e.printStackTrace();
         }
-        d.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                try {
-                    duration.get(position).setText("1:00");
-                    duration.get(position).setVisibility(View.VISIBLE);
-                    views.get(position).setVisibility(View.VISIBLE);
-                    views.get(position).setText(numberPickerHrs.getValue() + ":" + String.format("%02d", (numberPickerMin.getValue() * 5)));
-                    if (!selectionDone) {
-                        handleTimeSelection(position, duration, getResources().getString(R.string.durationMsg), 1, 1, 4);
-                        startingHrs[position] = numberPickerHrs.getValue();
-                        startingMins[position] = (numberPickerMin.getValue() * 5);
-                        selectionDone = true;
+        d.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+            try {
+                duration.get(position).setText("1:00");
+                duration.get(position).setVisibility(View.VISIBLE);
+                views.get(position).setVisibility(View.VISIBLE);
+                views.get(position).setText(numberPickerHrs.getValue() + ":" + String.format("%02d", (numberPickerMin.getValue() * 5)));
+                if (!selectionDone) {
+                    handleTimeSelection(position, duration, getResources().getString(R.string.durationMsg), 1, 1, 4);
+                    startingHrs[position] = numberPickerHrs.getValue();
+                    startingMins[position] = (numberPickerMin.getValue() * 5);
+                    selectionDone = true;
 
-                    } else {
-                        checkedNumber++;
-                        if (!scheduleViews.isShown()) {
-                            scheduleViews.setVisibility(View.VISIBLE);
-                        }
-                        durationMillis[position] = ((numberPickerHrs.getValue() * 60) + (numberPickerMin.getValue() * 5)) * 60 * 1000;
+                } else {
+                    checkedNumber++;
+                    if (!scheduleViews.isShown()) {
+                        scheduleViews.setVisibility(View.VISIBLE);
                     }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    durationMillis[position] = ((numberPickerHrs.getValue() * 60) + (numberPickerMin.getValue() * 5)) * 60 * 1000;
                 }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-        d.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startingTime.get(position).setVisibility(GONE);
-                duration.get(position).setVisibility(GONE);
-                checkBoxes.get(position).setChecked(false);
-            }
+        d.setNegativeButton(R.string.cancel, (dialog, which) -> {
+            startingTime.get(position).setVisibility(GONE);
+            duration.get(position).setVisibility(GONE);
+            checkBoxes.get(position).setChecked(false);
         });
         AlertDialog alertDialog = d.create();
         alertDialog.show();
@@ -338,25 +314,8 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         return days * 86400000;
     }
 
-    public void setupActionBar(String text1, String text2) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.orange_500)));
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        View customActionBar = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
-        actionBar.setCustomView(customActionBar, params);
-        TextView abText1 = findViewById(R.id.abText1);
-        TextView abText2 = findViewById(R.id.abText2);
-        abText1.setText(text1);
-        abText2.setText(text2);
-    }
-
     private void initViews() {
+        scheduleAdTemplate=findViewById(R.id.scheduleAdTemplate);
         btnSchedule = findViewById(R.id.btnSchedule);
         edtTitle = findViewById(R.id.edtTitle);
         edtDescription = findViewById(R.id.edtDescription);
@@ -403,7 +362,8 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         duration.add(findViewById(R.id.durationFri));
         duration.add(findViewById(R.id.durationSat));
         scheduleAdContainer=findViewById(R.id.scheduleAdContainer);
-        Helpers.handleAds(scheduleAdContainer,this);
+//        Helpers.handleAds(scheduleAdContainer,this, Helpers.AD_ID_SCHEDULE);
+        Helpers.handleNativeAds(scheduleAdTemplate,this,Helpers.AD_ID_SCHEDULE_NATIVE,null);
     }
 
     private void getGmailCalendarIds(Context c) {
@@ -453,27 +413,17 @@ public class ScheduleActivity extends AppCompatActivity implements CompoundButto
         new AlertDialog.Builder(this, R.style.DefaultAlertDialogTheme)
                 .setTitle(R.string.selectCalendar)
                 .setIcon(R.drawable.ic_calendar)
-                .setSingleChoiceItems(accountNames, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected = which;
-                    }
-                })
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (selected == 0) {
-                            Utils.getInstance(ScheduleActivity.this).setCalendarID("");
-                            txtCalendar.setText(getResources().getString(R.string.def));
-                        } else {
-                            Utils.getInstance(ScheduleActivity.this).setCalendarID(calendarId.get(selected - 1));
-                            txtCalendar.setText(calendarName.get(selected - 1));
-                        }
+                .setSingleChoiceItems(accountNames, checkedItem, (dialog, which) -> selected = which)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    if (selected == 0) {
+                        Utils.getInstance(ScheduleActivity.this).setCalendarID("");
+                        txtCalendar.setText(getResources().getString(R.string.def));
+                    } else {
+                        Utils.getInstance(ScheduleActivity.this).setCalendarID(calendarId.get(selected - 1));
+                        txtCalendar.setText(calendarName.get(selected - 1));
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
-
     }
-
 }

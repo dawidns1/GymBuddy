@@ -1,153 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="5dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp"
-    app:cardBackgroundColor="@color/grey_700"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/txtTypeHeader"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true">
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:paddingTop="4dp"
+        android:text="FBW"
+        android:textColor="@color/orange_500"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/collapsed"
-            android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/grey_700"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTypeHeader">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:animateLayoutChanges="true">
 
-            <TextView
-                android:id="@+id/txtWorkoutName"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/collapsed"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="15dp"
-                android:text="WorkoutName"
-                android:textSize="20dp"
-                app:layout_constraintEnd_toStartOf="@+id/txtExercisesNo"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="8dp"
+                android:paddingEnd="0dp">
 
-            <TextView
-                android:id="@+id/txtExercisesNo"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txtWorkoutName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="WorkoutName"
+                    android:textSize="20dp"
+                    app:layout_constraintEnd_toStartOf="@+id/txtExercisesNo"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtExercisesNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/txtWorkoutName"
+                    android:text="- # exercises"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtWorkoutName"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMenuWorkout"
+                    app:layout_constraintTop_toTopOf="@+id/txtWorkoutName" />
+
+                <TextView
+                    android:id="@+id/typeTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/type"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/txtWorkoutName" />
+
+                <TextView
+                    android:id="@+id/txtType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="type"
+                    app:layout_constraintBottom_toBottomOf="@+id/typeTxt"
+                    app:layout_constraintStart_toEndOf="@+id/typeTxt"
+                    app:layout_constraintTop_toTopOf="@+id/typeTxt" />
+
+                <TextView
+                    android:id="@+id/muscleGroupTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/muscleGroup"
+                    app:layout_constraintStart_toEndOf="@+id/txtType"
+                    app:layout_constraintTop_toBottomOf="@+id/txtWorkoutName" />
+
+                <TextView
+                    android:id="@+id/txtMuscleGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="muscle1"
+                    app:layout_constraintBottom_toBottomOf="@+id/muscleGroupTxt"
+                    app:layout_constraintStart_toEndOf="@+id/muscleGroupTxt"
+                    app:layout_constraintTop_toTopOf="@+id/muscleGroupTxt" />
+
+                <TextView
+                    android:id="@+id/txtMuscleGroupSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="muscle2"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtMuscleGroup"
+                    app:layout_constraintStart_toEndOf="@+id/txtMuscleGroup"
+                    app:layout_constraintTop_toTopOf="@+id/txtMuscleGroup" />
+
+                <TextView
+                    android:id="@+id/workoutSeparator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtMuscleGroup"
+                    app:layout_constraintEnd_toStartOf="@+id/txtMuscleGroupSecondary"
+                    app:layout_constraintStart_toEndOf="@+id/txtMuscleGroup"
+                    app:layout_constraintTop_toTopOf="@+id/txtMuscleGroup" />
+
+                <TextView
+                    android:id="@+id/txtId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnMenuWorkout"
+                    android:layout_width="38dp"
+                    android:layout_height="30dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:src="@drawable/ic_hexagon_triple_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_hexagon_single"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtWorkoutName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtWorkoutName"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workoutsExercisesRV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/txtWorkoutName"
-                android:layout_marginEnd="5dp"
-                android:text="- # exercises"
-                android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtWorkoutName"
-                app:layout_constraintEnd_toStartOf="@+id/btnMenuWorkout"
-                app:layout_constraintTop_toTopOf="@+id/txtWorkoutName" />
+                android:layout_below="@id/collapsed"
+                android:visibility="visible"
+                tools:listitem="@layout/item_list_exercise_simple"/>
 
-            <TextView
-                android:id="@+id/typeTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/type"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/txtWorkoutName" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txtType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="type"
-                app:layout_constraintBottom_toBottomOf="@+id/typeTxt"
-                app:layout_constraintStart_toEndOf="@+id/typeTxt"
-                app:layout_constraintTop_toTopOf="@+id/typeTxt" />
-
-            <TextView
-                android:id="@+id/muscleGroupTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/muscleGroup"
-                app:layout_constraintStart_toEndOf="@+id/txtType"
-                app:layout_constraintTop_toBottomOf="@+id/txtWorkoutName" />
-
-            <TextView
-                android:id="@+id/txtMuscleGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="muscle1"
-                app:layout_constraintBottom_toBottomOf="@+id/muscleGroupTxt"
-                app:layout_constraintStart_toEndOf="@+id/muscleGroupTxt"
-                app:layout_constraintTop_toTopOf="@+id/muscleGroupTxt" />
-
-            <TextView
-                android:id="@+id/txtMuscleGroupSecondary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="muscle2"
-                app:layout_constraintBottom_toBottomOf="@+id/txtMuscleGroup"
-                app:layout_constraintStart_toEndOf="@+id/txtMuscleGroup"
-                app:layout_constraintTop_toTopOf="@+id/txtMuscleGroup"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/workoutSeparator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                app:layout_constraintBottom_toBottomOf="@+id/txtMuscleGroup"
-                app:layout_constraintEnd_toStartOf="@+id/txtMuscleGroupSecondary"
-                app:layout_constraintStart_toEndOf="@+id/txtMuscleGroup"
-                app:layout_constraintTop_toTopOf="@+id/txtMuscleGroup"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/txtId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <ImageView
-                android:id="@+id/btnMenuWorkout"
-                android:layout_width="15dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_hexagon_triple_vertical"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtWorkoutName"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtWorkoutName"
-                android:src="@drawable/ic_hexagon_single"
-                tools:ignore="ContentDescription" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/workoutsExercisesRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/collapsed"
-            android:visibility="visible" />
-
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

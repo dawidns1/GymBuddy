@@ -6,15 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".ExercisesActivity">
+    tools:context=".view.ExercisesActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercisesRV"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/exercisesdAdContainer"
         tools:listitem="@layout/item_list_exercise"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:paddingBottom="48dp"
         android:clipToPadding="false"/>
 
@@ -44,7 +46,7 @@
         app:layout_constraintTop_toTopOf="@id/btnAddExercise"
         app:layout_constraintBottom_toBottomOf="@id/btnAddExercise"
         app:layout_constraintEnd_toStartOf="@id/btnAddExercise"
-        android:text="@string/startWorkout" />
+        android:text="@string/start" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnResumeWorkout"
@@ -68,7 +70,16 @@
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.example.gymbuddy.helpers.TemplateView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:gnt_template_type="@layout/gnt_small_template_view"
+            android:id="@+id/exercisesAdTemplate"/>
+
+    </FrameLayout>
 
 <!--    <com.google.android.gms.ads.AdView-->
 <!--        android:id="@+id/chartAd"-->

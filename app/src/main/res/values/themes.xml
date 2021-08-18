@@ -67,15 +67,16 @@
     <style name="eFABStyle" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="strokeColor">@drawable/btn_color</item>
         <item name="strokeWidth">2dp</item>
-        <item name="backgroundTint">@color/orange_500_alpha</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/grey_900</item>
+        <item name="android:textColor">@drawable/efab_text_color</item>
         <item name="rippleColor">@color/orange_500</item>
         <item name="iconTint">@color/white</item>
     </style>
 
     <style name="textInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="endIconTint">@color/grey_500</item>
+        <item name="android:textColor">@color/white</item>
         <item name="boxStrokeColor">@drawable/text_input_layout_color</item>
-        <item name="android:textColor">@drawable/btn_text_color</item>
         <item name="helperTextTextColor">@color/grey_500</item>
         <item name="boxCornerRadiusBottomEnd">10dp</item>
         <item name="boxCornerRadiusBottomStart">10dp</item>
@@ -83,6 +84,8 @@
         <item name="boxCornerRadiusTopStart">10dp</item>
         <item name="boxStrokeWidth">1dp</item>
         <item name="boxStrokeWidthFocused">2.5dp</item>
+        <item name="hintTextColor">@color/grey_200</item>
+        <item name="android:textColorHint">@color/grey_200</item>
     </style>
 
 </resources>

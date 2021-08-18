@@ -14,6 +14,7 @@
     app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentSessionConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp">
@@ -233,6 +234,17 @@
             app:layout_constraintBottom_toBottomOf="@id/txtLxR7"
             app:layout_constraintStart_toStartOf="@+id/separator3"
             app:layout_constraintTop_toTopOf="@id/txtLxR7" />
+
+        <ImageView
+            android:id="@+id/highlightSession"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:src="@drawable/ic_hexagon_single"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@id/txtLxR1"
+            app:layout_constraintTop_toTopOf="@id/txtLxR1" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

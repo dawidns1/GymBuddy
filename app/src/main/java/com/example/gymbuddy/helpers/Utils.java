@@ -1,8 +1,10 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.gymbuddy.model.Exercise;
+import com.example.gymbuddy.model.Workout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,15 +23,20 @@ public class Utils {
     public static final String SYSTEM_TIME_KEY="system time";
     public static final String BREAK_LEFT_KEY="break left";
     public static final String LOGGING_KEY="logging";
+    public static final String GROUPING_KEY="grouping";
     public static final String CALENDAR_ID_KEY="calendar";
-//    public static final String WORKOUT_STATE_KEY="workout state";
+    public static final String APP_RATING_KEY="app rating";
+    public static final String LAST_AD_SHOWN_KEY="last ad";
 
     static boolean areExercisesShown;
     static boolean loggingEnabled;
+    static boolean groupingEnabled;
     static int workoutsID;
     static int exercisesID;
     static long breakLeft;
     static long systemTime;
+    static long lastAppRating;
+    static long lastAdShown;
 
     static String calendarID;
 
@@ -46,32 +53,28 @@ public class Utils {
 //        workoutState=getWorkoutState();
 
         calendarID=getCalendarID();
-
         workoutsID = getWorkoutsId();
-
         exercisesID = getExercisesId();
-
         areExercisesShown = isAreExercisesShown();
-
         loggingEnabled=isLoggingEnabled();
-
+        groupingEnabled=isGroupingEnabled();
         exportedWorkouts = new ArrayList<>();
-
         breakLeft=getBreakLeft();
-
         systemTime=getSystemTime();
+        lastAppRating=getLastAppRating();
+        lastAdShown=getLastAdShown();
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Gson gson = new Gson();
     }
 
     private void initData() {
 
         ArrayList<Workout> workouts = new ArrayList<>();
-        ArrayList<Exercise> exercises1 = new ArrayList<>();
-        ArrayList<Exercise> exercises2 = new ArrayList<>();
-        ArrayList<Session> sessions1 = new ArrayList<>();
-        ArrayList<Session> sessions2 = new ArrayList<>();
+//        ArrayList<Exercise> exercises1 = new ArrayList<>();
+//        ArrayList<Exercise> exercises2 = new ArrayList<>();
+//        ArrayList<Session> sessions1 = new ArrayList<>();
+//        ArrayList<Session> sessions2 = new ArrayList<>();
 
 //        workouts.add(new Workout(99, "FBW5", "FBW", "Legs", "Lats", 2));
 //        workouts.add(new Workout(98, "FBW2", "FBW", "Delts", "Traps", 1));
@@ -94,7 +97,27 @@ public class Utils {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-        editor.commit();
+        editor.apply();
+    }
+
+    public long getLastAdShown() {
+        return sharedPreferences.getLong(LAST_AD_SHOWN_KEY, 0);
+    }
+
+    public void setLastAdShown(long lastAdShown) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(LAST_AD_SHOWN_KEY, lastAdShown);
+        editor.apply();
+    }
+
+    public long getLastAppRating() {
+        return sharedPreferences.getLong(APP_RATING_KEY, 0);
+    }
+
+    public void setLastAppRating(long lastAppRating) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(APP_RATING_KEY, lastAppRating);
+        editor.apply();
     }
 
     public static Utils getInstance(Context context) {
@@ -108,67 +131,57 @@ public class Utils {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Workout>>() {
         }.getType();
-        ArrayList<Workout> workouts = gson.fromJson(sharedPreferences.getString(ALL_WORKOUTS_KEY, null), type);
-        return workouts;
+        return gson.fromJson(sharedPreferences.getString(ALL_WORKOUTS_KEY, null), type);
     }
 
     public String getCalendarID() {
-        String calendarID=sharedPreferences.getString(CALENDAR_ID_KEY,"");
-        return calendarID;
+        return sharedPreferences.getString(CALENDAR_ID_KEY,"");
     }
 
     public void setCalendarID(String calendarID) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(CALENDAR_ID_KEY, calendarID);
-        editor.commit();
+        editor.apply();
     }
 
     public int getWorkoutsId() {
-        int workoutsId = sharedPreferences.getInt(WORKOUTS_ID_KEY, 0);
-        return workoutsId;
+        return sharedPreferences.getInt(WORKOUTS_ID_KEY, 0);
     }
 
     public int getExercisesId() {
-        int exercisesId = sharedPreferences.getInt(EXERCISES_ID_KEY, 0);
-        return exercisesId;
+        return sharedPreferences.getInt(EXERCISES_ID_KEY, 0);
     }
 
-    public boolean setWorkoutsId(int workoutsID) {
+    public void setWorkoutsId(int workoutsID) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(WORKOUTS_ID_KEY, workoutsID);
-        editor.commit();
-        return true;
+        editor.apply();
     }
 
-    public boolean setExercisesId(int exercisesID) {
+    public void setExercisesId(int exercisesID) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(EXERCISES_ID_KEY, exercisesID);
-        editor.commit();
-        return true;
+        editor.apply();
     }
 
     public long getBreakLeft() {
-        long breakLeft = sharedPreferences.getLong(BREAK_LEFT_KEY, 0);
-        return breakLeft;
+        return sharedPreferences.getLong(BREAK_LEFT_KEY, 0);
     }
 
     public long getSystemTime() {
-        long systemTime = sharedPreferences.getLong(SYSTEM_TIME_KEY, 0);
-        return systemTime;
+        return sharedPreferences.getLong(SYSTEM_TIME_KEY, 0);
     }
 
-    public boolean setBreakLeft(long breakLeft) {
+    public void setBreakLeft(long breakLeft) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(BREAK_LEFT_KEY, breakLeft);
-        editor.commit();
-        return true;
+        editor.apply();
     }
 
-    public boolean setSystemTime(long systemTime) {
+    public void setSystemTime(long systemTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(SYSTEM_TIME_KEY, systemTime);
-        editor.commit();
-        return true;
+        editor.apply();
     }
 
 //    public static int[] getWorkoutState() {
@@ -183,8 +196,7 @@ public class Utils {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Workout>>() {
         }.getType();
-        ArrayList<Workout> workouts = gson.fromJson(sharedPreferences.getString(EXPORTED_WORKOUTS_KEY, null), type);
-        return workouts;
+        return gson.fromJson(sharedPreferences.getString(EXPORTED_WORKOUTS_KEY, null), type);
     }
 
     public void setExportedWorkouts(ArrayList<Workout> exportedWorkouts) {
@@ -192,59 +204,67 @@ public class Utils {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(EXPORTED_WORKOUTS_KEY);
         editor.putString(EXPORTED_WORKOUTS_KEY, gson.toJson(exportedWorkouts));
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isAreExercisesShown() {
-        boolean areExercisesShown = sharedPreferences.getBoolean(ARE_EXERCISES_SHOWN_KEY, true);
-        return areExercisesShown;
+        return sharedPreferences.getBoolean(ARE_EXERCISES_SHOWN_KEY, true);
     }
 
     public void setAreExercisesShown(boolean areExercisesShown) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(ARE_EXERCISES_SHOWN_KEY, areExercisesShown);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isLoggingEnabled() {
-        boolean loggingEnabled = sharedPreferences.getBoolean(LOGGING_KEY, false);
-        return loggingEnabled;
+        return sharedPreferences.getBoolean(LOGGING_KEY, false);
     }
 
     public void setLoggingEnabled(boolean loggingEnabled) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(LOGGING_KEY, loggingEnabled);
-        editor.commit();
+        editor.apply();
     }
 
-    public boolean updateWorkouts(ArrayList<Workout> workouts) {
+    public boolean isGroupingEnabled() {
+        return sharedPreferences.getBoolean(GROUPING_KEY, false);
+    }
+
+    public void setGroupingEnabled(boolean groupingEnabled) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(GROUPING_KEY, groupingEnabled);
+        editor.apply();
+    }
+
+    public void updateWorkouts(ArrayList<Workout> workouts) {
         Gson gson = new Gson();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(ALL_WORKOUTS_KEY);
         editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-        editor.commit();
-        return true;
+        editor.apply();
     }
 
-    public boolean updateSingleWorkouts(Workout workout) {
+    public void updateSingleWorkout(Workout workout) {
         ArrayList<Workout> workouts = getAllWorkouts();
         if (null != workouts) {
             for (Workout w : workouts) {
                 if (w.getId() == workout.getId()) {
                     w.setState(workout.getState());
+                    w.setTimestamp(workout.getTimestamp());
+                    w.setCloudID(workout.getCloudID());
                     Gson gson = new Gson();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.remove(ALL_WORKOUTS_KEY);
                     editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                    editor.commit();
-                    return true;
+                    editor.apply();
+                    return;
                 }
             }
         }
-        return false;
     }
 
-    public boolean addToAllWorkouts(Workout workout) {
+    public void addToAllWorkouts(Workout workout) {
         int id = getWorkoutsId();
         workout.setId(id);
         id++;
@@ -264,14 +284,12 @@ public class Utils {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.remove(ALL_WORKOUTS_KEY);
                 editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                editor.commit();
-                return true;
+                editor.apply();
             }
         }
-        return false;
     }
 
-    public boolean deleteWorkout(Workout workout) {
+    public void deleteWorkout(Workout workout) {
         ArrayList<Workout> workouts = getAllWorkouts();
         if (null != workouts) {
             for (Workout w : workouts) {
@@ -281,16 +299,15 @@ public class Utils {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.remove(ALL_WORKOUTS_KEY);
                         editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                        editor.commit();
-                        return true;
+                        editor.apply();
+                        return;
                     }
                 }
             }
         }
-        return false;
     }
 
-    public boolean addExerciseToWorkout(Workout workout, Exercise exercise) {
+    public void addExerciseToWorkout(Workout workout, Exercise exercise) {
         int id = getExercisesId();
         exercise.setId(id);
         id++;
@@ -307,16 +324,15 @@ public class Utils {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.remove(ALL_WORKOUTS_KEY);
                         editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                        editor.commit();
-                        return true;
+                        editor.apply();
+                        return;
                     }
                 }
             }
         }
-        return false;
     }
 
-    public boolean deleteExerciseFromWorkout(Exercise exercise) {
+    public void deleteExerciseFromWorkout(Exercise exercise) {
         ArrayList<Workout> workouts = getAllWorkouts();
         if (null != workouts) {
             for (Workout w : workouts) {
@@ -325,39 +341,39 @@ public class Utils {
                     if (e.getId() == exercise.getId()) {
                         if (exercises.remove(e)) {
                             w.setExercises(exercises);
+                            w.setState((new int[]{1, 1, 1}));
                             w.setExerciseNumber(w.getExercises().size());
                             Gson gson = new Gson();
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.remove(ALL_WORKOUTS_KEY);
                             editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                            editor.commit();
-                            return true;
+                            editor.apply();
+                            return;
                         }
                     }
             }
         }
-        return false;
     }
 
-    public boolean updateWorkoutsExercises(Workout workout, ArrayList<Exercise> exercises) {
+    public void updateWorkoutsExercises(Workout workout, ArrayList<Exercise> exercises) {
         ArrayList<Workout> workouts = getAllWorkouts();
         if (null != workouts) {
             for (Workout w : workouts) {
                 if (w.getId() == workout.getId()) {
+                    w.setState(workout.getState());
                     w.setExercises(exercises);
                     Gson gson = new Gson();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.remove(ALL_WORKOUTS_KEY);
                     editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                    editor.commit();
-                    return true;
+                    editor.apply();
+                    return;
                 }
             }
         }
-        return false;
     }
 
-    public boolean updateWorkoutsExercisesWithoutWorkout(ArrayList<Exercise> exercises) {
+    public void updateWorkoutsExercisesWithoutWorkout(ArrayList<Exercise> exercises) {
         ArrayList<Workout> workouts = getAllWorkouts();
         if (null != workouts) {
             for (Workout w : workouts) {
@@ -367,12 +383,11 @@ public class Utils {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.remove(ALL_WORKOUTS_KEY);
                     editor.putString(ALL_WORKOUTS_KEY, gson.toJson(workouts));
-                    editor.commit();
-                    return true;
+                    editor.apply();
+                    return;
                 }
             }
         }
-        return false;
     }
 }
 

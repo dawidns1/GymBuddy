@@ -6,22 +6,23 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:fillViewport="true"
-    tools:context=".NewSessionActivity">
+    tools:context=".view.NewSessionActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/newSessionAdContainer">
 
         <TextView
             android:id="@+id/txtSetCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:text="3/8"
-            android:textSize="25sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/setTxt"
+            app:layout_constraintEnd_toStartOf="@+id/newSessionExercisesRV"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/setTxt"
             app:layout_constraintTop_toTopOf="@+id/setTxt" />
 
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tempo"
-            android:textSize="25sp"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@+id/setTxt"
             app:layout_constraintTop_toBottomOf="@+id/setTxt" />
 
@@ -47,8 +48,8 @@
             app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setTxt"
             app:layout_constraintVertical_bias="0.514"
+            app:layout_goneMarginTop="-10dp"
             tools:progress="50" />
 
         <TextView
@@ -76,38 +77,79 @@
         <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
+            android:id="@+id/workoutName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="FBW"
+            android:textColor="@color/orange_500"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/newSessionExercisesRV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/setTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="@string/set"
-            android:textSize="25sp"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/txtSetCount"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/workoutName" />
 
         <TextView
             android:id="@+id/txtTempoSession"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1010"
-            android:textSize="25sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/tempoTxt"
             app:layout_constraintStart_toStartOf="@+id/txtSetCount"
             app:layout_constraintTop_toTopOf="@+id/tempoTxt" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnNextSet"
-            android:layout_width="150sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:background="@drawable/background_rounded_corners"
             android:backgroundTint="@drawable/btn_color"
-            android:text="@string/nextSet"
-            android:textColor="@drawable/btn_text_color"
-            app:cornerRadius="20sp"
+            android:clickable="true"
+            android:foreground="@drawable/ripple"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:rotation="180"
+            android:src="@drawable/ic_previous"
+            app:layout_constraintBottom_toBottomOf="@id/tilReps"
+            app:layout_constraintEnd_toEndOf="@+id/btnSkipTimer"
+            app:layout_constraintTop_toTopOf="@id/tilReps"
+            app:tint="@drawable/btn_text_color"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/btnPreviousSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rounded_corners"
+            android:backgroundTint="@drawable/btn_color"
+            android:clickable="true"
+            android:foreground="@drawable/ripple"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_previous"
             app:layout_constraintBottom_toBottomOf="@id/tilReps"
             app:layout_constraintStart_toStartOf="@+id/btnSkipTimer"
-            app:layout_constraintTop_toTopOf="@id/tilReps" />
+            app:layout_constraintTop_toTopOf="@id/tilReps"
+            app:tint="@drawable/btn_text_color"
+            tools:ignore="ContentDescription" />
 
         <Button
             android:id="@+id/btnSkipTimer"
@@ -165,9 +207,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLoads"
-                android:inputType="numberDecimal"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="64dp"
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,9 +227,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtReps"
-                android:inputType="number"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -259,10 +303,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:clipToPadding="false"
-        android:paddingBottom="48dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
 
     <FrameLayout
         android:id="@+id/newSessionAdContainer"
@@ -270,8 +311,17 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.example.gymbuddy.helpers.TemplateView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:gnt_template_type="@layout/gnt_small_template_view"
+            android:id="@+id/newSessionAdTemplate"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

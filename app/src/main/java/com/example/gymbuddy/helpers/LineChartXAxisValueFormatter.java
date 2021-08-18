@@ -1,4 +1,4 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.helpers;
 
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 

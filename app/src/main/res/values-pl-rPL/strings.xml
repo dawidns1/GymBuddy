@@ -40,7 +40,7 @@
     <string name="noWorkoutsToLoad">Brak treningów do wczytania</string>
     <string name="selectWorkoutsToLoad">Wybierz treningi do wczytania</string>
     <string name="fileNotFound">Nie znaleziono pliku</string>
-    <string name="checkLocationName">sprawdź lokalizację pliku i spróbuj ponownie</string>
+    <string name="checkLocationNamePermissions">Nie można otworzyć. Sprawdź uprawnienia aplikacji, lokalizację pliku i spróbuj ponownie</string>
     <string name="selectWorkoutsToSave">Wybierz treningi do zapisania</string>
     <string name="insertFileName">Wpisz nazwę pliku</string>
     <string name="workoutsSavedIn">Treningi zapisane w</string>
@@ -114,13 +114,13 @@
     <string name="enableLogging">Włączanie zapisywania</string>
     <string name="enableLoggingMsg">Czy na pewno chcesz włączyć zapisywanie treningów w kalendarzu?</string>
     <string name="grantPermission">Ta aplikacja została pozbawiona uprawnień dostępu do kalendarza</string>
-    <string name="tuesday">wtorek</string>
-    <string name="wednesday">środa</string>
-    <string name="thursday">czwartek</string>
-    <string name="friday">piątek</string>
-    <string name="saturday">sobota</string>
-    <string name="sunday">niedziela</string>
-    <string name="monday">poniedziałek</string>
+    <string name="tuesday">wt.</string>
+    <string name="wednesday">śr.</string>
+    <string name="thursday">czw.</string>
+    <string name="friday">pt.</string>
+    <string name="saturday">sob.</string>
+    <string name="sunday">niedz.</string>
+    <string name="monday">pon.</string>
     <string name="schedulingWorkouts">Planowanie treningów</string>
     <string name="title">Tytuł</string>
     <string name="description">Opis</string>
@@ -148,5 +148,27 @@
     <string name="bestSession">Najlepsza sesja</string>
     <string name="cannotAddMoreExercises">Nie można dodać więcej niż 9 ćwiczeń</string>
     <string name="maximumExerciseNumberReached">Osiągnięto limit ćwiczeń</string>
+    <string name="breakFinish">Przerwa - koniec</string>
+    <string name="breakCountdown">Przerwa - odliczanie</string>
+    <string name="breakNotification">Przerwa</string>
+    <string name="grouping">Włącz/wyłącz grupowanie</string>
+    <string name="other">Inne</string>
+    <string name="cloud">Chmura</string>
+    <string name="loadFromCloud">Wczytaj z chmury</string>
+    <string name="saveToCloud">Zapisz w chmurze</string>
+    <string name="deleteFromCloud">Usuń z chmury</string>
+    <string name="signIn">Zaloguj</string>
+    <string name="signOut">Wyloguj</string>
+    <string name="signedInAs">Zalogowano jako</string>
+    <string name="signedOut">Wylogowano</string>
+    <string name="errorSigningIn">Błąd podczas logowania</string>
+    <string name="noWorkoutsToDelete">Brak treningów do usunięcia</string>
+    <string name="selectWorkoutsToDelete">Wybierz treningi do usunięcia z chmury</string>
+    <string name="saved">trening zapisany</string>
+    <string name="unableToSave">nie udało się zapisać</string>
+    <string name="deleted">trening usunięty</string>
+    <string name="unableToDelete">nie udało się usunąć</string>
+    <string name="updated">trening zaktualizowany</string>
+    <string name="unableToUpdate">nie udało się zaktualizować</string>
 
 </resources>

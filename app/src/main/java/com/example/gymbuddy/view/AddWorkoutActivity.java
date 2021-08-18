@@ -1,4 +1,4 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -17,6 +17,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gymbuddy.R;
+import com.example.gymbuddy.helpers.Utils;
+import com.example.gymbuddy.helpers.Helpers;
+import com.example.gymbuddy.model.Workout;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;

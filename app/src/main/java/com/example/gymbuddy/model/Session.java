@@ -1,18 +1,11 @@
-package com.example.gymbuddy;
-
-import android.os.Build;
+package com.example.gymbuddy.model;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
 
 public class Session implements Serializable {
     private int id;
-    private float load[];
-    private int reps[];
+    private float[] load;
+    private int[] reps;
     private String date;
 
     public Session(int id, float[] load, int[] reps) {
@@ -21,15 +14,15 @@ public class Session implements Serializable {
         this.reps = reps;
     }
 
-    @Override
-    public String toString() {
-        return "Session{" +
-                "id=" + id +
-                ", load=" + Arrays.toString(load) +
-                ", reps=" + Arrays.toString(reps) +
-                ", date='" + date + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Session{" +
+//                "id=" + id +
+//                ", load=" + Arrays.toString(load) +
+//                ", reps=" + Arrays.toString(reps) +
+//                ", date='" + date + '\'' +
+//                '}';
+//    }
 
     public int getId() {
         return id;
@@ -61,5 +54,13 @@ public class Session implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public float getTotal(){
+        int total=0;
+        for(int i=0;i<load.length;i++){
+            total+=load[i]*reps[i];
+        }
+        return total;
     }
 }

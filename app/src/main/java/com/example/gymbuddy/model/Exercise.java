@@ -1,9 +1,14 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.model;
+
+import com.google.firebase.firestore.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Exercise implements Serializable {
+@IgnoreExtraProperties
+public class Exercise implements Serializable, Cloneable {
     private int id;
     private String name;
     private int sets;
@@ -13,7 +18,9 @@ public class Exercise implements Serializable {
     private String muscleGroup;
     private String muscleGroupSecondary;
     private ArrayList<Session> sessions;
-
+    private String cloudID;
+    @ServerTimestamp
+    private Date timestamp;
 
     public Exercise(int id, String name, int sets, int breaks, String muscleGroup, String muscleGroupSecondary, int tempo) {
         this.id = id;
@@ -25,6 +32,24 @@ public class Exercise implements Serializable {
         this.muscleGroupSecondary=muscleGroupSecondary;
         this.sessions= new ArrayList<>();
         this.superSet=0;
+        this.cloudID = "asd";
+        this.timestamp = null;
+    }
+
+    public String getCloudID() {
+        return cloudID;
+    }
+
+    public void setCloudID(String cloudID) {
+        this.cloudID = cloudID;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getSuperSet() {

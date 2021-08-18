@@ -12,35 +12,43 @@
             android:id="@+id/submenuHideShow"
             android:title="@string/hideShowExercises"/>
         <item
+            android:id="@+id/submenuGrouping"
+            android:title="@string/grouping"/>
+        <item
             android:id="@+id/logInCalendar"
             android:title="@string/logInCalendar"/>
         <item
             android:id="@+id/submenuShare"
-            android:title="@string/share"/>
+            android:title="@string/share" />
 
         <item
-            android:title="@string/load">
-            <menu>
-                <item
-                    android:id="@+id/importFromFile"
-                    android:title="@string/fromFile"/>
-                <item
-                    android:id="@+id/importFromArchive"
-                    android:title="@string/fromAppsMemory"/>
-
-            </menu>
-        </item>
+            android:id="@+id/importFromFile"
+            android:title="@string/load" />
         <item
-            android:title="@string/save">
+            android:id="@+id/exportToFile"
+            android:title="@string/save" />
+
+        <item android:title="@string/cloud"
+            android:visible="false">
             <menu>
+
                 <item
-                    android:id="@+id/exportToFile"
-                    android:title="@string/toFile"/>
+                    android:id="@+id/loadFromCloud"
+                    android:title="@string/loadFromCloud" />
+
                 <item
-                    android:id="@+id/exportToArchive"
-                    android:title="@string/toAppsMemory"/>
+                    android:id="@+id/saveToCloud"
+                    android:title="@string/saveToCloud" />
+
+                <item
+                    android:id="@+id/deleteFromCloud"
+                    android:title="@string/deleteFromCloud" />
             </menu>
         </item>
+
+        <item
+            android:id="@+id/auth"
+            android:title="@string/signIn" />
 
 
     </menu>

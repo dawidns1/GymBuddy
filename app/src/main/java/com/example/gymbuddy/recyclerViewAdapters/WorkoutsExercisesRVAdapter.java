@@ -1,47 +1,26 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.recyclerViewAdapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ColorStateListInflaterCompat;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.gymbuddy.R;
+import com.example.gymbuddy.model.Exercise;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class WorkoutsExercisesRVAdapter extends RecyclerView.Adapter<WorkoutsExercisesRVAdapter.ViewHolder> {
 
     private ArrayList<Exercise> exercises = new ArrayList<>();
-    private Context mContext;
+    private final Context mContext;
     private boolean newSession;
     private int exerciseNo;
 
@@ -71,14 +50,14 @@ public class WorkoutsExercisesRVAdapter extends RecyclerView.Adapter<WorkoutsExe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (newSession) {
             if (position == exerciseNo) {
-                holder.parentExerciseSimple.setCardBackgroundColor(mContext.getResources().getColor(R.color.orange_500));
-                holder.txtExerciseNameSimple.setTextColor(mContext.getResources().getColor(R.color.grey_700));
-                holder.txtSetsNoSimple.setTextColor(mContext.getResources().getColor(R.color.grey_700));
+                holder.parentExerciseSimple.setCardBackgroundColor(ContextCompat.getColor(mContext,R.color.orange_500));
+                holder.txtExerciseNameSimple.setTextColor(ContextCompat.getColor(mContext,R.color.grey_700));
+                holder.txtSetsNoSimple.setTextColor(ContextCompat.getColor(mContext,R.color.grey_700));
                 holder.imgExerciseSimple.setImageResource(R.drawable.ic_hexagon_double_vertical_empty);
             }
             if (position < exerciseNo) {
-                holder.txtExerciseNameSimple.setTextColor(mContext.getResources().getColor(R.color.grey_200));
-                holder.txtSetsNoSimple.setTextColor(mContext.getResources().getColor(R.color.grey_200));
+                holder.txtExerciseNameSimple.setTextColor(ContextCompat.getColor(mContext,R.color.grey_200));
+                holder.txtSetsNoSimple.setTextColor(ContextCompat.getColor(mContext,R.color.grey_200));
                 holder.imgExerciseSimple.setImageResource(R.drawable.ic_hexagon_double_vertical_empty);
             }
 
@@ -86,7 +65,6 @@ public class WorkoutsExercisesRVAdapter extends RecyclerView.Adapter<WorkoutsExe
 
         holder.txtExerciseNameSimple.setText(exercises.get(position).getName());
         if (exercises.get(position).getSets() == 3 || exercises.get(position).getSets() == 4) {
-            //TODO sprawdzic co się wysrało
             holder.txtSetsNoSimple.setText(exercises.get(position).getSets() + " " + mContext.getString(R.string.setTxt34));
         } else {
             holder.txtSetsNoSimple.setText(exercises.get(position).getSets() + " " + mContext.getString(R.string.setTxt));
@@ -107,12 +85,12 @@ public class WorkoutsExercisesRVAdapter extends RecyclerView.Adapter<WorkoutsExe
         this.exercises = exercises;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView parentExerciseSimple;
-        private TextView txtExerciseNameSimple;
-        private TextView txtSetsNoSimple;
-        private ImageView imgExerciseSimple;
+        private final CardView parentExerciseSimple;
+        private final TextView txtExerciseNameSimple;
+        private final TextView txtSetsNoSimple;
+        private final ImageView imgExerciseSimple;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

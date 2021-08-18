@@ -1,4 +1,4 @@
-package com.example.gymbuddy;
+package com.example.gymbuddy.view;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
@@ -22,6 +22,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gymbuddy.R;
+import com.example.gymbuddy.helpers.Helpers;
+import com.example.gymbuddy.model.Exercise;
+import com.example.gymbuddy.model.Workout;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.lang.reflect.Field;
@@ -205,48 +209,55 @@ public class AddExerciseActivity extends AppCompatActivity {
 
         btnAddNewExercise.setOnClickListener(v -> {
             if (isEdited) {
+                Exercise editedExercise=allExercises.get(position);
                 if (!edtExerciseName.getText().toString().isEmpty() &&
-                        !edtExerciseName.getText().toString().equals(allExercises.get(position).getName())) {
+                        !edtExerciseName.getText().toString().equals(editedExercise.getName())) {
                     changeMade = true;
-                    allExercises.get(position).setName(edtExerciseName.getText().toString());
+                    editedExercise.setName(edtExerciseName.getText().toString());
                 }
                 if (!edtBreaks.getText().toString().isEmpty() && Integer.parseInt(edtBreaks.getText().toString()) != 0 &&
-                        !edtBreaks.getText().toString().equals(String.valueOf(allExercises.get(position).getBreaks()))) {
+                        !edtBreaks.getText().toString().equals(String.valueOf(editedExercise.getBreaks()))) {
                     changeMade = true;
-                    allExercises.get(position).setBreaks(Integer.parseInt(edtBreaks.getText().toString()));
+                    editedExercise.setBreaks(Integer.parseInt(edtBreaks.getText().toString()));
                 }
                 if (edtIso.getSelectedItem().toString().equals(getResources().getString(R.string.yes))) {
-                    allExercises.get(position).setTempo(9999);
+                    editedExercise.setTempo(9999);
                     changeMade = true;
                 } else if (edtTempo.getText().toString().isEmpty()) {
-                    allExercises.get(position).setTempo(0);
+                    editedExercise.setTempo(0);
                     changeMade = true;
                 } else if (edtTempo.getText().toString().length() == 4) {
-                    allExercises.get(position).setTempo(Integer.parseInt(edtTempo.getText().toString()));
+                    editedExercise.setTempo(Integer.parseInt(edtTempo.getText().toString()));
                     changeMade = true;
 
                 }
                 if (edtMuscleGroupE.getText().toString().isEmpty()) {
-                    allExercises.get(position).setMuscleGroup("");
-                    allExercises.get(position).setMuscleGroupSecondary("");
+                    editedExercise.setMuscleGroup("");
+                    editedExercise.setMuscleGroupSecondary("");
                     changeMade = true;
                 } else {
-                    if (!edtMuscleGroupE.getText().toString().equals(allExercises.get(position).getMuscleGroup())) {
+                    if (!edtMuscleGroupE.getText().toString().equals(editedExercise.getMuscleGroup())) {
                         changeMade = true;
-                        allExercises.get(position).setMuscleGroup(edtMuscleGroupE.getText().toString());
+                        editedExercise.setMuscleGroup(edtMuscleGroupE.getText().toString());
                     }
-                    if (!edtMuscleGroupSecondaryE.getText().toString().equals(allExercises.get(position).getMuscleGroupSecondary())) {
+                    if (!edtMuscleGroupSecondaryE.getText().toString().equals(editedExercise.getMuscleGroupSecondary())) {
                         changeMade = true;
-                        allExercises.get(position).setMuscleGroupSecondary(edtMuscleGroupSecondaryE.getText().toString());
+                        editedExercise.setMuscleGroupSecondary(edtMuscleGroupSecondaryE.getText().toString());
                     }
                 }
-                if (!edtSets.getSelectedItem().toString().equals(String.valueOf(allExercises.get(position).getSets()))) {
+                if (!edtSets.getSelectedItem().toString().equals(String.valueOf(editedExercise.getSets()))) {
                     changeMade = true;
-                    allExercises.get(position).setSets(Integer.parseInt(edtSets.getSelectedItem().toString()));
+                    editedExercise.setSets(Integer.parseInt(edtSets.getSelectedItem().toString()));
                 }
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
                 if (changeMade) {
-                    Utils.getInstance(AddExerciseActivity.this).updateWorkoutsExercises(workout, allExercises);
+//                    Toast.makeText(this, "edited", Toast.LENGTH_SHORT).show();
+                    returnIntent.putExtra(Helpers.EDITED_EXERCISE_KEY, editedExercise);
                 }
+                InputMethodManager imm1;
+                imm1 = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 finish();
             } else {
 
