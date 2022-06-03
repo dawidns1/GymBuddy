@@ -9,14 +9,23 @@
 
     <menu>
         <item
-            android:id="@+id/submenuHideShow"
-            android:title="@string/hideShowExercises"/>
-        <item
-            android:id="@+id/submenuGrouping"
-            android:title="@string/grouping"/>
-        <item
-            android:id="@+id/logInCalendar"
-            android:title="@string/logInCalendar"/>
+            android:title="@string/settings">
+            <menu>
+                <item
+                    android:id="@+id/submenuExercises"
+                    android:title="@string/hideExercises"/>
+                <item
+                    android:id="@+id/submenuRir"
+                    android:title="@string/disableRir"/>
+                <item
+                    android:id="@+id/submenuGrouping"
+                    android:title="@string/disableGrouping"/>
+                <item
+                    android:id="@+id/submenuLogging"
+                    android:title="@string/enableLogging"/>
+            </menu>
+        </item>
+
         <item
             android:id="@+id/submenuShare"
             android:title="@string/share" />
@@ -29,7 +38,7 @@
             android:title="@string/save" />
 
         <item android:title="@string/cloud"
-            android:visible="false">
+            android:visible="true">
             <menu>
 
                 <item

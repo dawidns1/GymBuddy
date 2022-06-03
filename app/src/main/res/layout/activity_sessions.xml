@@ -58,12 +58,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="48dp"
         android:clipToPadding="false"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:paddingBottom="48dp"
         app:layout_constraintBottom_toTopOf="@id/sessionsAdContainer"
-        app:layout_constraintTop_toBottomOf="@+id/tilRep"
+        app:layout_constraintTop_toBottomOf="@+id/input"
         tools:listitem="@layout/item_list_session" />
 
     <View
@@ -80,168 +80,176 @@
         app:layout_constraintRight_toRightOf="@id/sessionsRV"
         app:layout_constraintTop_toTopOf="@id/sessionsRV" />
 
-    <!--        <EditText-->
-    <!--            android:id="@+id/edtRep"-->
-    <!--            style="@style/EditTextStyle"-->
-    <!--            android:layout_width="70sp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="20dp"-->
-    <!--            android:inputType="number"-->
-    <!--            android:visibility="visible"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@+id/txtRep"-->
-    <!--            app:layout_constraintStart_toEndOf="@+id/txtRep"-->
-    <!--            app:layout_constraintTop_toTopOf="@+id/txtRep" />-->
-
-    <ImageView
-        android:id="@+id/imgRep"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_hexagon_triple_empty"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/input"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tilRep"
-        app:layout_constraintStart_toStartOf="@id/imgLoad"
-        app:layout_constraintTop_toTopOf="@id/tilRep"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/imgLoad"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_hexagon_triple_empty"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/tilLoad"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tilLoad"
-        tools:ignore="ContentDescription" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilLoad"
-        style="@style/textInputStyle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:hint="@string/loadSet"
-        android:visibility="gone"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toStartOf="@id/main50"
-        app:layout_constraintStart_toEndOf="@+id/imgLoad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/EditTextStyle"
-            android:id="@+id/edtLoad"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imgRep"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_hexagon_triple_empty"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/tilRep"
+            app:layout_constraintStart_toStartOf="@id/imgLoad"
+            app:layout_constraintTop_toTopOf="@id/tilRep"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imgLoad"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_hexagon_triple_empty"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/tilLoad"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tilLoad"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLoad"
+            style="@style/textInputStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="85dp"
+            android:hint="@string/loadSet"
+            android:visibility="visible"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toStartOf="@+id/btnPrevious"
+            app:layout_constraintStart_toEndOf="@+id/imgLoad"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtLoad"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilRep"
-        style="@style/textInputStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/repsSet"
-        android:visibility="gone"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="@id/tilLoad"
-        app:layout_constraintStart_toStartOf="@id/tilLoad"
-        app:layout_constraintTop_toBottomOf="@id/tilLoad">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/EditTextStyle"
-            android:id="@+id/edtRep"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRep"
+            style="@style/textInputStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:hint="@string/repsSet"
+            android:visibility="visible"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="@id/tilLoad"
+            app:layout_constraintStart_toStartOf="@id/tilLoad"
+            app:layout_constraintTop_toBottomOf="@id/tilLoad">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtRep"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
-    <!--        <EditText-->
-    <!--            android:id="@+id/edtLoad"-->
-    <!--            style="@style/EditTextStyle"-->
-    <!--            android:layout_width="70sp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:inputType="numberDecimal"-->
-    <!--            android:visibility="visible"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@+id/txtLoad"-->
-    <!--            app:layout_constraintStart_toStartOf="@+id/edtRep"-->
-    <!--            app:layout_constraintTop_toTopOf="@+id/txtLoad" />-->
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/txtLoad"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="45dp"-->
-    <!--            android:layout_marginTop="20dp"-->
-    <!--            android:text="@string/loadSet"-->
-    <!--            android:visibility="visible"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rounded_corners"
+            android:backgroundTint="@drawable/btn_color"
+            android:clickable="true"
+            android:foreground="@drawable/ripple"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:rotation="180"
+            android:src="@drawable/ic_previous"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPrevious"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnPrevious"
+            app:layout_constraintTop_toTopOf="@+id/btnPrevious"
+            app:tint="@drawable/btn_text_color" />
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/txtRep"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="20dp"-->
-    <!--            android:text="@string/repsSet"-->
-    <!--            android:visibility="visible"-->
-    <!--            app:layout_constraintStart_toStartOf="@+id/txtLoad"-->
-    <!--            app:layout_constraintTop_toBottomOf="@+id/txtLoad" />-->
+        <ImageButton
+            android:id="@+id/btnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:background="@drawable/background_rounded_corners"
+            android:backgroundTint="@drawable/btn_color"
+            android:clickable="true"
+            android:foreground="@drawable/ripple"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_previous"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnNext"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tilLoad"
+            app:layout_constraintStart_toStartOf="@+id/main50"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@drawable/btn_text_color" />
 
-    <ImageButton
-        android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:rotation="180"
-        android:foreground="@drawable/ripple"
-        android:background="@drawable/background_rounded_corners"
-        android:backgroundTint="@drawable/btn_color"
-        android:src="@drawable/ic_previous"
-        android:clickable="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/tilLoad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnPrevious"
-        app:layout_constraintTop_toTopOf="@+id/tilRep"
-        app:tint="@drawable/btn_text_color" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRIR"
+            style="@style/textInputStyle"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="5dp"
+            android:hint="RIR"
+            android:visibility="visible"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toBottomOf="@id/tilRep"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/tilRep"
+            app:layout_constraintTop_toTopOf="@id/tilLoad"
+            tools:ignore="HardcodedText"
+            tools:layout_editor_absoluteX="167dp">
 
-    <ImageButton
-        android:id="@+id/btnPrevious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_rounded_corners"
-        android:backgroundTint="@drawable/btn_color"
-        android:paddingStart="15dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:src="@drawable/ic_previous"
-        android:visibility="gone"
-        android:clickable="true"
-        android:foreground="@drawable/ripple"
-        app:layout_constraintBottom_toBottomOf="@+id/tilLoad"
-        app:layout_constraintEnd_toStartOf="@+id/btnNext"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tilLoad"
-        app:layout_constraintStart_toStartOf="@+id/main50"
-        app:layout_constraintTop_toTopOf="@+id/tilRep"
-        app:tint="@drawable/btn_text_color" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtRIR"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:inputType="number"
+                android:text=" "
+                android:visibility="visible" />
 
-    <!--    <com.google.android.gms.ads.AdView-->
-    <!--        android:id="@+id/sessionsAd"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        app:adSize="BANNER"-->
-    <!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <NumberPicker
+            android:id="@+id/rirNumberPicker"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:theme="@style/RIRNumberPickerTheme"
+            app:layout_constraintBottom_toBottomOf="@id/tilRIR"
+            app:layout_constraintEnd_toEndOf="@id/tilRIR"
+            app:layout_constraintStart_toStartOf="@id/tilRIR"
+            app:layout_constraintTop_toTopOf="@id/tilRIR" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/main50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/sessionsAdContainer"
@@ -254,20 +262,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.example.gymbuddy.helpers.TemplateView
+            android:id="@+id/sessionsAdTemplate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:gnt_template_type="@layout/gnt_small_template_view"
-            android:id="@+id/sessionsAdTemplate"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </FrameLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/main50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

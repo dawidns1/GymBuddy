@@ -99,7 +99,7 @@
     <!--NewSessionActivity-->
     <string name="pressBackToExitSession">Press BACK again to exit session</string>
     <string name="breakFinished">Break finished!</string>
-    <string name="clickToOpenAndDoTheSet">Click to open the app and do continue</string>
+    <string name="clickToOpenAndDoTheSet">Click to open the app and continue</string>
     <string name="insertRepsAndLoad">Insert reps and load!</string>
     <string name="nextSet">Next set</string>
     <string name="nextExercise">Next exercise</string>
@@ -153,7 +153,7 @@
     <!--exercises_menu-->
     <string name="deleteAllExercises">Delete all exercises</string>
     <!--main_menu-->
-    <string name="hideShowExercises">Hide/show exercises</string>
+    <string name="hideExercises">Hide exerciexses</string>
     <string name="fromFile">from file</string>
     <string name="fromAppsMemory">from app\'s memory</string>
     <string name="toFile">to file</string>
@@ -223,7 +223,6 @@
     <string name="breakFinish">Break finish</string>
     <string name="breakCountdown">Break countdown</string>
     <string name="breakNotification">Break</string>
-    <string name="grouping">Enable/disable grouping</string>
     <string name="other">Other</string>
     <string name="cloud">Cloud</string>
     <string name="loadFromCloud">Load from cloud</string>
@@ -242,5 +241,16 @@
     <string name="unableToDelete">Unable to delete</string>
     <string name="updated">workout updated</string>
     <string name="unableToUpdate">unable to update</string>
+    <string name="disableAds">Disable ads temporarily</string>
+    <string name="disableAdsInfo">Watch an ad to disable banner ads for a week</string>
+    <string name="failedToLoad">Failed to load</string>
+    <string name="failedToLoadInfo">The ad failed to load, but the reward is granted anyway</string>
+    <string name="settings">Settings</string>
+    <string name="disableRir">Disable RIR</string>
+    <string name="disableGrouping">Disable grouping</string>
+    <string name="enableRir">Enable RIR</string>
+    <string name="enableGrouping">Enable grouping</string>
+    <string name="showExercises">Show exercises</string>
+    <string name="lastSession">last session:</string>
 
 </resources>

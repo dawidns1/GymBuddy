@@ -39,9 +39,7 @@
                 android:id="@+id/collapsed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:paddingEnd="0dp">
-
+                android:padding="8dp">
                 <TextView
                     android:id="@+id/txtWorkoutName"
                     android:layout_width="0dp"
@@ -140,7 +138,7 @@
                     android:layout_height="30dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
+
                     android:src="@drawable/ic_hexagon_triple_vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

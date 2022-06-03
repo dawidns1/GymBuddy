@@ -85,7 +85,7 @@
     <string name="previous">Poprzednie</string>
     <string name="nextExer">Następne</string>
     <string name="deleteAllExercises">Usuń wszystkie ćwiczenia</string>
-    <string name="hideShowExercises">Pokaż/ukryj ćwiczenia</string>
+    <string name="hideExercises">Ukryj ćwiczenia</string>
     <string name="fromFile">z pliku</string>
     <string name="fromAppsMemory">z pamięci aplikacji</string>
     <string name="toFile">do pliku</string>
@@ -139,7 +139,7 @@
     <string name="startingTime">Czas rozpoczęcia</string>
     <string name="duration">Czas trwania</string>
     <string name="selectCalendar">Wybierz kalendarz</string>
-    <string name="def">Domyślny</string>
+    <string name="def">domyślny</string>
     <string name="calendar">Kalendarz</string>
     <string name="progress">" progres"</string>
     <string name="highlighted">Zaznaczona sesja</string>
@@ -151,7 +151,6 @@
     <string name="breakFinish">Przerwa - koniec</string>
     <string name="breakCountdown">Przerwa - odliczanie</string>
     <string name="breakNotification">Przerwa</string>
-    <string name="grouping">Włącz/wyłącz grupowanie</string>
     <string name="other">Inne</string>
     <string name="cloud">Chmura</string>
     <string name="loadFromCloud">Wczytaj z chmury</string>
@@ -170,5 +169,16 @@
     <string name="unableToDelete">nie udało się usunąć</string>
     <string name="updated">trening zaktualizowany</string>
     <string name="unableToUpdate">nie udało się zaktualizować</string>
+    <string name="failedToLoad">Błąd podczas wczytywania</string>
+    <string name="failedToLoadInfo">Podczas wczytywania wystąpił błąd, ale nagroda została przyznana</string>
+    <string name="disableAds">Tymczasowo wyłącz reklamy</string>
+    <string name="disableAdsInfo">Obejrzyj reklamę by wyłączyć banery na tydzień</string>
+    <string name="settings">Ustawienia</string>
+    <string name="disableRir">Wyłącz RIR</string>
+    <string name="disableGrouping">Wyłącz grupowanie</string>
+    <string name="enableRir">Włącz RIR</string>
+    <string name="enableGrouping">Włącz grupowanie</string>
+    <string name="showExercises">Pokaż ćwiczenia</string>
+    <string name="lastSession">ostatni trening:</string>
 
 </resources>
